@@ -1,0 +1,11 @@
+<xml>
+
+<Name> Attenuation </Name>
+<Arg1> <?z echo($rfi_atten_Mon) ?> dB </Arg1>
+<Arg2> <?z echo($nf_atten_Mon)  ?> dB </Arg2>
+<Arg3> <?z echo($t_on_mon)      ?> us </Arg3>
+<Arg4> <?z echo($t_total_mon)   ?> ms </Arg4>
+<Arg5> <?z echo($rfi_mode_mon)  ?>    </Arg5>
+<Arg6> <?z echo($time_mode_mon) ?>    </Arg6>
+
+</xml>

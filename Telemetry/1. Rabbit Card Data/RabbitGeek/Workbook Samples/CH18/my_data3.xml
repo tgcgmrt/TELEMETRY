@@ -1,0 +1,4 @@
+<!-- RabbitWeb XML file -->
+<RabbitWeb>
+	<Switch_1> <?z echo($Switch_1) ?> </Switch_1>
+</RabbitWeb>

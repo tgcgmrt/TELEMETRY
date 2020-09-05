@@ -1,0 +1,129 @@
+<html>
+<head><title>New MCM Control Window</title>
+<style type="text/css">
+div.outrect
+{
+ width : 770;
+ padding : 10px;
+ background : #445566;
+ border-radius : 5px;
+ -webkit-border-radius : 5px;
+ font-size : 22px;
+ font-family : Lucida Sans Unicode;
+ box-shadow: 12px 12px 10px #999999;
+}
+
+div.inrect
+{
+ width : 730px;
+ padding : 3px;
+ margin : 10px;
+ background : #778899;
+}
+
+div.out
+{
+ padding : 10px;
+ color:#223344;
+ background : WhiteSmoke;
+ margin : 1px;
+ font-size : 15px;
+ font-family : Verdana;
+}
+</style>
+</head>
+
+<body bgcolor="eeeeee">
+<p>
+<center>
+<br><p>
+<div class="outrect">
+  <div style = "color:#ddeeff"> New MCM Control Window </div>
+  <table width="550" style="font-size:12px;color:#ddeeff;margin-bottom:10;letter-spacing:1px"><tr><td width="35%">IP : <?z echo($ip) ?></td><td width="30%">Antenna : ___</td><td>System : Analog Back End</td></tr></table>
+<div class="inrect">
+ <div class="out" style = "color:#223344">SET 32 Digital Output</div>
+ <div class="out">
+  <table cellpadding="3" cellspacing="3" width="500" border ="0">
+  <form action="/MCM_Set.zhtml" method="POST">
+   <tr> <td width="40%"> <input style="text-transform: uppercase; color:#334455;" type="text" name="msw" value="0000" maxlength="4" size="5"> </td>
+        <td width="40%"> <input style="text-transform: uppercase; color:#334455;" type="text" name="lsw" value="0000" maxlength="4" size="5"> </td>
+        <td> <input type="submit" value="Submit">
+   </tr>
+  </form>
+  </table>
+ </div>
+</div>
+<p>
+<div class="inrect">
+ <div class="out"> SET LO Frequency </div>
+ <div class="out">
+  <table cellpadding="3" cellspacing="3" width="500">
+  <form action="/MCM_Set.zhtml" method="POST">
+   <tr>
+   <td width="40%"><SELECT NAME="LO1" style="color:#334455;width:110">
+    <?z for($A=0; $A < count($LO1); $A++) { ?>
+    <OPTION> <?z print_opt($LO1,$A) ?> </OPTION> <?z } ?> </SELECT></td>
+   <td width="40%"><SELECT NAME="LO2" style="color:#334455;width:110">
+    <?z for($A=0; $A < count($LO2); $A++) { ?>
+    <OPTION> <?z print_opt($LO2,$A) ?> </OPTION> <?z } ?> </SELECT></td>
+    <td> <input type="submit" value="Submit"> </td> </tr>
+  </form>
+  </table>
+ </div>
+</div>
+<p>
+<div class="inrect">
+ <div class="out"> RFI Test </div>
+ <div class="out">
+  <table cellpadding="3" cellspacing="3" width="500" style = "color:#334455; font-size:15px">
+  <form action="/MCM_Set.zhtml" method="POST">
+   <tr>
+   <td width="40%"> Spectrum Spreader </td>
+   <td width="40%"> <SELECT NAME="SS" style="color:#334455;width:110">
+    <?z for($A=0; $A < count($SS); $A++) { ?>
+    <OPTION> <?z print_opt($SS,$A) ?> </OPTION> <?z } ?> </SELECT></td> </tr>
+   <tr>
+   <td> Frequency Doubler </td>
+   <td> <SELECT NAME="FDB" style="color:#334455;width:110">
+    <?z for($A=0; $A < count($FDB); $A++) { ?>
+    <OPTION> <?z print_opt($FDB,$A) ?> </OPTION> <?z } ?> </SELECT></td> </tr>
+   <tr>
+   <td> Frequency Divider </td>
+   <td> <SELECT NAME="FDV" style="color:#334455;width:110">
+    <?z for($A=0; $A < count($FDV); $A++) { ?>
+    <OPTION> <?z print_opt($FDV,$A) ?> </OPTION> <?z } ?> </SELECT> </td>
+
+   <td> <input type="submit" value="Submit"> </td> </tr>
+  </form>
+  </table>
+ </div>
+</div>
+<p>
+<!-- <div class="inrect">
+ <div class="out"> Network Setting </div>
+ <div class="out">
+  <table cellpadding="3" cellspacing="3" width="500" style = "color:#334455; font-size:15px">
+  <form action="/MCM_Set.zhtml" method="POST">
+   <tr>
+   <td width="40%"> IP Address </td>
+   <td width="40%"> <input style="color:#334455;width:110" value="<?z print($ip) ?>" type="text" name="ip" maxlength="15"> </td>
+   </tr>
+   <tr>
+   <td> Subnet Mask </td>
+   <td> <input style="color:#334455;width:110" value="<?z print($mask) ?>" type="text" name="mask" maxlength="15"> </td>
+   </tr>
+   <tr>
+   <td> Gateway Address </td>
+   <td> <input style="color:#334455;width:110" value="<?z print($gateway) ?>" type="text" name="gateway" maxlength="15"> </td>
+
+   <td> <input type="submit" value="Submit"> </td> </tr>
+  </form>
+  </table>
+ </div>
+</div>
+
+<div style="font-size:12px; color:#bbccdd"> Designed @ Telemetry Lab - GMRT<br> </div> -->
+
+</div>
+</body>
+</html>

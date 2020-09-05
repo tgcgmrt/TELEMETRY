@@ -1,0 +1,239 @@
+<xml>
+
+<Name> </Name>
+<Arg1> </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> Parameters </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> LASER Tx1 </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> LASER Tx2 </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> LASER Tx3 </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> LASER Tx4 </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> DC Power (-5v) </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> -5.2 V </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> -5.2 V </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> -5.2 V </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> NC </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> RF Amp Voltage </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> 5.1 V </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> 5.1 V </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> 5.1 V </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> NC </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> Bias Voltage 1 </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> -1.122 V </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> -1.122 V </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> -1.122 V </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> NC </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> Bias Voltage 2 </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> -3.222 V </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> -3.222 V </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> -3.222 V </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> NC </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> APC Voltage </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> 2.9 V </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> 2.9 V </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> 2.9 V </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> NC </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> Bias current </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> 60 mA </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> 60 mA </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> 60 mA </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> NC </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> Optical O/P power </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> 9.99 dBm </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> 9.99 dBm </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> 9.99 dBm </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> NC </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> Temp. </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> 25 </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> NC </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> NC </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> NC </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> OK </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> 25 </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> Ok </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> Ok </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> </Arg1>
+<Arg2> </Arg2>
+
+</xml>

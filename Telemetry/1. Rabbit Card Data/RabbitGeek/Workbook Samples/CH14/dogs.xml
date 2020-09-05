@@ -1,0 +1,9 @@
+<!-- My XML file -->
+<Famous_Animals>
+	<Dogs>
+		<Scoobie_Doo>Great Dane</Scoobie_Doo>
+		<Lassie>Collie</Lassie>
+		<Rin_Tin_Tin>German Sheppard</Rin_Tin_Tin>
+		<Stimpy>Chihuahua</Stimpy>
+	</Dogs>
+</Famous_Animals>

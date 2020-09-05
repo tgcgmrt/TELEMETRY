@@ -1,0 +1,7 @@
+<!-- RabbitWeb XML file -->
+<RabbitWeb>
+	<My_Data1> <?z echo($My_Data1) ?> </My_Data1>
+	<My_Data2> <?z echo($My_Data2) ?> </My_Data2>
+	<My_Data3> <?z echo($My_Data3) ?> </My_Data3>
+	<My_Data4> <?z echo($My_Data4) ?> </My_Data4>
+</RabbitWeb>

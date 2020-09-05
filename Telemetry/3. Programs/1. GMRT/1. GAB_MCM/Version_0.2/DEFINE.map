@@ -1,0 +1,1466 @@
+// Compilers view of MMU. Note these values are determined by the origin statements in the BIOS.
+//Segment           Origin     Size
+Root Code           0000:0000    002bcb
+Root Data           0000:b800    000c58
+Xmem Code           0000:e000    0070dc
+
+
+
+// Function mapping and source reference.
+// * The size of labels is indeterminate and so is denoted with an asterisk.
+//  Addr     Size   Function                        File                         Line Num
+    168f      224   dkDoWatchExpression             \DKCORE.LIB                      2466
+    176f        *   dkStartup                       \DKCOMMON.LIB                     231
+    1776        *   dkInitDebugKernel               \DKCOMMON.LIB                      75
+    1826        *   _LongOperators_                 \DKCOMMON.LIB                     218
+    1826        *   _FloatOperators_                \DKCOMMON.LIB                     219
+    1826        *   G_asr                           \MUTIL.LIB                        352
+    1850        *   G_div_ep2                       \MUTIL.LIB                        147
+    1854        *   G_div                           \MUTIL.LIB                        150
+    1883        *   G_mod                           \MUTIL.LIB                         57
+    1899        *   G_asl                           \MUTIL.LIB                        389
+    1899        *   L_asl                           \MUTIL.LIB                        390
+    18c3        *   L_asr                           \MUTIL.LIB                        304
+    18fa        *   _ZGLExit                        \MUTIL.LIB                        436
+    18fc        *   G_rmax                          \MUTIL.LIB                        439
+    1900        *   L_div                           \MUTIL.LIB                         90
+    1937        *   L_mod                           \MUTIL.LIB                         26
+    194d        *   _dkxexit                        \DKCOMMON.LIB                      12
+    1996        *   __xexit__                       \DKCOMMON.LIB                      59
+    19a8        *   c_asl                           \UTIL.LIB                         920
+    19c5        *   c_divt                          \MUTIL.LIB                        626
+    19f0        *   c_modt                          \MUTIL.LIB                        595
+    19fd        *   c_udv                           \MUTIL.LIB                        490
+    1a08        *   c_div                           \MUTIL.LIB                        509
+    1a59        *   c_asr                           \UTIL.LIB                         839
+    1a81        *   c_usr                           \UTIL.LIB                         874
+    1aa5        *   flt_0                           \UTIL.LIB                         614
+    1ab2        *   cf_ge                           \UTIL.LIB                         622
+    1ac9        *   cf_gt                           \UTIL.LIB                         639
+    1b00        *   cf_le                           \UTIL.LIB                         676
+    1b17        *   cf_lt                           \UTIL.LIB                         693
+    1b41        *   div0                            \MUTIL.LIB                        449
+    1b4d        *   div0long                        \MUTIL.LIB                        463
+    1b95        *   dkCallback                      \DKAPP.LIB                        798
+    1bc4       14   dkSetStdioTimer                 \DKCOMMON.LIB                     519
+    1bd2       30   dkCheckStdioTimeOut             \DKCOMMON.LIB                     524
+    1bf0       14   dkSetGetCharTimer               \DKCOMMON.LIB                     534
+    1bfe       28   dkCheckGetCharTimeOut           \DKCOMMON.LIB                     539
+    1c1a        *   periodic_isr                    \STDVDRIVER.LIB                   158
+    1c23        *   periodic_isr_ep2                \STDVDRIVER.LIB                   166
+    1cfa        *   _clock_adjust                   \STDVDRIVER.LIB                   472
+    1d1a        *   __slice_tick                    \SLICE.LIB                         67
+    1d2e        *   dkSetSingleStepCommand          \DKAPP.LIB                         94
+    1d54        *   dkSetRunProgramCommand          \DKAPP.LIB                        172
+    1d59        *   dkSetStopProgramCommand         \DKAPP.LIB                        198
+    1d5e        *   dkHandleStartProgram            \DKAPP.LIB                        215
+    1d63        *   dkHandleToggleBreakpoint        \DKAPP.LIB                        221
+    1d7f        *   dkClearAllBreakpoints           \DKAPP.LIB                        258
+    1d84        *   dkHandleRegRead                 \DKAPP.LIB                        467
+    1d89        *   dkHandleRegWrite                \DKAPP.LIB                        471
+    1da5        *   dkHandleNoop                    \DKAPP.LIB                        489
+    1dae        *   dkHandleReset                   \DKAPP.LIB                        495
+    1db7        *   dkSendStkTrace                  \DKAPP.LIB                        505
+    1dbc        *   dkSetSendFlags                  \DKAPP.LIB                        543
+    1ddd        *   dkHandleAddWatch                \DKAPP.LIB                        562
+    1df7        *   dkHandleDeleteWatch             \DKAPP.LIB                        579
+    1e0c        *   dkHandleDeleteAllWatches        \DKAPP.LIB                        605
+    1e11        *   dkHandleExecuteWatch            \DKAPP.LIB                        611
+    1e33        *   dkHandleExecAllWatches          \DKAPP.LIB                        648
+    1e38        *   dkHandleWatchData               \DKAPP.LIB                        656
+    1e4c        *   dkHandleSendChar                \DKAPP.LIB                        672
+    1e62        *   dkHandleStdioCharReady          \DKAPP.LIB                        683
+    1e75        *   dkHandleGetEnabledOptions       \DKAPP.LIB                        717
+    1e7a        *   dkAddWatch                      \DKCORE.LIB                      2046
+    1eb0        *   __dk_executewatch               \DKCORE.LIB                      2234
+    1f0f        *   dkConvertAddress                \DKCORE.LIB                       962
+    1f30        *   dkConvertCodeAddress            \DKCORE.LIB                      1368
+    1f3a        *   dkSavepcrst2028                 \DKCORE.LIB                       460
+    1f48        *   dkHandleHardBreak               \DKENTRY.LIB                      228
+    1ff8        *   dkHandleRST18                   \DKENTRY.LIB                      343
+    2038        *   dkCopyNextInstruction           \DKCORE.LIB                      1581
+    204c        *   __dk_copylcallreturn            \DKCORE.LIB                      1809
+    205e        *   __dk_handle_lddsr               \DKCORE.LIB                      1946
+    2061        *   __dk_handle_ldisr               \DKCORE.LIB                      1950
+    2064        *   __dk_handle_lsdr                \DKCORE.LIB                      1954
+    2067        *   __dk_handle_lsir                \DKCORE.LIB                      1958
+    206a        *   __dk_handle_lsddr               \DKCORE.LIB                      1962
+    206d        *   __dk_handle_lsidr               \DKCORE.LIB                      1966
+    2070        *   dkSetReturnAddress              \DKCOMMON.LIB                     255
+    20d4        *   dkHandleRST20                   \DKCOMMON.LIB                     321
+    21be        *   LongToXaddr                     \SYSIO.LIB                        884
+    21ea        *   dkHandleRST28                   \DKENTRY.LIB                      463
+    2213        *   dkDoHook                        \DKCORE.LIB                      1456
+    222c        *   dkProlog                        \DKENTRY.LIB                       72
+    2248        *   dkRespond                       \DKCORE.LIB                      2834
+    224c        *   dkRestoreContext                \DKCORE.LIB                      1388
+    229e        *   dkEpilog                        \DKENTRY.LIB                      126
+    22b5        *   dkSaveContext                   \DKCORE.LIB                       348
+    230e        *   __dk_ldp_LogToPhyCode           \DKCORE.LIB                      1550
+    231d        *   dkUnlockStdio                   \DKAPP.LIB                        737
+    2322        *   dloop8                          \MUTIL.LIB                        260
+    2375        *   exception                       \ERRORS.LIB                        63
+    2399        *   mod0                            \MUTIL.LIB                        286
+    23a9      133   premain                         \PROGRAM.LIB                      128
+    2438        *   _ProgStkSwitch                  \STACK.LIB                        662
+    2459        *   _BiosStkSwitch                  \STACK.LIB                        695
+    246d        *   _init_bad_interrupts            \PROGRAM.LIB                      300
+    25b9        *   _f_memset                       \STRING.C                        1326
+    2601        *   _unexp_interrupt                \UTIL.LIB                        1153
+    261d      252   exit                            \STDLIB.C                        1131
+    2719        *   _sys_exit                       \SYS.LIB                           55
+    2734        *   _f_memcpy                       \STRING.C                          68
+    2734        *   _f_memmove                      \STRING.C                          69
+    2785        *   _n_memset                       \STRING.C                        1367
+    2798        *   swap4_                          \UTIL.LIB                         772
+    27a1        *   swaps_                          \UTIL.LIB                         786
+    27b2        *   hitwd                           \VDRIVER.LIB                       93
+ 0004:e1ed        *   dkGetCharFromStdio              \DKCORE.LIB                      2613
+ 0004:e22f        *   periodic_init                   \STDVDRIVER.LIB                    98
+ 0004:e271       15   slicefsp_init                   \SLICE.LIB                         29
+ 0004:e280        *   bios_intexit                    \STDVDRIVER.LIB                   513
+ 0004:e298        *   __dk_setrun                     \DKAPP.LIB                        130
+ 0004:e2c0        *   __dk_setstop                    \DKAPP.LIB                        178
+ 0004:e2ec        *   __dk_startprogram               \DKAPP.LIB                        204
+ 0004:e2fe        *   __dk_clearallbps                \DKAPP.LIB                        241
+ 0004:e31c        *   __dk_regread                    \DKAPP.LIB                        266
+ 0004:e331        *   dkSendStackTraceInfo            \DKAPP.LIB                        281
+ 0004:e3e7        *   __dk_deleteallwatches           \DKAPP.LIB                        595
+ 0004:e3f5        *   __dk_execallwatches             \DKAPP.LIB                        631
+ 0004:e413        *   __dk_getenabledoptions          \DKAPP.LIB                        695
+ 0004:e43c        *   dkDeleteWatch                   \DKCORE.LIB                      2096
+ 0004:e4f7        *   dkDeleteAllWatches              \DKCORE.LIB                      2223
+ 0004:e507        *   dkExecuteWatch                  \DKCORE.LIB                      2302
+ 0004:e549        *   dkExecuteAllWatches             \DKCORE.LIB                      2332
+ 0004:e5c7        *   dkSendWatches                   \DKCORE.LIB                      2407
+ 0004:e5d6        *   dkBPTableFindEmpty              \DKCORE.LIB                       830
+ 0004:e5dd        *   dkBPTableFindBP                 \DKCORE.LIB                       839
+ 0004:e677        *   dkToggleBreakpoint              \DKCORE.LIB                       986
+ 0004:e834        *   dkClearBPTable                  \DKCORE.LIB                      1308
+ 0004:e849        *   dkToggleAllBreakpoints          \DKCORE.LIB                      1324
+ 0004:e869        *   dkResetBreakpoints              \DKCORE.LIB                      1345
+ 0004:e86b        *   dkCore                          \DKCORE.LIB                       473
+ 0004:e87d        *   __dk_sendstatusret              \DKCORE.LIB                       480
+ 0004:e8ec        *   dkSendStatus                    \DKCORE.LIB                       582
+ 0004:e926        *   __dk_eawret                     \DKCORE.LIB                       615
+ 0004:e953        *   dkEnableRST28                   \DKCORE.LIB                      2854
+ 0004:e95a        *   dkDisableRST28                  \DKCORE.LIB                      2858
+ 0004:e962        *   dkEnableRST20                   \DKCORE.LIB                      2863
+ 0004:e969        *   dkDisableRST20                  \DKCORE.LIB                      2867
+ 0004:e970        *   dkEnableRST18                   \DKCORE.LIB                      2873
+ 0004:e977        *   dkDisableRST18                  \DKCORE.LIB                      2877
+ 0004:e97e        *   dkGetStructMemberAddr           \DKCORE.LIB                      1997
+ 0004:e988        *   dkAsmSingleStep                 \DKCORE.LIB                      1610
+ 0004:ea2a        *   __dk_default_step               \DKCORE.LIB                      1717
+ 0004:ea51        *   __dk_call                       \DKCORE.LIB                      1743
+ 0004:ea86        *   __dk_stepintocall               \DKCORE.LIB                      1769
+ 0004:ea99        *   __dk_lcall                      \DKCORE.LIB                      1779
+ 0004:eadf        *   __dk_do_ldir                    \DKCORE.LIB                      1835
+ 0004:eaf1        *   __dk_ldir                       \DKCORE.LIB                      1844
+ 0004:eaf7        *   __dk_lddsr                      \DKCORE.LIB                      1848
+ 0004:eafd        *   __dk_ldisr                      \DKCORE.LIB                      1852
+ 0004:eb03        *   __dk_lsdr                       \DKCORE.LIB                      1856
+ 0004:eb09        *   __dk_lsir                       \DKCORE.LIB                      1860
+ 0004:eb0f        *   __dk_lsddr                      \DKCORE.LIB                      1864
+ 0004:eb15        *   __dk_lsidr                      \DKCORE.LIB                      1868
+ 0004:eb1b        *   __dk_ljp                        \DKCORE.LIB                      1873
+ 0004:eb29        *   __dk_rst2028                    \DKCORE.LIB                      1883
+ 0004:eb33        *   __dkReenterRST18                \DKCORE.LIB                      1889
+ 0004:eb3b        *   __dkCopyToRam                   \DKCORE.LIB                      1894
+ 0004:eb51        *   __dkExecInRAM                   \DKCORE.LIB                      1907
+ 0004:eb6b        *   __dk_handle_ldir                \DKCORE.LIB                      1940
+ 0004:eb6e        *   dkCheckEntry                    \DKCORE.LIB                       333
+ 0004:eb79        *   dkPollSerialPort                \DKCORE.LIB                       433
+ 0004:eb8f        *   dkExit                          \DKENTRY.LIB                       29
+ 0004:eb91        *   dkRunProgram                    \DKCORE.LIB                       715
+ 0004:eba9        *   dkSavepc                        \DKCORE.LIB                       419
+ 0004:ebb7        *   dkSingleStep                    \DKCORE.LIB                      1483
+ 0004:ebe2        *   dkCSingleStep                   \DKCORE.LIB                      1513
+ 0004:ec09        *   dkSingleStepExit                \DKENTRY.LIB                       50
+ 0004:ec0b        *   dkStartProgram                  \DKCORE.LIB                       691
+ 0004:ec20        *   dkStopProgram                   \DKCORE.LIB                       736
+ 0004:ec3a        *   __dk_unlockstdio                \DKAPP.LIB                        727
+ 0004:ec47       16   VdInit                          \VDRIVER.LIB                       56
+ 0004:ec57      405   _Init_Stacks                    \STACK.LIB                        363
+ 0004:edec      257   _Get_Stack_Size                 \STACK.LIB                        442
+ 0004:eeed      244   _Alloc_Stack                    \STACK.LIB                        514
+ 0004:efe1      138   _Dealloc_Stack                  \STACK.LIB                        590
+ 0005:e06b       61   _gen_lin2seg                    \XMEM.LIB                          19
+ 0005:e0a8       67   _init_xalloc                    \MEM.LIB                          607
+ 0005:e0eb      243   _stdio_files_init               \STDIO.C                          277
+ 0005:e1de        5   _kbhit                          \STDIO_DK.C                       284
+ 0005:e1e3       25   kbhit                           \STDIO_DK.C                       299
+ 0005:e1fc       44   _stream_stdin_read              \STDIO_DK.C                       308
+ 0005:e1fc        *   _stream_stdin_read              \STDIO_DK.C                       317
+ 0005:e228      100   _stream_stdout_write            \STDIO_DK.C                       364
+ 0005:e228        *   _stream_stdout_write            \STDIO_DK.C                       371
+ 0005:e28c      377   _xalloc                         \MEM.LIB                          330
+ 0005:e405       26   alloc_calc_chksum               \MEM.LIB                           46
+ 0005:e41f      330   alloc_init                      \MEM.LIB                          155
+ 0005:e571      232   fclose                          \STDIO.C                          477
+ 0005:e659      135   _stdio_FILE_alloc               \STDIO.C                          324
+ 0005:e6e0       80   _stdio_FILE_free                \STDIO.C                          358
+ 0005:e730      370   fflush                          \STDIO.C                          399
+ 0005:e8a2      169   _stream_wrapped_write           \STDIO.C                         1091
+ 0005:e94b       27   free                            \MALLOC.LIB                      4361
+ 0005:e966      159   _init_app_mem_space             \MALLOC.LIB                      3852
+ 0005:ea05      227   _init_sys_mem_space             \MALLOC.LIB                      3794
+ 0005:eae8      319   _xavail                         \MEM.LIB                          494
+ 0005:ec27      223   create_mspace_with_base         \MALLOC.LIB                      3022
+ 0005:ed06      130   init_mparams                    \MALLOC.LIB                      1626
+ 0005:ed88      432   init_user_mstate                \MALLOC.LIB                      2979
+ 0005:ef38      105   init_bins                       \MALLOC.LIB                      2369
+ 0005:efa1      118   init_top                        \MALLOC.LIB                      2350
+ 0006:e017     1020   mspace_free                     \MALLOC.LIB                      3220
+ 0006:e413      757   insert_large_chunk              \MALLOC.LIB                      2162
+ 0006:e708      289   compute_tree_index              \MALLOC.LIB                      1426
+ 0006:e829      265   insert_small_chunk              \MALLOC.LIB                      2067
+ 0006:e932       10   paddr                           \XMEM.LIB                         499
+ 0006:e93c       24   read_rtc                        \RTCLOCK.LIB                      146
+ 0006:e954        5   remove                          \STDIO_FAT.C                      429
+ 0006:e959       88   insert_chunk                    \MALLOC.LIB                      2319
+ 0006:e9b1       83   unlink_chunk                    \MALLOC.LIB                      2326
+ 0006:ea04      948   unlink_large_chunk              \MALLOC.LIB                      2239
+ 0006:edb8      285   unlink_small_chunk              \MALLOC.LIB                      2094
+ 0006:eed5        *   vwdog                           \VDRIVER.LIB                      323
+ 0006:ef15       24   vwdogInit                       \VDRIVER.LIB                      112
+ 0006:ef2d       21   xalloc                          \STACK.LIB                        271
+ 0006:ef42      379   xalloc_init                     \MEM.LIB                           81
+ 0007:e0bd       30   xmem2xmem                       \XMEM.LIB                         160
+
+
+// Global/static data symbol mapping and source reference.
+//  Addr     Size   Symbol                          File                         Line Num  Type
+    b3c3        4   dkSendChar                      \DKCORE.LIB                      2605  struct __dksendchar
+    b3b7       12   sxd                             \RS232.LIB                        487  struct _sxd *[] 
+ 0000:e750     5625   MCM_Mon_zhtml                   \DEFINE.C                          55  #ximport        
+ 0001:ed4d     3903   Mon_Raw_xml                     \DEFINE.C                          56  #ximport        
+ 0002:ec90     1162   Mon_Sum_xml                     \DEFINE.C                          57  #ximport        
+ 0003:e11e     4249   MCM_Set_zhtml                   \DEFINE.C                          58  #ximport        
+    b3a3       20   ip                              \DEFINE.C                          87  char[]          
+    b38f       20   mask                            \DEFINE.C                          87  char[]          
+    b37b       20   gateway                         \DEFINE.C                          87  char[]          
+    b379        2   LO1                             \DEFINE.C                          92  int             
+    b377        2   LO2                             \DEFINE.C                          92  int             
+    b375        2   Temp_LO1                        \DEFINE.C                          92  int             
+    b373        2   Temp_LO2                        \DEFINE.C                          92  int             
+    b35f       20   LO1_Mon                         \DEFINE.C                          96  char[]          
+    b34b       20   LO2_Mon                         \DEFINE.C                          96  char[]          
+    b341       10   Attn1_Mon                       \DEFINE.C                         100  char[]          
+    b337       10   Attn2_Mon                       \DEFINE.C                         100  char[]          
+    b335        2   SS                              \DEFINE.C                         104  int             
+    b333        2   FDB                             \DEFINE.C                         104  int             
+    b331        2   FDV                             \DEFINE.C                         104  int             
+    b32f        2   Temp_SS                         \DEFINE.C                         104  int             
+    b32d        2   Temp_FDB                        \DEFINE.C                         104  int             
+    b32b        2   Temp_FDV                        \DEFINE.C                         104  int             
+    b321       10   SS1_Mon                         \DEFINE.C                         109  char[]          
+    b317       10   SS2_Mon                         \DEFINE.C                         109  char[]          
+    b312        5   FDB_Mon                         \DEFINE.C                         109  char[]          
+    b30d        5   FDV_Mon                         \DEFINE.C                         109  char[]          
+    b303       10   MCM_Clk                         \DEFINE.C                         109  char[]          
+    b2fe        5   msw                             \DEFINE.C                         116  char[]          
+    b2f9        5   lsw                             \DEFINE.C                         116  char[]          
+    b2f4        5   mswT                            \DEFINE.C                         116  char[]          
+    b2ef        5   lswT                            \DEFINE.C                         116  char[]          
+    b2e8        7   rtc                             \DEFINE.C                         122  struct tm       
+    b2e4        4   t0                              \DEFINE.C                         123  unsigned long   
+    b2e0        4   sec_tm                          \DEFINE.C                         123  unsigned long   
+    b2d6       10   time1                           \DEFINE.C                         124  char[]          
+    b2ca       12   date                            \DEFINE.C                         124  char[]          
+    b23e      140   rw                              \DEFINE.C                         128  int[]           
+    af82      700   vl                              \DEFINE.C                         131  char[][]        
+    af78       10   temp_ar                         \DEFINE.C                         143  char[]          
+    af6e       10   time_ar                         \DEFINE.C                         143  char[]          
+    af5a       20   RTC_time                        \DEFINE.C                         145  char[]          
+ 00f9:cf2a     8406   Wrpr_Cmd                        \DEFINE.C                         201  __far struct Wrpr_Cmd
+ 00f9:ad4c     8670   MCM_Resp                        \DEFINE.C                         202  __far struct MCM_Resp
+    af58        2   mcm_addr                        \DEFINE.C                         204  int             
+    af26       50   SenMon_Para                     \DEFINE.C                         205  char[][]        
+    af22        4   if_vccp                         \DEFINE.C                         209  float           
+    af1e        4   if_vccn                         \DEFINE.C                         209  float           
+    af1a        4   if_vdd                          \DEFINE.C                         209  float           
+    af16        4   lo_vccp                         \DEFINE.C                         209  float           
+    af12        4   lo_vccn                         \DEFINE.C                         209  float           
+    af0e        4   lo_vdd                          \DEFINE.C                         209  float           
+    af04       10   dmask                           \DEFINE.C                         210  char[]          
+    af00        4   dkStructWatchMem                \DKCORE.LIB                      2448  unsigned long   
+    aeff        1   dkStatusFlags                   \DKCORE.LIB                       245  char            
+    aefe        1   dkSendFlags                     \DKCORE.LIB                       247  char            
+    aefd        1   dkRequest                       \DKCORE.LIB                       248  char            
+    aefc        1   dkAckToSend                     \DKCORE.LIB                       249  char            
+    aefb        1   dkStepFlags                     \DKCORE.LIB                       250  char            
+    aef9        2   dkptrASMbuf                     \DKCORE.LIB                       251  char *          
+    bff8        8   dkASMbuf                        \DKCORE.LIB                       252  char[]          
+    aeba       63   dkRegisters                     \DKCORE.LIB                       253  struct __dkregisters
+    aeb6        4   dkNextAddress                   \DKCORE.LIB                       258  struct __dkaddress
+    aeb2        4   dkBreakAddress                  \DKCORE.LIB                       259  struct __dkaddress
+    aea5       13   dkBreakPoint                    \DKCORE.LIB                       260  struct __dkbreakpoint
+    aea3        2   dkEntryCount                    \DKCORE.LIB                       261  int             
+    aea1        2   dkLastAsmStart                  \DKCORE.LIB                       267  unsigned int    
+    ae9f        2   dkLastAsmEnd                    \DKCORE.LIB                       268  unsigned int    
+    ae9d        2   dkStackTop                      \DKCORE.LIB                       263  unsigned int    
+    ae9b        2   dkStkAddrToSend                 \DKCORE.LIB                       264  unsigned int    
+    ae91       10   dkStackTraceMsg                 \DKCORE.LIB                       265  struct __dkStackTraceMsg
+    ae90        1   dkLocks                         \DKCORE.LIB                       269  char            
+    ae8f        1   dkUCos                          \DKCORE.LIB                       271  char            
+    ae8e        1   dkRST28State                    \DKCORE.LIB                       273  char            
+    ae8d        1   dkRST20State                    \DKCORE.LIB                       274  char            
+    ae8b        2   rstvectorreturn                 \DKCORE.LIB                       277  int             
+    1b59       60   dkJumpTable                     \DKAPP.LIB                        745  void( * const[])()
+    ae8a        1   dkCharData                      \DKCORE.LIB                      2597  char            
+    ae88        2   dkCharReady                     \DKCORE.LIB                      2598  unsigned int    
+    ae86        2   dkStdioTimeout                  \DKCOMMON.LIB                     516  unsigned int    
+    ae84        2   dkGetCharTimeout                \DKCOMMON.LIB                     517  unsigned int    
+    ae83        1   __MS_COUNTER                    \STDVDRIVER.LIB                    83  char            
+    ae82        1   __TICK_COUNTER                  \STDVDRIVER.LIB                    84  char            
+    ae81        1   _defer_adjust                   \STDVDRIVER.LIB                    85  char            
+    ae7d        4   MS_TIMER                        \STDVDRIVER.LIB                    70  unsigned long   
+    ae79        4   SEC_TIMER                       \STDVDRIVER.LIB                    71  unsigned long   
+    ae75        4   TICK_TIMER                      \STDVDRIVER.LIB                    72  unsigned long   
+    ae73        2   FSP                             \SLICE.LIB                         19  void *          
+    ae71        2   DBGFSP                          \SLICE.LIB                         19  void *          
+    ae70        1   bios_intnesting                 \STDVDRIVER.LIB                   499  char            
+    ae6f        1   bios_swpend                     \STDVDRIVER.LIB                   500  char            
+    ae6b        4   dkEnabledOptions                \DKAPP.LIB                         91  struct __dkmsgEnabledOptions
+    ae6a        1   dkWatchCount                    \DKCORE.LIB                      2025  char            
+    ae5e       12   dkWatchExpression               \DKCORE.LIB                      2021  struct dkWatchExpression
+    adce      144   dkWatchTable                    \DKCORE.LIB                      2024  struct __dkwatch[]
+    adcc        2   dkWatchIndex                    \DKCORE.LIB                      2020  unsigned int    
+    adcb        1   __dk_watchcurindex              \DKCORE.LIB                      2035  char            
+    adca        1   __dk_watchnumleft               \DKCORE.LIB                      2036  char            
+    adc8        2   __dk_watchcurxpc                \DKCORE.LIB                      2037  unsigned int    
+    adc6        2   __dk_watchcuroffset             \DKCORE.LIB                      2038  unsigned int    
+    adc4        2   __dk_ptrexecwatchret            \DKCORE.LIB                      2039  unsigned int    
+    adc2        2   dkStructWatchBufferOffset       \DKCORE.LIB                      2022  int             
+    ac22      416   dkBPTable                       \DKCORE.LIB                       816  struct __dkbreakpoint[]
+    ac20        2   dkBPCount                       \DKCORE.LIB                       817  unsigned int    
+    ac1b        5   dk_bdcr                         \DKENTRY.LIB                      204  char[]          
+    ac1a        1   dkHWBP_enabled                  \DKENTRY.LIB                      207  char            
+    ac19        1   dkSavedIPReg                    \DKENTRY.LIB                      208  char            
+    ac18        1   dkUseSavedIPReg                 \DKENTRY.LIB                      209  char            
+    ac14        4   dkStackAddress                  \DKCORE.LIB                      1564  struct __dkaddress
+    ac10        4   dkReturnAddress                 \DKCORE.LIB                      1565  struct __dkaddress
+    ac08        8   dknextasm                       \DKCORE.LIB                      1578  char[]          
+    ac04        4   dkCurBPAddress                  \DKCOMMON.LIB                     251  struct __dkaddress
+    ac00        4   freeStacks                      \STACK.LIB                        286  long[]          
+    242e       10   stackSizes                      \STACK.LIB                        333  const unsigned int[]
+    abfc        4   BaseOfStacks1                   \STACK.LIB                        284  unsigned long   
+    abf8        4   SizeOfStacks1                   \STACK.LIB                        285  unsigned long   
+    abf6        2   _Dealloc_Stack:fsPtr            \STACK.LIB                        593  char *          
+    abf4        2   biossp                          \STACK.LIB                        636  int             
+    abf2        2   biossr                          \STACK.LIB                        636  int             
+    abee        4   __initial_stack                 \PROGRAM.LIB                       67  long            
+ 00f9:accc      128   _stdout_buf                     \STDIO.C                          269  __far char[]    
+ 00f9:ac4c      128   _stderr_buf                     \STDIO.C                          270  __far char[]    
+ 00f9:aa54      504   _stdio_files                    \STDIO.C                          178  __far struct FILE[]
+    abea        4   xubreak                         \MEM.LIB                          281  long            
+    abe8        2   ubreak                          \MEM.LIB                           40  struct ubreak * 
+    abe6        2   exit:exit_state                 \STDLIB.C                        1133  int             
+    abde        8   _atexit_func_table              \STDLIB.C                         108  void( *[])()    
+    abdc        2   _sys_exit_ret                   \SYS.LIB                           44  int             
+    abda        2   _sys_exit_err                   \SYS.LIB                           45  int             
+    abd6        4   _app_mem_space                  \MALLOC.LIB                      3846  __far void *    
+    abd2        4   _sys_mem_space                  \MALLOC.LIB                      3777  __far void *    
+    abc6       12   mparams                         \MALLOC.LIB                      1269  struct malloc_params
+    abc5        1   topVd                           \VDRIVER.LIB                      104  char            
+    abb1       20   vd_wdogarray                    \VDRIVER.LIB                      105  unsigned int[]  
+    2ae9        2   _orgtablesize                   \Rabbitbios.c                      43  int             
+    2aeb        0   _orgtable                       \Rabbitbios.c                      44  struct _orgtable[]
+
+// Parameter and local auto symbol mapping and source reference.
+//Offset Rel. to     Size   Symbol                          File                         Line Num  Type
+       2      SP        2   dkDoWatchExpression:WatchExpression \DKCORE.LIB                      2465  struct dkDoWatchExpression:WatchExpression
+       0      SP        0   dkSetStdioTimer:_____zW000001D9 \DKCOMMON.LIB                     519  void            
+       0      SP        0   dkCheckStdioTimeOut:_____zW000001DB \DKCOMMON.LIB                     524  void            
+       0      SP        0   dkSetGetCharTimer:_____zW000001DF \DKCOMMON.LIB                     534  void            
+       0      SP        0   dkCheckGetCharTimeOut:_____zW000001E1 \DKCOMMON.LIB                     539  void            
+       0      SP        0   slicefsp_init:_____zW000001E5   \SLICE.LIB                         29  void            
+       0      SP        0   premain:_____zW000001E9         \PROGRAM.LIB                      128  void            
+       0      SP        0   VdInit:_____zW000001F9          \VDRIVER.LIB                       56  void            
+      24      SP        0   _Init_Stacks:_____zW000001FD    \STACK.LIB                        363  void            
+      20      SP        4   _Init_Stacks:allocatedForStacks \STACK.LIB                        365  long            
+      16      SP        4   _Init_Stacks:spaceLeft          \STACK.LIB                        366  long            
+      14      SP        2   _Init_Stacks:i                  \STACK.LIB                        367  int             
+       4      SP       10   _Init_Stacks:locCounts          \STACK.LIB                        368  unsigned int[]  
+       2      SP        2   _Init_Stacks:allocIndex         \STACK.LIB                        369  unsigned int    
+       0      SP        2   _Init_Stacks:totalStackCounts   \STACK.LIB                        370  unsigned int    
+       5      SP        4   _Get_Stack_Size:ptr             \STACK.LIB                        443  long            
+       0      SP        2   _Get_Stack_Size:i               \STACK.LIB                        444  int             
+      13      SP        2   _Alloc_Stack:sz                 \STACK.LIB                        514  unsigned int    
+       6      SP        4   _Alloc_Stack:retval             \STACK.LIB                        516  long            
+       4      SP        2   _Alloc_Stack:i                  \STACK.LIB                        517  int             
+       2      SP        2   _Alloc_Stack:i2                 \STACK.LIB                        517  int             
+       0      SP        2   _Alloc_Stack:fsPtr              \STACK.LIB                        518  char *          
+       7      SP        4   _Dealloc_Stack:ptr              \STACK.LIB                        590  long            
+       2      SP        2   _Dealloc_Stack:i                \STACK.LIB                        592  int             
+       0      SP        2   _Dealloc_Stack:i2               \STACK.LIB                        592  int             
+       3      SP        2   _gen_lin2seg:laddr              \XMEM.LIB                          20  long *          
+       5      SP        1   _gen_lin2seg:norm               \XMEM.LIB                          20  char            
+       0      SP        2   _init_xalloc:p                  \MEM.LIB                          609  char *          
+       0      SP        0   _stdio_files_init:_____zW0000022C \STDIO.C                          277  void            
+       3      SP        4   _stream_stdin_read:cookie       \STDIO_DK.C                       308  __far void *    
+       7      SP        4   _stream_stdin_read:buffer       \STDIO_DK.C                       308  __far void *    
+      11      SP        2   _stream_stdin_read:bytes        \STDIO_DK.C                       308  unsigned int    
+       5      SP        4   _stream_stdout_write:cookie     \STDIO_DK.C                       363  __far void *    
+       9      SP        4   _stream_stdout_write:buffer     \STDIO_DK.C                       363  const __far void *
+      13      SP        2   _stream_stdout_write:bytes      \STDIO_DK.C                       364  unsigned int    
+       0      SP        2   _stream_stdout_write:saveix     \STDIO_DK.C                       366  int             
+      35      SP        2   _xalloc:szp                     \MEM.LIB                          330  long *          
+      37      SP        2   _xalloc:alignm                  \MEM.LIB                          330  unsigned int    
+      39      SP        2   _xalloc:type                    \MEM.LIB                          330  unsigned int    
+      30      SP        2   _xalloc:i                       \MEM.LIB                          332  int             
+      26      SP        4   _xalloc:mask                    \MEM.LIB                          333  long            
+      22      SP        4   _xalloc:next                    \MEM.LIB                          333  long            
+      18      SP        4   _xalloc:sz                      \MEM.LIB                          334  long            
+      14      SP        4   _xalloc:base                    \MEM.LIB                          334  long            
+       0      SP       14   _xalloc:xsbreak                 \MEM.LIB                          335  struct _xalloc:xsbreak
+       3      SP        4   alloc_calc_chksum:p             \MEM.LIB                           47  __far void *    
+       7      SP        2   alloc_calc_chksum:num           \MEM.LIB                           47  int             
+      13      SP        2   alloc_init:orgtbl               \MEM.LIB                          156  struct alloc_init:orgtbl *
+      15      SP        2   alloc_init:orgtblsize           \MEM.LIB                          156  unsigned int    
+       8      SP        2   alloc_init:i                    \MEM.LIB                          157  unsigned int    
+       6      SP        2   alloc_init:msize                \MEM.LIB                          157  unsigned int    
+       4      SP        2   alloc_init:bsize                \MEM.LIB                          157  unsigned int    
+       2      SP        2   alloc_init:mbreak               \MEM.LIB                          158  struct alloc_init:mbreak *
+       0      SP        2   alloc_init:pe                   \MEM.LIB                          159  struct alloc_init:pe *
+       8      SP        2   exit:status                     \STDLIB.C                        1131  int             
+       4      SP        2   exit:f                          \STDLIB.C                        1134  void( * *)()    
+       0      SP        4   exit:stream                     \STDLIB.C                        1135  __far struct FILE *
+      22      SP        4   fclose:stream                   \STDIO.C                          477  __far struct FILE *
+       4      SP       15   fclose:tmpnam_local             \STDIO.C                          480  char[]          
+       2      SP        2   fclose:retval                   \STDIO.C                          482  int             
+       0      SP        2   fclose:error                    \STDIO.C                          482  int             
+       4      SP        2   _stdio_FILE_alloc:i             \STDIO.C                          326  int             
+       0      SP        4   _stdio_FILE_alloc:f             \STDIO.C                          327  __far struct FILE *
+       3      SP        4   _stdio_FILE_free:f              \STDIO.C                          358  __far struct FILE *
+      17      SP        4   fflush:stream                   \STDIO.C                          399  __far struct FILE *
+      12      SP        2   fflush:send                     \STDIO.C                          401  unsigned int    
+      10      SP        2   fflush:sent                     \STDIO.C                          401  unsigned int    
+       8      SP        2   fflush:error                    \STDIO.C                          402  int             
+       4      SP        4   fflush:p                        \STDIO.C                          403  __far char *    
+       0      SP        4   fflush:end                      \STDIO.C                          403  __far char *    
+      11      SP        4   _stream_wrapped_write:stream    \STDIO.C                         1090  __far struct FILE *
+      15      SP        4   _stream_wrapped_write:base      \STDIO.C                         1090  const __far void *
+      19      SP        2   _stream_wrapped_write:bytes     \STDIO.C                         1091  unsigned int    
+       6      SP        2   _stream_wrapped_write:total     \STDIO.C                         1093  unsigned int    
+       4      SP        2   _stream_wrapped_write:wrote     \STDIO.C                         1094  int             
+       0      SP        4   _stream_wrapped_write:p         \STDIO.C                         1095  const __far char *
+       3      SP        4   free:ptr                        \MALLOC.LIB                      4361  __far void *    
+      14      SP        0   _init_app_mem_space:_____zW0000029A \MALLOC.LIB                      3852  void            
+      10      SP        4   _init_app_mem_space:xbase       \MALLOC.LIB                      3854  __far void *    
+       6      SP        4   _init_app_mem_space:xsize       \MALLOC.LIB                      3855  unsigned long   
+       2      SP        4   _init_app_mem_space:xsize_a     \MALLOC.LIB                      3856  unsigned long   
+       0      SP        2   _init_app_mem_space:mt          \MALLOC.LIB                      3857  int             
+      14      SP        0   _init_sys_mem_space:_____zW000002A6 \MALLOC.LIB                      3794  void            
+      10      SP        4   _init_sys_mem_space:xbase       \MALLOC.LIB                      3796  __far void *    
+       6      SP        4   _init_sys_mem_space:xsize       \MALLOC.LIB                      3797  unsigned long   
+       2      SP        4   _init_sys_mem_space:xsize_a     \MALLOC.LIB                      3798  unsigned long   
+       0      SP        2   _init_sys_mem_space:mt          \MALLOC.LIB                      3799  int             
+      31      SP        2   _xavail:addr_ptr                \MEM.LIB                          494  long *          
+      33      SP        2   _xavail:alignm                  \MEM.LIB                          494  unsigned int    
+      35      SP        2   _xavail:type                    \MEM.LIB                          494  unsigned int    
+      26      SP        2   _xavail:i                       \MEM.LIB                          496  int             
+      22      SP        4   _xavail:mask                    \MEM.LIB                          497  long            
+      18      SP        4   _xavail:sz                      \MEM.LIB                          498  long            
+      14      SP        4   _xavail:maxsz                   \MEM.LIB                          498  long            
+       0      SP       14   _xavail:xsbreak                 \MEM.LIB                          499  struct _xavail:xsbreak
+      11      SP        4   create_mspace_with_base:base    \MALLOC.LIB                      3023  __far void *    
+      15      SP        4   create_mspace_with_base:capacity \MALLOC.LIB                      3023  unsigned long   
+      19      SP        2   create_mspace_with_base:locked  \MALLOC.LIB                      3023  int             
+       4      SP        4   create_mspace_with_base:m       \MALLOC.LIB                      3024  __far struct malloc_state *
+       0      SP        4   create_mspace_with_base:msize   \MALLOC.LIB                      3025  unsigned long   
+       4      SP        0   init_mparams:_____zW000002D0    \MALLOC.LIB                      1627  void            
+       0      SP        4   init_mparams:s                  \MALLOC.LIB                      1628  unsigned long   
+      19      SP        4   init_user_mstate:tbase          \MALLOC.LIB                      2980  __far char *    
+      23      SP        4   init_user_mstate:tsize          \MALLOC.LIB                      2980  unsigned long   
+      12      SP        4   init_user_mstate:msize          \MALLOC.LIB                      2981  unsigned long   
+       8      SP        4   init_user_mstate:mn             \MALLOC.LIB                      2982  __far struct malloc_chunk *
+       4      SP        4   init_user_mstate:msp            \MALLOC.LIB                      2983  __far struct malloc_chunk *
+       0      SP        4   init_user_mstate:m              \MALLOC.LIB                      2984  __far struct malloc_state *
+      11      SP        4   init_bins:m                     \MALLOC.LIB                      2370  __far struct malloc_state *
+       4      SP        4   init_bins:i                     \MALLOC.LIB                      2372  unsigned long   
+       0      SP        4   init_bins:bin                   \MALLOC.LIB                      2373  __far struct malloc_chunk *
+       7      SP        4   init_top:m                      \MALLOC.LIB                      2351  __far struct malloc_state *
+      11      SP        4   init_top:p                      \MALLOC.LIB                      2351  __far struct malloc_chunk *
+      15      SP        4   init_top:psize                  \MALLOC.LIB                      2351  unsigned long   
+       0      SP        4   init_top:offset                 \MALLOC.LIB                      2353  unsigned long   
+      43      SP        4   mspace_free:msp                 \MALLOC.LIB                      3221  __far void *    
+      47      SP        4   mspace_free:mem                 \MALLOC.LIB                      3221  __far void *    
+      36      SP        4   mspace_free:p                   \MALLOC.LIB                      3222  __far struct malloc_chunk *
+      32      SP        4   mspace_free:fm                  \MALLOC.LIB                      3223  __far struct malloc_state *
+      28      SP        4   mspace_free:psize               \MALLOC.LIB                      3224  unsigned long   
+      24      SP        4   mspace_free:tsize               \MALLOC.LIB                      3224  unsigned long   
+      20      SP        4   mspace_free:dsize               \MALLOC.LIB                      3224  unsigned long   
+      16      SP        4   mspace_free:nsize               \MALLOC.LIB                      3224  unsigned long   
+      12      SP        4   mspace_free:next                \MALLOC.LIB                      3225  __far struct malloc_chunk *
+       8      SP        4   mspace_free:prev                \MALLOC.LIB                      3225  __far struct malloc_chunk *
+       4      SP        4   mspace_free:prevsize            \MALLOC.LIB                      3226  unsigned long   
+       0      SP        4   mspace_free:tp                  \MALLOC.LIB                      3227  __far struct malloc_tree_chunk *
+      27      SP        4   insert_large_chunk:m            \MALLOC.LIB                      2163  __far struct malloc_state *
+      31      SP        4   insert_large_chunk:x            \MALLOC.LIB                      2163  __far struct malloc_tree_chunk *
+      35      SP        4   insert_large_chunk:s            \MALLOC.LIB                      2163  unsigned long   
+      20      SP        4   insert_large_chunk:h            \MALLOC.LIB                      2164  __far struct malloc_tree_chunk * __far *
+      16      SP        4   insert_large_chunk:i            \MALLOC.LIB                      2165  unsigned long   
+      12      SP        4   insert_large_chunk:t            \MALLOC.LIB                      2166  __far struct malloc_tree_chunk *
+       8      SP        4   insert_large_chunk:k            \MALLOC.LIB                      2167  unsigned long   
+       4      SP        4   insert_large_chunk:c            \MALLOC.LIB                      2168  __far struct malloc_tree_chunk * __far *
+       0      SP        4   insert_large_chunk:f            \MALLOC.LIB                      2169  __far struct malloc_tree_chunk *
+      19      SP        4   compute_tree_index:s            \MALLOC.LIB                      1426  unsigned long   
+      12      SP        4   compute_tree_index:x            \MALLOC.LIB                      1428  unsigned long   
+       8      SP        4   compute_tree_index:y            \MALLOC.LIB                      1429  unsigned long   
+       4      SP        4   compute_tree_index:n            \MALLOC.LIB                      1429  unsigned long   
+       0      SP        4   compute_tree_index:k            \MALLOC.LIB                      1429  unsigned long   
+      15      SP        4   insert_small_chunk:m            \MALLOC.LIB                      2068  __far struct malloc_state *
+      19      SP        4   insert_small_chunk:p            \MALLOC.LIB                      2068  __far struct malloc_chunk *
+      23      SP        4   insert_small_chunk:s            \MALLOC.LIB                      2068  unsigned long   
+       8      SP        4   insert_small_chunk:i            \MALLOC.LIB                      2069  unsigned long   
+       4      SP        4   insert_small_chunk:b            \MALLOC.LIB                      2070  __far struct malloc_chunk *
+       0      SP        4   insert_small_chunk:f            \MALLOC.LIB                      2071  __far struct malloc_chunk *
+       3      SP        2   paddr:pointer                   \XMEM.LIB                         499  const void *    
+       0      SP        0   read_rtc:_____zW0000031E        \RTCLOCK.LIB                      146  void            
+       3      SP        2   remove:filename                 \STDIO_FAT.C                      429  const char *    
+       7      SP        4   insert_chunk:m                  \MALLOC.LIB                      2320  __far struct malloc_state *
+      11      SP        4   insert_chunk:p                  \MALLOC.LIB                      2320  __far struct malloc_chunk *
+      15      SP        4   insert_chunk:s                  \MALLOC.LIB                      2320  unsigned long   
+       0      SP        4   insert_chunk:tp                 \MALLOC.LIB                      2321  __far struct malloc_tree_chunk *
+       7      SP        4   unlink_chunk:m                  \MALLOC.LIB                      2327  __far struct malloc_state *
+      11      SP        4   unlink_chunk:p                  \MALLOC.LIB                      2327  __far struct malloc_chunk *
+      15      SP        4   unlink_chunk:s                  \MALLOC.LIB                      2327  unsigned long   
+       0      SP        4   unlink_chunk:tp                 \MALLOC.LIB                      2328  __far struct malloc_tree_chunk *
+      35      SP        4   unlink_large_chunk:m            \MALLOC.LIB                      2240  __far struct malloc_state *
+      39      SP        4   unlink_large_chunk:x            \MALLOC.LIB                      2240  __far struct malloc_tree_chunk *
+      28      SP        4   unlink_large_chunk:xp           \MALLOC.LIB                      2241  __far struct malloc_tree_chunk *
+      24      SP        4   unlink_large_chunk:r            \MALLOC.LIB                      2242  __far struct malloc_tree_chunk *
+      20      SP        4   unlink_large_chunk:f            \MALLOC.LIB                      2242  __far struct malloc_tree_chunk *
+      16      SP        4   unlink_large_chunk:rp           \MALLOC.LIB                      2243  __far struct malloc_tree_chunk * __far *
+      12      SP        4   unlink_large_chunk:cp           \MALLOC.LIB                      2243  __far struct malloc_tree_chunk * __far *
+       8      SP        4   unlink_large_chunk:h            \MALLOC.LIB                      2244  __far struct malloc_tree_chunk * __far *
+       4      SP        4   unlink_large_chunk:c0           \MALLOC.LIB                      2245  __far struct malloc_tree_chunk *
+       0      SP        4   unlink_large_chunk:c1           \MALLOC.LIB                      2245  __far struct malloc_tree_chunk *
+      15      SP        4   unlink_small_chunk:m            \MALLOC.LIB                      2095  __far struct malloc_state *
+      19      SP        4   unlink_small_chunk:p            \MALLOC.LIB                      2095  __far struct malloc_chunk *
+      23      SP        4   unlink_small_chunk:s            \MALLOC.LIB                      2095  unsigned long   
+       8      SP        4   unlink_small_chunk:f            \MALLOC.LIB                      2096  __far struct malloc_chunk *
+       4      SP        4   unlink_small_chunk:b            \MALLOC.LIB                      2097  __far struct malloc_chunk *
+       0      SP        4   unlink_small_chunk:i            \MALLOC.LIB                      2098  unsigned long   
+       3      SP        4   xalloc:sz                       \STACK.LIB                        271  long            
+      35      SP        2   xalloc_init:orgtbl              \MEM.LIB                           82  struct xalloc_init:orgtbl *
+      37      SP        2   xalloc_init:orgtblsize          \MEM.LIB                           82  unsigned int    
+      28      SP        4   xalloc_init:tmp                 \MEM.LIB                           83  long            
+      24      SP        4   xalloc_init:prior_tmp           \MEM.LIB                           84  long            
+      20      SP        4   xalloc_init:prev_xsbreak        \MEM.LIB                           85  long            
+      18      SP        2   xalloc_init:i                   \MEM.LIB                           86  int             
+       4      SP       14   xalloc_init:xsbreak             \MEM.LIB                           87  struct xalloc_init:xsbreak
+       0      SP        4   xalloc_init:available           \MEM.LIB                           88  long            
+       3      SP        4   xmem2xmem:dest                  \XMEM.LIB                         160  unsigned long   
+       7      SP        4   xmem2xmem:src                   \XMEM.LIB                         160  unsigned long   
+      11      SP        2   xmem2xmem:len                   \XMEM.LIB                         160  unsigned int    
+
+
+// Macro listing and source reference.
+//  Name                           File                         Line Num
+   _RESTRICT_WATCHCODE_            
+   SETUSERMODE                     \DEFAULT.H                         14
+   SETSYSMODE                      \DEFAULT.H                         15
+   _system                         \DEFAULT.H                         16
+   _SYS_CALL_VARS                  \DEFAULT.H                         17
+   _NET_SYSCALL                    \DEFAULT.H                         18
+   _rk_printf                      \DEFAULT.H                         19
+   _rk_sprintf                     \DEFAULT.H                         20
+   DK_ENABLE_BREAKPOINTS           \DEFAULT.H                         28
+   DK_ENABLE_ASMSINGLESTEP         \DEFAULT.H                         36
+   DK_ENABLE_WATCHEXPRESSIONS      \DEFAULT.H                         44
+   DK_ENABLE_TRACING               \DEFAULT.H                         52
+   DK_ENABLE_STACK_TRACING         \DEFAULT.H                         60
+   DK_SEND_STACK_LENGTH            \DEFAULT.H                         68
+   DK_ENABLE_DEBUGKERNEL           \DEFAULT.H                         70
+   __RABBIT_H                      \RABBIT.H                          34
+   ZWORLD_RESERVED_SIZE            \RABBIT.H                          65
+   __DMA_LIB                       \DMA.LIB                           14
+   _dma_nodebug                    \DMA.LIB                           21
+   DMA_CHANNEL_NONE                \DMA.LIB                           24
+   DMA_CHANNEL_ANY                 \DMA.LIB                           28
+   DMA_CHANNEL_0                   \DMA.LIB                           30
+   DMA_CHANNEL_1                   \DMA.LIB                           31
+   DMA_CHANNEL_2                   \DMA.LIB                           32
+   DMA_CHANNEL_3                   \DMA.LIB                           33
+   DMA_CHANNEL_4                   \DMA.LIB                           34
+   DMA_CHANNEL_5                   \DMA.LIB                           35
+   DMA_CHANNEL_6                   \DMA.LIB                           36
+   DMA_CHANNEL_7                   \DMA.LIB                           37
+   DMA_IDP_FIXED                   \DMA.LIB                           48
+   DMA_IDP_ROTATE_FINE             \DMA.LIB                           49
+   DMA_IDP_ROTATE_COARSE           \DMA.LIB                           50
+   DMA_LAST_DESC                   \DMA.LIB                           53
+   DMA_LINK_DESC                   \DMA.LIB                           54
+   DMA_SRC_IOI                     \DMA.LIB                           55
+   DMA_SRC_IOE                     \DMA.LIB                           56
+   DMA_SRC_MEMDEC                  \DMA.LIB                           57
+   DMA_SRC_MEM                     \DMA.LIB                           58
+   DMA_DEST_IOI                    \DMA.LIB                           59
+   DMA_DEST_IOE                    \DMA.LIB                           60
+   DMA_DEST_MEMDEC                 \DMA.LIB                           61
+   DMA_DEST_MEM                    \DMA.LIB                           62
+   DMA_F_DEST_DEC                  \DMA.LIB                           65
+   DMA_F_SRC_DEC                   \DMA.LIB                           66
+   DMA_F_REPEAT                    \DMA.LIB                           67
+   DMA_F_INTERRUPT                 \DMA.LIB                           68
+   DMA_F_LAST_SPECIAL              \DMA.LIB                           69
+   DMA_F_STOP_MATCH                \DMA.LIB                           70
+   DMA_F_FALLING                   \DMA.LIB                           71
+   DMA_F_RISING                    \DMA.LIB                           72
+   DMA_F_LOW                       \DMA.LIB                           73
+   DMA_F_HIGH                      \DMA.LIB                           74
+   DMA_F_PD2                       \DMA.LIB                           75
+   DMA_F_PE2                       \DMA.LIB                           76
+   DMA_F_PE6                       \DMA.LIB                           77
+   DMA_F_PD3                       \DMA.LIB                           78
+   DMA_F_PE3                       \DMA.LIB                           79
+   DMA_F_PE7                       \DMA.LIB                           80
+   DMA_F_TIMER                     \DMA.LIB                           81
+   DMA_F_TIMER_1BPR                \DMA.LIB                           82
+   DMA_SC_USB_RX                   \DMA.LIB                           85
+   DMA_SC_USB_TX                   \DMA.LIB                           86
+   DMA_SC_CS_OFF                   \DMA.LIB                           88
+   DMA_SC_DC_SRC                   \DMA.LIB                           90
+   DMA_SC_SRC_FIXED                \DMA.LIB                           91
+   DMA_SC_DC_DEST                  \DMA.LIB                           92
+   DMA_SC_DEST_FIXED               \DMA.LIB                           93
+   DMAstartDirect                  \DMA.LIB                          100
+   DMAstartAuto                    \DMA.LIB                          101
+   DMAstopDirect                   \DMA.LIB                          102
+   __MUTILFP_LIB                   \MUTILFP.LIB                      174
+   __SYS_LIB                       \SYS.LIB                           15
+   _FLAG_PVALID                    \SYS.LIB                           73
+   CLKDIV_1                        \SYS.LIB                          524
+   CLKDIV_2                        \SYS.LIB                          525
+   CLKDIV_4                        \SYS.LIB                          526
+   CLKDIV_6                        \SYS.LIB                          527
+   CLKDIV_8                        \SYS.LIB                          528
+   OSC32DIV_1                      \SYS.LIB                          570
+   OSC32DIV_2                      \SYS.LIB                          571
+   OSC32DIV_4                      \SYS.LIB                          572
+   OSC32DIV_8                      \SYS.LIB                          573
+   OSC32DIV_16                     \SYS.LIB                          574
+   SetVectExtern3000               \SYS.LIB                          776
+   SetVectExtern4000               \SYS.LIB                          777
+   GetVectExtern3000               \SYS.LIB                          885
+   BitRevTable                     \SYS.LIB                         1299
+   TAT1R_RELEASE_REQ               \SYS.LIB                         1328
+   TAT1R_BTIMER_REQ                \SYS.LIB                         1330
+   TAT1R_CTIMER_REQ                \SYS.LIB                         1331
+   TAT1R_A1TIMER_REQ               \SYS.LIB                         1332
+   TAT1R_A2TIMER_REQ               \SYS.LIB                         1335
+   TAT1R_A3TIMER_REQ               \SYS.LIB                         1336
+   TAT1R_A4TIMER_REQ               \SYS.LIB                         1337
+   TAT1R_A5TIMER_REQ               \SYS.LIB                         1338
+   TAT1R_A6TIMER_REQ               \SYS.LIB                         1339
+   TAT1R_A7TIMER_REQ               \SYS.LIB                         1340
+   __EXTIO_LIB__                   \EXTERNIO.LIB                      12
+   __PWM_LIB__                     \PWM.LIB                           15
+   PWM_FREQ_FACTOR                 \PWM.LIB                           32
+   PWM_SPREAD                      \PWM.LIB                           85
+   PWM_OPENDRAIN                   \PWM.LIB                           86
+   PWM_USEPORTC                    \PWM.LIB                           88
+   PWM_USEPORTD                    \PWM.LIB                           89
+   PWM_USEPORTE                    \PWM.LIB                           90
+   PWM_OUTNORMAL                   \PWM.LIB                           92
+   PWM_OUTEIGHTH                   \PWM.LIB                           93
+   PWM_OUTQUARTER                  \PWM.LIB                           94
+   PWM_OUTHALF                     \PWM.LIB                           95
+   PWM_INTNORMAL                   \PWM.LIB                           97
+   PWM_INTEIGHTH                   \PWM.LIB                           98
+   PWM_INTQUARTER                  \PWM.LIB                           99
+   PWM_INTHALF                     \PWM.LIB                          100
+   PWM_INTOFF                      \PWM.LIB                          102
+   PWM_INTPRI1                     \PWM.LIB                          103
+   PWM_INTPRI2                     \PWM.LIB                          104
+   PWM_INTPRI3                     \PWM.LIB                          105
+   __QD_LIB__                      \QD.LIB                            29
+   QD_DIVISOR                      \QD.LIB                            32
+   QD_OVERFLOW                     \QD.LIB                            34
+   QD_UNDERFLOW                    \QD.LIB                            35
+   __VBAT_LIB                      \VBAT.LIB                           2
+   __LIMITS_H                      \LIMITS.H                          29
+   CHAR_BIT                        \LIMITS.H                          31
+   UCHAR_MAX                       \LIMITS.H                          32
+   SCHAR_MAX                       \LIMITS.H                          33
+   SCHAR_MIN                       \LIMITS.H                          34
+   CHAR_MAX                        \LIMITS.H                          35
+   CHAR_MIN                        \LIMITS.H                          36
+   MB_LEN_MAX                      \LIMITS.H                          37
+   SHRT_MAX                        \LIMITS.H                          38
+   SHRT_MIN                        \LIMITS.H                          39
+   USHRT_MAX                       \LIMITS.H                          40
+   INT_MAX                         \LIMITS.H                          41
+   INT_MIN                         \LIMITS.H                          42
+   UINT_MAX                        \LIMITS.H                          43
+   LONG_MAX                        \LIMITS.H                          44
+   LONG_MIN                        \LIMITS.H                          45
+   ULONG_MAX                       \LIMITS.H                          46
+   __STDDEF_H                      \STDDEF.H                          28
+   NULL                            \STDDEF.H                          41
+   offsetof                        \STDDEF.H                          44
+   __SETJMP_H                      \SETJMP.H                          28
+   __TIME_H                        \TIME.H                            61
+   STARTYR                         \TIME.H                            68
+   NULL                            \TIME.H                            71
+   CLOCKS_PER_SEC                  \TIME.H                            76
+   CLK_TCK                         \TIME.H                            77
+   _TM_MON_JANUARY                 \TIME.H                           110
+   tm_mon2month                    \TIME.H                           111
+   month2tm_mon                    \TIME.H                           112
+   _TM_MON_DECEMBER                \TIME.H                           114
+   __LC_TIME_H                     \LC_TIME.H                         29
+   _lc_time_debug                  \LC_TIME.LIB                       30
+   _time_debug                     \TIME.C                            31
+   clock                           \TIME.C                            41
+   __DAYSINMONTH                   \TIME.C                           127
+   ctime                           \TIME.C                           434
+   gmtime                          \TIME.C                           470
+   __R6K_PLL_H                     \PLL.LIB                           27
+   __DKENTRY_LIB                   \DKENTRY.LIB                        2
+   __DKCOMMON_LIB                  \DKCOMMON.LIB                       2
+   __DKCORE_LIB                    \DKCORE.LIB                         2
+   TC_TYPE_DEBUG                   \DKCORE.LIB                        13
+   TC_DEBUG_NOREQUEST              \DKCORE.LIB                        15
+   TC_DEBUG_SINGLESTEP             \DKCORE.LIB                        16
+   TC_DEBUG_TOGGLEBREAKPOINT       \DKCORE.LIB                        17
+   TC_DEBUG_CLEARBREAKPOINTS       \DKCORE.LIB                        18
+   TC_DEBUG_TOGGLEALLBREAKPOINTS   \DKCORE.LIB                        19
+   TC_DEBUG_ATBREAKPOINT           \DKCORE.LIB                        20
+   TC_DEBUG_STARTPROGRAM           \DKCORE.LIB                        21
+   TC_DEBUG_RUNPROGRAM             \DKCORE.LIB                        22
+   TC_DEBUG_STOPPROGRAM            \DKCORE.LIB                        23
+   TC_DEBUG_ADDWATCH               \DKCORE.LIB                        24
+   TC_DEBUG_DELETEWATCH            \DKCORE.LIB                        25
+   TC_DEBUG_DELETEALLWATCHES       \DKCORE.LIB                        26
+   TC_DEBUG_EXECWATCH              \DKCORE.LIB                        27
+   TC_DEBUG_EXECALLWATCHES         \DKCORE.LIB                        28
+   TC_DEBUG_SENDCHAR               \DKCORE.LIB                        29
+   TC_DEBUG_RESET                  \DKCORE.LIB                        30
+   TC_DEBUG_SETSENDFLAGS           \DKCORE.LIB                        31
+   TC_DEBUG_REGDATA                \DKCORE.LIB                        32
+   TC_DEBUG_WATCHDATA              \DKCORE.LIB                        33
+   TC_DEBUG_ASMDATA                \DKCORE.LIB                        34
+   TC_DEBUG_STACKDATA              \DKCORE.LIB                        35
+   TC_DEBUG_STDIO                  \DKCORE.LIB                        36
+   TC_DEBUG_WRITEREGDATA           \DKCORE.LIB                        37
+   TC_DEBUG_STDIOCHARREADY         \DKCORE.LIB                        38
+   TC_DEBUG_NOOP                   \DKCORE.LIB                        39
+   TC_DEBUG_ENABLEDOPTIONS         \DKCORE.LIB                        40
+   TC_DEBUG_WRITESTACKSIZE         \DKCORE.LIB                        46
+   TC_DEBUG_STACKTRACEDATA         \DKCORE.LIB                        47
+   _TRACE                          \DKCORE.LIB                        87
+   _TRACEON                        \DKCORE.LIB                        88
+   _TRACEOFF                       \DKCORE.LIB                        89
+   DK_SEND_ASM_LENGTH              \DKCORE.LIB                        93
+   DKF_SEND_STACK                  \DKCORE.LIB                        95
+   DKF_SEND_WATCHES                \DKCORE.LIB                        96
+   DKF_SEND_ASM                    \DKCORE.LIB                        97
+   DKF_SEND_REGS                   \DKCORE.LIB                        98
+   DKF_SEND_STATUS                 \DKCORE.LIB                        99
+   DKF_SEND_ACK                    \DKCORE.LIB                       100
+   DKF_SEND_STACKTRACE             \DKCORE.LIB                       105
+   DK_ERROR_BPNOTENABLED           \DKCORE.LIB                       111
+   DK_ERROR_ASMSINGLESTEPNOTENABLED \DKCORE.LIB                       112
+   DK_ERROR_WATCHNOTENABLED        \DKCORE.LIB                       113
+   DKF_STDIO_LOCK                  \DKCORE.LIB                       115
+   DKF_GETCHAR_LOCK                \DKCORE.LIB                       116
+   DKF_RESET_LOCK                  \DKCORE.LIB                       117
+   DKF_DK_LOCK                     \DKCORE.LIB                       118
+   DKF_GETCHARTIMEOUT_LOCK         \DKCORE.LIB                       119
+   DK_STDIO_TIMEOUT                \DKCORE.LIB                       120
+   DK_GETCHAR_TIMEOUT              \DKCORE.LIB                       121
+   dkIOI                           \DKCORE.LIB                       123
+   dkIOE                           \DKCORE.LIB                       124
+   dkALTD                          \DKCORE.LIB                       125
+   DK_RST20                        \DKCORE.LIB                       127
+   DK_RST28                        \DKCORE.LIB                       128
+   dkZZ                            \DKCORE.LIB                       135
+   dkZS                            \DKCORE.LIB                       136
+   dkZD                            \DKCORE.LIB                       137
+   dkZT                            \DKCORE.LIB                       138
+   dkSZ                            \DKCORE.LIB                       139
+   dkSS                            \DKCORE.LIB                       140
+   dkSD                            \DKCORE.LIB                       141
+   dkST                            \DKCORE.LIB                       142
+   dkDZ                            \DKCORE.LIB                       143
+   dkDS                            \DKCORE.LIB                       144
+   dkDD                            \DKCORE.LIB                       145
+   dkDT                            \DKCORE.LIB                       146
+   dkTZ                            \DKCORE.LIB                       147
+   dkTS                            \DKCORE.LIB                       148
+   dkTD                            \DKCORE.LIB                       149
+   dkTT                            \DKCORE.LIB                       150
+   DK_MAX_WATCHES                  \DKCORE.LIB                       230
+   _DISABLE_DEBUG                  \DKCORE.LIB                       279
+   _ENABLE_DEBUG                   \DKCORE.LIB                       280
+   DKF_BP_ACTIVE                   \DKCORE.LIB                       765
+   DKF_BP_DELETED                  \DKCORE.LIB                       766
+   DKF_BP_CONDITIONAL              \DKCORE.LIB                       767
+   DKF_BP_HARD                     \DKCORE.LIB                       768
+   DKF_BP_HARDWARE                 \DKCORE.LIB                       769
+   DKF_BP_HWDATAREAD               \DKCORE.LIB                       770
+   DKF_BP_HWDATAWRITE              \DKCORE.LIB                       771
+   DKF_BP_HWINSFETCH               \DKCORE.LIB                       772
+   DKF_BP_INSERT                   \DKCORE.LIB                       775
+   DKF_BP_FOUND                    \DKCORE.LIB                       776
+   DKF_BP_NOTFOUND                 \DKCORE.LIB                       777
+   DKF_BP_EMPTYFOUND               \DKCORE.LIB                       778
+   DKF_BP_EXHAUSTED                \DKCORE.LIB                       779
+   DK_MAX_BREAKPOINTS              \DKCORE.LIB                       784
+   DK_BREAKPOINT_MASK              \DKCORE.LIB                       802
+   DK_BxM0R                        \DKCORE.LIB                       805
+   DK_BxM1R                        \DKCORE.LIB                       806
+   DK_BxM2R                        \DKCORE.LIB                       807
+   DK_BxCR                         \DKCORE.LIB                       809
+   DK_BxA0R                        \DKCORE.LIB                       811
+   DK_BxA1R                        \DKCORE.LIB                       812
+   DK_BxA2R                        \DKCORE.LIB                       813
+   DKF_RST_RST28                   \DKCORE.LIB                      2846
+   DKF_RST_RST20                   \DKCORE.LIB                      2847
+   DKF_RST_RST18                   \DKCORE.LIB                      2848
+   __DKAPP_LIB                     \DKAPP.LIB                          2
+   DKF_OPTIONS_BREAKPOINTS         \DKAPP.LIB                         71
+   DKF_OPTIONS_ASMSINGLESTEP       \DKAPP.LIB                         72
+   DKF_OPTIONS_WATCHES             \DKAPP.LIB                         73
+   DK_BREAKPOINTS_ENABLED          \DKAPP.LIB                         75
+   DK_ASMSINGLESTEP_ENABLED        \DKAPP.LIB                         76
+   DK_WATCHES_ENABLED              \DKAPP.LIB                         77
+   __COFUNC_LIB                    \COFUNC.LIB                         2
+   __COSTATE_LIB                   \COSTATE.LIB                        2
+   _CS_STOPPED                     \COSTATE.LIB                       17
+   _CS_INIT                        \COSTATE.LIB                       18
+   _CS_NORESET                     \COSTATE.LIB                       19
+   _CS_INITB                       \COSTATE.LIB                       20
+   EFUNCBLK                        \COSTATE.LIB                       65
+   __SLICE_LIB                     \SLICE.LIB                          2
+   SLICING                         \SLICE.LIB                          7
+   PERIODIC_TIMERS                 \SLICE.LIB                          8
+   _CBUF_H                         \CBUF.LIB                          91
+   _cbuf_debug                     \CBUF.LIB                          96
+   CBUF_IP                         \CBUF.LIB                         104
+   CBUF_WRITE_BIT                  \CBUF.LIB                         116
+   CBUF_READ_BIT                   \CBUF.LIB                         117
+   CBUF_OVERHEAD                   \CBUF.LIB                         124
+   __RS232_LIB                     \RS232.LIB                          2
+   RS232_FAIL                      \RS232.LIB                          3
+   RS232_CR                        \RS232.LIB                          4
+   RS232_LF                        \RS232.LIB                          5
+   RS232_BASEFREQ                  \RS232.LIB                          6
+   PARAM_8BIT                      \RS232.LIB                          8
+   PARAM_7BIT                      \RS232.LIB                          9
+   PARAM_NOPARITY                  \RS232.LIB                         11
+   PARAM_EPARITY                   \RS232.LIB                         12
+   PARAM_OPARITY                   \RS232.LIB                         13
+   PARAM_SPARITY                   \RS232.LIB                         14
+   PARAM_MPARITY                   \RS232.LIB                         15
+   PARAM_1STOP                     \RS232.LIB                         17
+   PARAM_2STOP                     \RS232.LIB                         18
+   SER_PARITY_ERROR                \RS232.LIB                         20
+   SER_OVERRUN_ERROR               \RS232.LIB                         21
+   SER_OVERFLOW_ERROR              \RS232.LIB                         22
+   _rs232_debug                    \RS232.LIB                         27
+   SER_PORT_A                      \RS232.LIB                        240
+   SER_PORT_B                      \RS232.LIB                        241
+   SER_PORT_C                      \RS232.LIB                        242
+   SER_PORT_D                      \RS232.LIB                        243
+   SER_PORT_E                      \RS232.LIB                        244
+   SER_PORT_F                      \RS232.LIB                        245
+   SER_PORT_N                      \RS232.LIB                        247
+   SxDR_OFS                        \RS232.LIB                        250
+   SxAR_OFS                        \RS232.LIB                        251
+   SxLR_OFS                        \RS232.LIB                        252
+   SxSR_OFS                        \RS232.LIB                        253
+   SxCR_OFS                        \RS232.LIB                        254
+   SxER_OFS                        \RS232.LIB                        255
+   RS232_INT_LEVEL                 \RS232.LIB                        258
+   RS232_ENTER_CRITICAL            \RS232.LIB                        275
+   RS232_EXIT_CRITICAL             \RS232.LIB                        285
+   SER_BIT_RTSCTS                  \RS232.LIB                        322
+   SER_BIT_PARITY                  \RS232.LIB                        323
+   SER_BIT_SEVENBIT                \RS232.LIB                        324
+   SER_BIT_TWOSTOP                 \RS232.LIB                        325
+   SER_BIT_LONGSTOP                \RS232.LIB                        326
+   SER_BIT_PARITYERROR             \RS232.LIB                        327
+   SER_BIT_OVERRUN                 \RS232.LIB                        328
+   SER_BIT_OVERFLOW                \RS232.LIB                        329
+   SER_FLAG_RTSCTS                 \RS232.LIB                        337
+   SER_FLAG_PARITY                 \RS232.LIB                        338
+   SER_FLAG_SEVENBIT               \RS232.LIB                        339
+   SER_FLAG_TWOSTOP                \RS232.LIB                        340
+   SER_FLAG_LONGSTOP               \RS232.LIB                        341
+   SER_FLAG_PARITYERROR            \RS232.LIB                        342
+   SER_FLAG_OVERRUN                \RS232.LIB                        343
+   SER_FLAG_OVERFLOW               \RS232.LIB                        344
+   SER_DMA_DIVISIONS               \RS232.LIB                        361
+   SER_DMA_ON                      \RS232.LIB                        365
+   SER_DMA_ISR                     \RS232.LIB                        366
+   SER_DMA_BUSY                    \RS232.LIB                        367
+   SER_DMA_STOP                    \RS232.LIB                        368
+   SER_DMA_PPD23                   \RS232.LIB                        370
+   SER_DMA_PPE23                   \RS232.LIB                        371
+   SER_DMA_PPE67                   \RS232.LIB                        372
+   SER_DMA_ODD                     \RS232.LIB                        374
+   _CALL_                          \RS232.LIB                        410
+   _READ_FLAG_                     \RS232.LIB                        414
+   _CLEAR_FLAG_                    \RS232.LIB                        419
+   _SET_FLAG_                      \RS232.LIB                        424
+   _READ_BIT_                      \RS232.LIB                        426
+   _CLEAR_BIT_                     \RS232.LIB                        427
+   _SET_BIT_                       \RS232.LIB                        428
+   RS232_IO                        \RS232.LIB                        434
+   RS232_EXIO                      \RS232.LIB                        440
+   RS232_HS                        \RS232.LIB                        446
+   serXdmaOn                       \RS232.LIB                        452
+   serXdmaOff                      \RS232.LIB                        453
+   serXgetError                    \RS232.LIB                        455
+   serXgetc                        \RS232.LIB                        456
+   serXread                        \RS232.LIB                        457
+   serXpeek                        \RS232.LIB                        458
+   serXputc                        \RS232.LIB                        459
+   serXputs                        \RS232.LIB                        460
+   serXwrite                       \RS232.LIB                        461
+   serXfastwrite                   \RS232.LIB                        462
+   cof_serXgetc                    \RS232.LIB                        463
+   cof_serXgets                    \RS232.LIB                        464
+   cof_serXread                    \RS232.LIB                        465
+   cof_serXputc                    \RS232.LIB                        466
+   cof_serXputs                    \RS232.LIB                        467
+   cof_serXwrite                   \RS232.LIB                        468
+   serXflowcontrolOff              \RS232.LIB                        469
+   serXparity                      \RS232.LIB                        470
+   serXdatabits                    \RS232.LIB                        471
+   serXrdFree                      \RS232.LIB                        472
+   serXwrFree                      \RS232.LIB                        473
+   serXrdUsed                      \RS232.LIB                        474
+   serXwrUsed                      \RS232.LIB                        475
+   serXrdFlush                     \RS232.LIB                        476
+   serXwrFlush                     \RS232.LIB                        477
+   serXsending                     \RS232.LIB                        478
+   RS232_ECHO                      \RS232.LIB                        500
+   serXrts_update                  \RS232.LIB                       4636
+   __STDIO_H                       \STDIO.H                           34
+   NULL                            \STDIO.H                           36
+   EOF                             \STDIO.H                           41
+   L_tmpnam                        \STDIO.H                           46
+   TMP_MAX                         \STDIO.H                           50
+   _FILE_FLAG_OPEN_READ            \STDIO.H                           61
+   _FILE_FLAG_OPEN_WRITE           \STDIO.H                           62
+   _FILE_FLAG_OPEN_RW              \STDIO.H                           63
+   _FILE_FLAG_OPEN_APPEND          \STDIO.H                           64
+   _FILE_FLAG_OPEN_BINARY          \STDIO.H                           65
+   _FILE_FLAG_CAN_READ             \STDIO.H                           70
+   _FILE_FLAG_CAN_WRITE            \STDIO.H                           71
+   _FILE_FLAG_UNUSED1              \STDIO.H                           73
+   _FILE_FLAG_UNUSED2              \STDIO.H                           74
+   _FILE_FLAG_BUF_NONE             \STDIO.H                           76
+   _FILE_FLAG_BUF_FULL             \STDIO.H                           77
+   _FILE_FLAG_BUF_LINE             \STDIO.H                           78
+   _FILE_FLAG_BUFFERED             \STDIO.H                           79
+   _FILE_FLAG_BUF_NEVER            \STDIO.H                           81
+   _FILE_FLAG_AUTOFLUSH            \STDIO.H                           88
+   _FILE_FLAG_EOF                  \STDIO.H                           94
+   _FILE_FLAG_ERROR                \STDIO.H                           95
+   _FILE_FLAG_USED                 \STDIO.H                           96
+   _FILE_FLAG_OPEN                 \STDIO.H                           97
+   _STDIO_UNGET_BYTES              \STDIO.H                          138
+   FOPEN_MAX                       \STDIO.H                          174
+   stdin                           \STDIO.H                          179
+   stdout                          \STDIO.H                          180
+   stderr                          \STDIO.H                          181
+   FILENAME_MAX                    \STDIO.H                          185
+   BUFSIZ                          \STDIO.H                          237
+   _IOFBF                          \STDIO.H                          241
+   _IOLBF                          \STDIO.H                          242
+   _IONBF                          \STDIO.H                          243
+   SEEK_SET                        \STDIO.H                          252
+   SEEK_CUR                        \STDIO.H                          253
+   SEEK_END                        \STDIO.H                          254
+   __STDIO_LOOP                    \STDIO.H                          355
+   _stdio_debug                    \STDIO.C                           46
+   _STDIO_FILE_UPDATE_CAN_RW       \STDIO.C                           53
+   _STDIO_FILE_INVALID             \STDIO.C                          225
+   fsetpos                         \STDIO.C                         1024
+   _stream_can_read                \STDIO.C                         1193
+   _stream_can_write               \STDIO.C                         1194
+   getchar                         \STDIO.C                         1434
+   putchar                         \STDIO.C                         1936
+   _stdio_fat_debug                \STDIO_FAT.C                       37
+   _downcast_FATfile               \STDIO_FAT.C                       43
+   fopen                           \STDIO_FAT.C                       49
+   _stdio_serial_debug             \STDIO_SERIAL.C                    34
+   serXstream                      \STDIO_SERIAL.C                    39
+   __STDARG_H                      \STDARG.H                          55
+   va_start                        \STDARG.H                          60
+   va_arg                          \STDARG.H                          66
+   va_end                          \STDARG.H                          69
+   va_copy                         \STDARG.H                          72
+   _stdio_printf_debug             \STDIO_PRINTF.C                    31
+   vprintf                         \STDIO_PRINTF.C                   326
+   _stdio_scanf_debug              \STDIO_SCANF.C                     31
+   __STDIO_SCANF_H                 \STDIO_SCANF.C                    252
+   _SCANF_GET                      \STDIO_SCANF.C                    261
+   _SCANF_FLAG_NONE                \STDIO_SCANF.C                    273
+   _SCANF_FLAG_NOASSIGN            \STDIO_SCANF.C                    274
+   _SCANF_FLAG_ALLOC               \STDIO_SCANF.C                    275
+   _SCANF_FLAG_CHAR                \STDIO_SCANF.C                    276
+   _SCANF_FLAG_SHORT               \STDIO_SCANF.C                    277
+   _SCANF_FLAG_LONG                \STDIO_SCANF.C                    278
+   _SCANF_FLAG_LONGLONG            \STDIO_SCANF.C                    279
+   _SCANF_FLAG_FAR                 \STDIO_SCANF.C                    281
+   _SCANF_FLAG_ALLFAR              \STDIO_SCANF.C                    282
+   _SCANF_FLAG_FINISH              \STDIO_SCANF.C                    284
+   _SCANF_GLOBAL_FLAGS             \STDIO_SCANF.C                    287
+   vfscanf                         \STDIO_SCANF.C                   1113
+   vscanf                          \STDIO_SCANF.C                   1131
+   vsscanf                         \STDIO_SCANF.C                   1189
+   _stdio_dk_debug                 \STDIO_DK.C                        32
+   __STDIO_LIB                     \STDIO.LIB                          2
+   __STDIO_LIB_VERSION             \STDIO.LIB                          6
+   DEFDECDIGITS                    \STDIO.LIB                         21
+   _CALL_PUTC_FUNC                 \STDIO.LIB                         28
+   _DOPRNT_FLAG_LEFT_JUSTIFY       \STDIO.LIB                        391
+   _DOPRNT_FLAG_SIGN_ALWAYS        \STDIO.LIB                        392
+   _DOPRNT_FLAG_SIGN_SPACE         \STDIO.LIB                        393
+   _DOPRNT_FLAG_ALTERNATE          \STDIO.LIB                        394
+   _DOPRNT_FLAG_LEADING_ZEROS      \STDIO.LIB                        395
+   _DOPRNT_FLAG_INT                \STDIO.LIB                        397
+   _DOPRNT_FLAG_CHAR               \STDIO.LIB                        398
+   _DOPRNT_FLAG_SHORT              \STDIO.LIB                        399
+   _DOPRNT_FLAG_LONG               \STDIO.LIB                        400
+   _DOPRNT_FLAG_LONGLONG           \STDIO.LIB                        401
+   _DOPRNT_FLAG_ANYLONG            \STDIO.LIB                        402
+   _DOPRNT_FLAG_FAR                \STDIO.LIB                        403
+   _DOPRNT_FLAG_PARSED             \STDIO.LIB                        405
+   xmem_dump                       \STDIO.LIB                       2373
+   __STDLIB_H                      \STDLIB.H                          29
+   strtod                          \STDLIB.H                          40
+   strtol                          \STDLIB.H                          41
+   strtoul                         \STDLIB.H                          42
+   qsort                           \STDLIB.H                          43
+   bsearch                         \STDLIB.H                          44
+   _n_atof                         \STDLIB.H                          48
+   _f_atof                         \STDLIB.H                          49
+   _n_atoi                         \STDLIB.H                          50
+   _f_atoi                         \STDLIB.H                          51
+   _n_atol                         \STDLIB.H                          52
+   _f_atol                         \STDLIB.H                          53
+   NULL                            \STDLIB.H                          56
+   RAND_MAX                        \STDLIB.H                          79
+   EXIT_FAILURE                    \STDLIB.H                          98
+   EXIT_SUCCESS                    \STDLIB.H                          99
+   _ATEXIT_FUNC_COUNT              \STDLIB.H                         104
+   __abort                         \STDLIB.H                         112
+   MB_CUR_MAX                      \STDLIB.H                         155
+   _stdlib_debug                   \STDLIB.C                          28
+   atof                            \STDLIB.C                         858
+   atoi                            \STDLIB.C                         885
+   atol                            \STDLIB.C                         909
+   MALLOC_H_Incl                   \MALLOC.LIB                       503
+   __static                        \MALLOC.LIB                       508
+   _malloc_debug                   \MALLOC.LIB                       514
+   _SYS_MALLOC_BLOCKS              \MALLOC.LIB                       523
+   _APP_MALLOC_BLOCKS              \MALLOC.LIB                       527
+   _MALLOC_SYS_EXIT_ON_ERROR       \MALLOC.LIB                       540
+   _MALLOC_APP_EXIT_ON_ERROR       \MALLOC.LIB                       544
+   _MALLOC_SYS_MEM_TYPE            \MALLOC.LIB                       554
+   _MALLOC_APP_MEM_TYPE            \MALLOC.LIB                       558
+   USE_DL_PREFIX                   \MALLOC.LIB                       572
+   MORECORE                        \MALLOC.LIB                       573
+   NO_SEGMENT_TRAVERSAL            \MALLOC.LIB                       574
+   MALLOC_PAGESIZE                 \MALLOC.LIB                       575
+   NO_MALLINFO                     \MALLOC.LIB                       576
+   USE_LOCK_BIT                    \MALLOC.LIB                       579
+   INITIAL_LOCK                    \MALLOC.LIB                       580
+   MAX_SIZE_T                      \MALLOC.LIB                       587
+   MALLOC_ALIGNMENT                \MALLOC.LIB                       589
+   MALLOC_FOOTERS                  \MALLOC.LIB                       591
+   MALLOC_ABORT                    \MALLOC.LIB                       594
+   ABORT_ON_ASSERT_FAILURE         \MALLOC.LIB                       597
+   PROCEED_ON_ERROR                \MALLOC.LIB                       600
+   MALLOC_USE_LOCKS                \MALLOC.LIB                       603
+   MALLOC_NO_CHECK                 \MALLOC.LIB                       606
+   MALLOC_FAILURE_ACTION           \MALLOC.LIB                       613
+   USE_BUILTIN_FFS                 \MALLOC.LIB                       617
+   USE_DEV_RANDOM                  \MALLOC.LIB                       620
+   MALLINFO_FIELD_TYPE             \MALLOC.LIB                       623
+   M_GRANULARITY                   \MALLOC.LIB                       636
+   CORRUPTION_ERROR_ACTION         \MALLOC.LIB                       649
+   USAGE_ERROR_ACTION              \MALLOC.LIB                       653
+   _malloc_assert                  \MALLOC.LIB                       666
+   SIZE_T_SIZE                     \MALLOC.LIB                       676
+   SIZE_T_BITSIZE                  \MALLOC.LIB                       677
+   SIZE_T_ZERO                     \MALLOC.LIB                       681
+   SIZE_T_ONE                      \MALLOC.LIB                       682
+   SIZE_T_TWO                      \MALLOC.LIB                       683
+   SIZE_T_FOUR                     \MALLOC.LIB                       684
+   TWO_SIZE_T_SIZES                \MALLOC.LIB                       685
+   FOUR_SIZE_T_SIZES               \MALLOC.LIB                       686
+   SIX_SIZE_T_SIZES                \MALLOC.LIB                       687
+   HALF_MAX_SIZE_T                 \MALLOC.LIB                       688
+   CHUNK_ALIGN_MASK                \MALLOC.LIB                       691
+   is_aligned                      \MALLOC.LIB                       696
+   align_offset                    \MALLOC.LIB                       703
+   MFAIL                           \MALLOC.LIB                       709
+   CMFAIL                          \MALLOC.LIB                       710
+   CALL_MORECORE                   \MALLOC.LIB                       714
+   USE_NONCONTIGUOUS_BIT           \MALLOC.LIB                       717
+   MALLOC_EXTERN_BIT               \MALLOC.LIB                       720
+   MCHUNK_SIZE                     \MALLOC.LIB                       869
+   CHUNK_OVERHEAD                  \MALLOC.LIB                       874
+   MIN_CHUNK_SIZE                  \MALLOC.LIB                       880
+   chunk2mem                       \MALLOC.LIB                       883
+   mem2chunk                       \MALLOC.LIB                       884
+   align_as_chunk                  \MALLOC.LIB                       886
+   MAX_REQUEST                     \MALLOC.LIB                       889
+   MIN_REQUEST                     \MALLOC.LIB                       890
+   pad_request                     \MALLOC.LIB                       894
+   request2size                    \MALLOC.LIB                       898
+   PINUSE_BIT                      \MALLOC.LIB                       911
+   CINUSE_BIT                      \MALLOC.LIB                       912
+   FLAG4_BIT                       \MALLOC.LIB                       913
+   INUSE_BITS                      \MALLOC.LIB                       914
+   FLAG_BITS                       \MALLOC.LIB                       915
+   FENCEPOST_HEAD                  \MALLOC.LIB                       918
+   cinuse                          \MALLOC.LIB                       921
+   pinuse                          \MALLOC.LIB                       922
+   chunksize                       \MALLOC.LIB                       923
+   clear_pinuse                    \MALLOC.LIB                       925
+   clear_cinuse                    \MALLOC.LIB                       926
+   chunk_plus_offset               \MALLOC.LIB                       929
+   chunk_minus_offset              \MALLOC.LIB                       930
+   next_chunk                      \MALLOC.LIB                       933
+   prev_chunk                      \MALLOC.LIB                       934
+   next_pinuse                     \MALLOC.LIB                       937
+   get_foot                        \MALLOC.LIB                       940
+   set_foot                        \MALLOC.LIB                       941
+   set_size_and_pinuse_of_free_chunk \MALLOC.LIB                       945
+   set_free_with_pinuse            \MALLOC.LIB                       949
+   overhead_for                    \MALLOC.LIB                       953
+   MALLOC_LEFTMOST_CHILD           \MALLOC.LIB                      1067
+   MALLOC_IS_EXT_SEG               \MALLOC.LIB                      1115
+   NSMALLBINS                      \MALLOC.LIB                      1203
+   NTREEBINS                       \MALLOC.LIB                      1204
+   SMALLBIN_SHIFT                  \MALLOC.LIB                      1205
+   SMALLBIN_WIDTH                  \MALLOC.LIB                      1206
+   TREEBIN_SHIFT                   \MALLOC.LIB                      1207
+   MIN_LARGE_SIZE                  \MALLOC.LIB                      1208
+   MAX_SMALL_SIZE                  \MALLOC.LIB                      1209
+   MAX_SMALL_REQUEST               \MALLOC.LIB                      1210
+   _MALLOC_INC_CURR                \MALLOC.LIB                      1248
+   _MALLOC_DEC_CURR                \MALLOC.LIB                      1249
+   is_initialized                  \MALLOC.LIB                      1274
+   use_lock                        \MALLOC.LIB                      1280
+   enable_lock                     \MALLOC.LIB                      1281
+   disable_lock                    \MALLOC.LIB                      1282
+   use_noncontiguous               \MALLOC.LIB                      1285
+   disable_contiguous              \MALLOC.LIB                      1286
+   set_lock                        \MALLOC.LIB                      1291
+   page_align                      \MALLOC.LIB                      1295
+   segment_holds                   \MALLOC.LIB                      1301
+   should_trim                     \MALLOC.LIB                      1347
+   TOP_FOOT_SIZE                   \MALLOC.LIB                      1356
+   MALLOC_PRE_ACTION               \MALLOC.LIB                      1378
+   MALLOC_POST_ACTION              \MALLOC.LIB                      1382
+   check_free_chunk                \MALLOC.LIB                      1392
+   check_inuse_chunk               \MALLOC.LIB                      1393
+   check_malloced_chunk            \MALLOC.LIB                      1394
+   check_malloc_state              \MALLOC.LIB                      1395
+   check_top_chunk                 \MALLOC.LIB                      1396
+   is_small                        \MALLOC.LIB                      1409
+   small_index                     \MALLOC.LIB                      1410
+   small_index2size                \MALLOC.LIB                      1411
+   MIN_SMALL_INDEX                 \MALLOC.LIB                      1412
+   smallbin_at                     \MALLOC.LIB                      1415
+   treebin_at                      \MALLOC.LIB                      1416
+   bit_for_tree_index              \MALLOC.LIB                      1449
+   leftshift_for_tree_index        \MALLOC.LIB                      1454
+   minsize_for_tree_index          \MALLOC.LIB                      1459
+   idx2bit                         \MALLOC.LIB                      1465
+   mark_smallmap                   \MALLOC.LIB                      1468
+   clear_smallmap                  \MALLOC.LIB                      1469
+   smallmap_is_marked              \MALLOC.LIB                      1470
+   mark_treemap                    \MALLOC.LIB                      1472
+   clear_treemap                   \MALLOC.LIB                      1473
+   treemap_is_marked               \MALLOC.LIB                      1474
+   least_bit                       \MALLOC.LIB                      1499
+   left_bits                       \MALLOC.LIB                      1502
+   same_or_left_bits               \MALLOC.LIB                      1505
+   ok_address                      \MALLOC.LIB                      1538
+   ok_next                         \MALLOC.LIB                      1540
+   ok_cinuse                       \MALLOC.LIB                      1542
+   ok_pinuse                       \MALLOC.LIB                      1544
+   ok_magic                        \MALLOC.LIB                      1557
+   RTCHECK                         \MALLOC.LIB                      1563
+   mark_inuse_foot                 \MALLOC.LIB                      1572
+   set_inuse                       \MALLOC.LIB                      1577
+   set_inuse_and_pinuse            \MALLOC.LIB                      1582
+   set_size_and_pinuse_of_inuse_chunk \MALLOC.LIB                      1586
+   ACQUIRE_MAGIC_INIT_LOCK         \MALLOC.LIB                      1620
+   RELEASE_MAGIC_INIT_LOCK         \MALLOC.LIB                      1621
+   internal_malloc                 \MALLOC.LIB                      2337
+   internal_free                   \MALLOC.LIB                      2338
+   ACQUIRE_MORECORE_LOCK           \MALLOC.LIB                      2512
+   RELEASE_MORECORE_LOCK           \MALLOC.LIB                      2513
+   _sys_malloc                     \MALLOC.LIB                      3770
+   _sys_calloc                     \MALLOC.LIB                      3771
+   _sys_realloc                    \MALLOC.LIB                      3772
+   _sys_free                       \MALLOC.LIB                      3773
+   __STRING_H                      \STRING.H                          29
+   memcpy                          \STRING.H                          48
+   memmove                         \STRING.H                          49
+   strcpy                          \STRING.H                          50
+   strncpy                         \STRING.H                          51
+   strcat                          \STRING.H                          52
+   strncat                         \STRING.H                          53
+   memchr                          \STRING.H                          54
+   strchr                          \STRING.H                          55
+   strpbrk                         \STRING.H                          56
+   strrchr                         \STRING.H                          57
+   strstr                          \STRING.H                          58
+   strtok                          \STRING.H                          59
+   memset                          \STRING.H                          60
+   _f_memcmp                       \STRING.H                          67
+   _f_strcmp                       \STRING.H                          68
+   _f_strncmp                      \STRING.H                          69
+   _f_strlen                       \STRING.H                          70
+   _f_strspn                       \STRING.H                          71
+   _f_strcspn                      \STRING.H                          72
+   _n_memcmp                       \STRING.H                          74
+   _n_strcmp                       \STRING.H                          75
+   _n_strncmp                      \STRING.H                          76
+   _n_strlen                       \STRING.H                          77
+   _n_strspn                       \STRING.H                          78
+   _n_strcspn                      \STRING.H                          79
+   NULL                            \STRING.H                          82
+   _string_debug                   \STRING.C                          30
+   strcoll                         \STRING.C                        1428
+   __STRINGS_H                     \STRINGS.H                         29
+   __STRING_LIB                    \STRING.LIB                         2
+   __CTYPE_H                       \CTYPE.H                           29
+   _LOWER                          \CTYPE.C                           33
+   _UPPER                          \CTYPE.C                           34
+   _DIGIT                          \CTYPE.C                           35
+   _XDIGIT                         \CTYPE.C                           36
+   _PUNCT                          \CTYPE.C                           37
+   _CNTRL                          \CTYPE.C                           38
+   _PRINT                          \CTYPE.C                           39
+   _SPACE                          \CTYPE.C                           40
+   strcasecmp                      \STRING.LIB                       371
+   _f_strcmpi                      \STRING.LIB                       393
+   _n_strcmpi                      \STRING.LIB                       394
+   strncasecmp                     \STRING.LIB                       457
+   _f_strncmpi                     \STRING.LIB                       480
+   _n_strncmpi                     \STRING.LIB                       481
+   __RTCLOCK_LIB                   \RTCLOCK.LIB                        3
+   _mktm_date                      \RTCLOCK.LIB                      199
+   __VDRIVER_LIB                   \VDRIVER.LIB                        2
+   _vd_debug                       \VDRIVER.LIB                        8
+   N_WATCHDOG                      \VDRIVER.LIB                       27
+   WD_UNUSED                       \VDRIVER.LIB                       30
+   __STDVDRIVER_LIB                \STDVDRIVER.LIB                     9
+   _SET_TIMEOUT                    \STDVDRIVER.LIB                    76
+   _CHK_TIMEOUT                    \STDVDRIVER.LIB                    77
+   _SET_SHORT_TIMEOUT              \STDVDRIVER.LIB                    78
+   _CHK_SHORT_TIMEOUT              \STDVDRIVER.LIB                    79
+   __PROGRAM_LIB                   \PROGRAM.LIB                       12
+   _program_debug                  \PROGRAM.LIB                       15
+   mem_debug                       \MEM.LIB                            5
+   XALLOC_ANY                      \MEM.LIB                           12
+   XALLOC_BB                       \MEM.LIB                           13
+   XALLOC_NOTBB                    \MEM.LIB                           14
+   XALLOC_MAYBBB                   \MEM.LIB                           15
+   USER_XALLOC_END                 \MEM.LIB                           72
+   USER_XALLOC_START               \MEM.LIB                           76
+   SYSTEM_XALLOC_END               \MEM.LIB                           77
+   __STACK_LIB                     \STACK.LIB                          2
+   _stack_debug                    \STACK.LIB                          5
+   Get_Stack_Size                  \STACK.LIB                          8
+   XALLOC_ANY                      \STACK.LIB                        199
+   XALLOC_BB                       \STACK.LIB                        200
+   XALLOC_NOTBB                    \STACK.LIB                        201
+   XALLOC_MAYBBB                   \STACK.LIB                        202
+   RAMEND                          \STACK.LIB                        215
+   _TOS_TCSYSBUF                   \STACK.LIB                        217
+   FS2_RAM_PHYS                    \STACK.LIB                        219
+   _SOS_USERDATABLOCK              \STACK.LIB                        221
+   DATASIZE                        \STACK.LIB                        223
+   STACKPOOLCOUNT                  \STACK.LIB                        286
+   __XMEM                          \XMEM.LIB                           2
+   _xmem_debug                     \XMEM.LIB                           5
+   _LIN2SEG                        \XMEM.H                            35
+   _GEN_LIN2SEG                    \XMEM.H                            79
+   _XMEM_MVC                       \XMEM.H                            87
+   _XMEM_MVC_IOE2MEM               \XMEM.H                            92
+   _XMEM_MVC_IOI2MEM               \XMEM.H                            93
+   _XMEM_MVC_MEM2IOE               \XMEM.H                            94
+   _XMEM_MVC_MEM2IOI               \XMEM.H                            95
+   _XMEM_CLC                       \XMEM.H                           107
+   _IOELSIDR                       \XMEM.H                           109
+   _IOILSIDR                       \XMEM.H                           110
+   _IOELDISR                       \XMEM.H                           111
+   _IOILDISR                       \XMEM.H                           112
+   _lin2seg                        \XMEM.LIB                          15
+   root2xmem                       \XMEM.LIB                          75
+   xmem2root                       \XMEM.LIB                         107
+   xavail                          \XMEM.LIB                         192
+   paddrDS                         \XMEM.LIB                         525
+   paddrSS                         \XMEM.LIB                         546
+   xstrlen                         \XMEM.LIB                         563
+   xmemset                         \XMEM.LIB                         585
+   xmemchr                         \XMEM.LIB                         609
+   xmemcmp                         \XMEM.LIB                         631
+   xgetint                         \XMEM.LIB                         665
+   xsetint                         \XMEM.LIB                         698
+   xgetlong                        \XMEM.LIB                         753
+   xgetfloat                       \XMEM.LIB                         754
+   xsetlong                        \XMEM.LIB                         809
+   xsetfloat                       \XMEM.LIB                         810
+   assert                          \ASSERT.H                          47
+   __DC_ASSERT_LIB                 \ASSERT.C                          29
+   __STDIO_LOOP                    \STDIO.H                          355
+   _stdio_debug                    \STDIO.C                           46
+   _STDIO_FILE_UPDATE_CAN_RW       \STDIO.C                           53
+   _STDIO_FILE_INVALID             \STDIO.C                          225
+   fsetpos                         \STDIO.C                         1024
+   _stream_can_read                \STDIO.C                         1193
+   _stream_can_write               \STDIO.C                         1194
+   getchar                         \STDIO.C                         1434
+   putchar                         \STDIO.C                         1936
+   _stdio_fat_debug                \STDIO_FAT.C                       37
+   _downcast_FATfile               \STDIO_FAT.C                       43
+   fopen                           \STDIO_FAT.C                       49
+   _stdio_serial_debug             \STDIO_SERIAL.C                    34
+   serXstream                      \STDIO_SERIAL.C                    39
+   _stdio_printf_debug             \STDIO_PRINTF.C                    31
+   vprintf                         \STDIO_PRINTF.C                   326
+   _stdio_scanf_debug              \STDIO_SCANF.C                     31
+   vfscanf                         \STDIO_SCANF.C                   1113
+   vscanf                          \STDIO_SCANF.C                   1131
+   vsscanf                         \STDIO_SCANF.C                   1189
+   _stdio_dk_debug                 \STDIO_DK.C                        32
+   XALLOC_ANY                      \MEM.LIB                           12
+   XALLOC_BB                       \MEM.LIB                           13
+   XALLOC_NOTBB                    \MEM.LIB                           14
+   XALLOC_MAYBBB                   \MEM.LIB                           15
+   USER_XALLOC_END                 \MEM.LIB                           72
+   USER_XALLOC_START               \MEM.LIB                           76
+   SYSTEM_XALLOC_END               \MEM.LIB                           77
+   assert                          \ASSERT.H                          47
+   TCPCONFIG                       \DEFINE.C                           1
+   USE_ETHERNET                    \DEFINE.C                           2
+   MY_IP_ADDR                      \DEFINE.C                           5
+   MY_NET_MASK                     \DEFINE.C                           6
+   MY_GATEWAY                      \DEFINE.C                           7
+   SERVER_ADDR                     \DEFINE.C                           9
+   SERVER_PORT                     \DEFINE.C                          12
+   TCP_BUF_SIZE                    \DEFINE.C                          15
+   SCAN_DELAY                      \DEFINE.C                          18
+   SPI_SER_D                       \DEFINE.C                          20
+   SPI_RX_PORT                     \DEFINE.C                          21
+   SPI_CLK_DIVISOR                 \DEFINE.C                          22
+   SYSTEM_0                        \DEFINE.C                          24
+   SYSTEM_1                        \DEFINE.C                          25
+   SYSTEM_2                        \DEFINE.C                          26
+   Cmd_001                         \DEFINE.C                          28
+   Cmd_002                         \DEFINE.C                          29
+   Cmd_003                         \DEFINE.C                          30
+   Cmd_004                         \DEFINE.C                          31
+   Cmd_101                         \DEFINE.C                          33
+   Cmd_102                         \DEFINE.C                          34
+   Cmd_103                         \DEFINE.C                          35
+   Cmd_104                         \DEFINE.C                          36
+   Cmd_105                         \DEFINE.C                          37
+   Cmd_106                         \DEFINE.C                          38
+   Cmd_107                         \DEFINE.C                          39
+   ADC_SCLKBRATE                   \DEFINE.C                          41
+   GAINSET                         \DEFINE.C                          42
+   CHANNEL_1                       \DEFINE.C                          43
+   CHANNEL_2                       \DEFINE.C                          44
+   CHANNEL_3                       \DEFINE.C                          45
+   CHANNEL_4                       \DEFINE.C                          46
+   MAXDATA                         \DEFINE.C                          48
+   DATALEN                         \DEFINE.C                          49
+   MSGLEN                          \DEFINE.C                          50
+   USE_RABBITWEB                   \DEFINE.C                          52
+   USE_HTTP_BASIC_AUTHENTICATION   \DEFINE.C                          53
+   MCM_Mon_zhtml                   \DEFINE.C                          55
+   Mon_Raw_xml                     \DEFINE.C                          56
+   Mon_Sum_xml                     \DEFINE.C                          57
+   MCM_Set_zhtml                   \DEFINE.C                          58
+   Wrpr_Cmd_Size                   \DEFINE.C                         198
+   MCM_Resp_Size                   \DEFINE.C                         199
+   SMP_rawsize                     \DEFINE.C                         207
+   _DK_POINTER                     \DKCORE.LIB                      2459
+   _DK_ID_MASK                     \DKCORE.LIB                      2460
+   _DIVSTEP                        \MUTIL.LIB                        257
+   DEFAULTSTACKSIZE                \PROGRAM.LIB                       92
+   STACK_CNT_256                   \STACK.LIB                        294
+   STACK_CNT_512                   \STACK.LIB                        297
+   STACK_CNT_1K                    \STACK.LIB                        300
+   STACK_CNT_2K                    \STACK.LIB                        303
+   STACK_CNT_4K                    \STACK.LIB                        306
+   TOTAL_STACK_CNT                 \STACK.LIB                        329
+   UEI                             \PROGRAM.LIB                      297
+   XBREAK_T_ADJ                    \MEM.LIB                           90
+
+
+// Function call graph.
+premain
+   VdInit
+      periodic_init
+         read_rtc
+      vwdogInit
+         _n_memset
+   _Alloc_Stack
+      _gen_lin2seg
+   _Init_Stacks
+      _xalloc
+         alloc_calc_chksum
+         exception
+         exit
+            fclose
+               _f_memcpy
+               _f_memset
+               _stdio_FILE_free
+                  free
+                     mspace_free
+                        exception
+                        exit->***recurses***
+                        insert_large_chunk
+                           compute_tree_index
+                           exception
+                           exit->***recurses***
+                        insert_small_chunk
+                           exception
+                           exit->***recurses***
+                        unlink_chunk
+                           unlink_large_chunk
+                              exception
+                              exit->***recurses***
+                           unlink_small_chunk
+                              exception
+                              exit->***recurses***
+               fflush
+                  _f_memcpy
+                  _stream_wrapped_write
+                  fflush->***recurses***
+               remove
+         paddr
+         xmem2xmem
+            _f_memcpy
+   _ProgStkSwitch
+   _init_bad_interrupts
+   _init_xalloc
+      alloc_init
+         alloc_calc_chksum
+      exception
+      exit->**see above**
+      xalloc_init
+   _stdio_files_init
+      _f_memset
+   exception
+   exit->**see above**

@@ -1,0 +1,17 @@
+<html>
+<head>
+<title> My Page </title>
+</head>
+<body>
+<form action="/index.zhtml" method="post">
+
+My_Data = 
+<input type="text" name="My_Data" value="<?z echo($My_Data) ?>">
+<br>
+
+<input type="submit" value="Submit">
+<br>
+
+</body>
+</html>
+

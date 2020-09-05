@@ -1,0 +1,41 @@
+<html>
+<head>
+<script type="text/javascript">
+function Read_XML_File()
+{
+	var XML_Data;
+	try 		//Test for Internet Explorer
+	{
+		xmlDoc=new ActiveXObject("Microsoft.XMLDOM");
+	}
+	catch(err)	//If ActiveX isn't going to work we use a more codified standard
+	{
+		try 	//Every browser but Internet Explorer
+		{
+			xmlDoc=document.implementation.createDocument("","",null);
+		}
+		catch(err) //If that doesn't work, we produce an error mocking our user.
+		{
+			alert("No XML for you!");
+			return;
+		}
+	}
+	xmlDoc.async=false;			//We want a synchronous connection
+	xmlDoc.load("my_data.xml");	//Load the XML file
+	
+	//Store the value of My_Data tag in the XML_Data variable
+	XML_Data = xmlDoc.getElementsByTagName("My_Data")[0].childNodes[0].nodeValue;
+	
+	//Write the value of XML_Data into the body
+	document.getElementById("My_Data_ID").innerHTML=XML_Data;	
+}
+</script>
+</head>
+
+<body>
+<p><b>My_Data1:</b><span id="My_Data_ID"></span></p>
+
+<button onclick="Read_XML_File();">Get XML</button>
+
+</body>
+</html>

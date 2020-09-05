@@ -1,0 +1,170 @@
+<html>
+<head><title>Firmware Control Window</title>
+<style type="text/css">
+div.outrect
+{
+ width : 800;
+ padding : 10px;
+ background : LightSeaGreen;
+ border-radius : 5px;
+ -webkit-border-radius : 5px;
+ font-size : 22px;
+ font-family : Lucida Sans Unicode;
+ box-shadow: 12px 12px 10px #999999;
+}
+
+div.inrect
+{
+ width : 760px;
+ margin-top: 15px;
+ border:10px ridge green;
+}
+
+div.out
+{
+ padding : 10px;
+ color:#223344;
+ background :  LightBlue;
+ margin : 1px;
+ font-size : 15px;
+ font-family : Verdana;
+}
+
+ div.title
+  {
+   width:758px;
+   height : 30;
+   padding-top : 10;
+   margin-bottom : 1;
+   margin-top : 1;
+   color : Black ;
+   background : #ccddff;
+   font-size : 16;
+   font-family : Lucida Sans Unicode;
+   text-align : center;
+   letter-spacing:1;
+  }
+
+
+</style>
+</head>
+
+<script>
+function myFunction() {
+    location.reload();
+}
+</script>
+
+<body bgcolor="eeeeee">
+<p>
+<center>
+
+<div class="outrect">
+  <div style = "color:MintCream"> Remote Firmware Control v1.0
+</div>
+
+   <div class="inrect">
+     <div class="out">
+       <table style="width:90%">
+        <tr>
+          <td align="left"><pre><font size="5"><b>Current Firmware:</b></pre></td>
+          <td align="left"><pre><font color="blue" size="5">   <?z echo($firmware.running) ?></font>   <b>Date:</b> <?z echo($fwidate) ?>  <b>Time:</b> <?z echo($fwitime) ?></pre></td>
+        </tr>
+       </table>
+     </div>
+   </div>
+
+
+<p>
+<div class="inrect">
+ <div class="out">
+  <table style="width:90%">
+
+   <?z if ($firmware.show_temp == 1) { ?>
+      <tr>
+	    <td align="left"><pre><font size="5"><b>Last FW Uploaded:</b></pre></td>
+       <td align="left"><pre><font color="blue" size="5">   <?z echo ($firmware.temp) ?></font>   <b>Date:</b> <?z echo($fwudate)?>  <b>Time:</b> <?z echo($fwutime) ?></pre>
+
+       <?z if ($firmware.show_install == -1)
+            { ?>
+		 <font color="red"> Image corrupted or not compatible. </font>
+	    <?z } ?>
+	    <?z if($firmware.install == -1)
+            { ?>
+		 <?z print($firmware.install_error) ?>
+	    <?z } ?>
+	</td>
+      </tr>
+   <?z } ?>
+
+  </table>
+ </div>
+</div>
+
+
+<p>
+<div class="inrect">
+ <div class="out">
+  <table style="width:90%">
+   <tr>
+      <td align="left"><pre><font size="5"><b>Upload New Firmware:</b></font></pre>
+      </td>
+      <td align="left">
+         <form action="upload.cgi" method="post" enctype="multipart/form-data" >
+         <input type="file" name="/firmware.bin" size="50" />
+         <input type="submit" value="Upload" /></form>
+      </td>
+   </tr>
+  </table>
+ </div>
+</div>
+
+
+
+<p>
+<div class="inrect">
+ <div class="title"> <b>  Upload Status  </b> </div>
+ <div class="out">
+  <table style="width:100%">
+    <tr>
+
+
+        <?z if ($firmware.show_status == 0) { ?>
+		   <font color="green"> Ready to upload </font>
+	     <?z } ?>
+
+        <?z if ($firmware.show_status == -1) { ?>
+		   <font color="red"> Fail to upload </font>
+	     <?z } ?>
+
+
+	     <?z if($firmware.show_status == 1) { ?>
+		   Loading.......
+	     <?z } ?>
+
+
+	     <?z if ($firmware.show_status == 2) { ?>
+             <font color="green"><b>  Firmware Uploaded Successfully  </b></font> <br>
+             <br> Name:
+             <?z echo ($firmware.temp) ?>
+             <br> Size:
+             <?z echo ($firmware.fwlen) ?> KBytes
+	       <form action="upload.zhtml" method="POST">
+	       <input type="hidden" name="firmware.install" value="1">
+             <br>  </br>
+	       <input type="submit" value="Install">
+	       </form>
+	     <?z } ?>
+
+    </tr>
+  </table>
+ </div>
+</div>
+
+
+<div style="font-size:12px; color:#bbccdd"> Designed @ Telemetry Lab - GMRT<br> </div>
+
+</div>
+</center>
+</body>
+</html>

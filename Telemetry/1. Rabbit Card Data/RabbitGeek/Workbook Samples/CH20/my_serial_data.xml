@@ -1,0 +1,4 @@
+<!-- RabbitWeb XML file -->
+<RabbitWeb>
+	<Serial_Data> <?z echo($Serial_Data) ?> </Serial_Data>
+</RabbitWeb>

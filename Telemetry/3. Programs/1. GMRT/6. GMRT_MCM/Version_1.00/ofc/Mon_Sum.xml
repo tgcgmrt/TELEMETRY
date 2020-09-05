@@ -1,0 +1,239 @@
+<xml>
+
+<Name> MCM Time </Name>
+<Arg1> <?z echo($time1) ?></Arg1>
+<Arg2> <?z echo($date) ?></Arg2>
+
+<Name> Clock Frequency </Name>
+<Arg1> <?z echo($MCM_Clk) ?></Arg1>
+<Arg2> </Arg2>
+
+<Name> Spectrum Spreader </Name>
+<Arg1> <?z echo($SS1_Mon) ?> (0-50MHz)</Arg1>
+<Arg2> <?z echo($SS2_Mon) ?> (>50MHz)</Arg2>
+
+<Name> Clock Doubler </Name>
+<Arg1> <?z echo($FDB_Mon) ?></Arg1>
+<Arg2> </Arg2>
+
+<Name> Digital Mask </Name>
+<Arg1> <?z echo($mswT) ?> </Arg1>
+<Arg2> <?z echo($lswT) ?> </Arg2>
+
+<Name> Clock Divided By </Name>
+<Arg1> <?z echo($FDV_Mon) ?></Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> CH1 Attenuation </Arg1>
+<Arg2> <?z echo($Attn1_Mon) ?> </Arg2>
+
+<Name> </Name>
+<Arg1> CH2 Attenuation </Arg1>
+<Arg2> <?z echo($Attn2_Mon) ?> </Arg2>
+
+<Name> </Name>
+<Arg1> Parameters </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> LASER Tx1 </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> LASER Tx2 </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> LASER Tx3 </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> LASER Tx4 </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> DC Power (-5v) </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> <?z echo($vl[0]) ?> V </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> <?z echo($vl[6]) ?> V </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> <?z echo($vl[11]) ?> V </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> NC </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> RF Amp Voltage </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> <?z echo($vl[1]) ?> V </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> <?z echo($vl[7]) ?> V </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> <?z echo($vl[12]) ?> V </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> NC </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> Bias Voltage 1 </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> <?z echo($vl[3]) ?> V </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> <?z echo($vl[9]) ?> V </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> <?z echo($vl[14]) ?> V </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> NC </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> Bias Voltage 2 </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> <?z echo($vl[2]) ?> V </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> <?z echo($vl[8]) ?> V </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> <?z echo($vl[13]) ?> V </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> NC </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> APC Voltage </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> <?z echo($vl[4]) ?> V </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> <?z echo($vl[10]) ?> V </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> <?z echo($vl[15]) ?> V </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> NC </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> Bias current </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> <?z echo($lt1i1) ?> mA </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> <?z echo($lt2i2) ?> mA </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> <?z echo($lt3i3) ?> mA </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> NC </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> Optical O/P power </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> <?z echo($lt1p1) ?> dBm </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> <?z echo($lt2p2) ?> dBm </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> <?z echo($lt3p3) ?> dBm </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> NC </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> Temp. </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> <?z echo($temp1) ?> </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> NC </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> NC </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> NC </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> State </Arg1>
+<Arg2> <?z echo($state) ?> </Arg2>
+
+<Name> </Name>
+<Arg1> Temp. </Arg1>
+<Arg2> <?z echo($temps) ?> </Arg2>
+
+<Name> </Name>
+<Arg1> Smoke Detector </Arg1>
+<Arg2> <?z echo($smoke_detector) ?> </Arg2>
+
+<Name> </Name>
+<Arg1> Intruder Detector </Arg1>
+<Arg2> <?z echo($intruder_detector) ?> </Arg2>
+
+<Name> </Name>
+<Arg1> </Arg1>
+<Arg2> </Arg2>
+
+<Name> </Name>
+<Arg1> </Arg1>
+<Arg2> </Arg2>
+
+</xml>

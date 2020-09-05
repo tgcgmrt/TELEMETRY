@@ -1,0 +1,73 @@
+<xml>
+
+<IP> <?z echo($webpg_mon.ip_addr) ?> </IP>
+<Ant> <?z echo($webpg_mon.ant) ?> </Ant>
+
+<Sys_Name> <?z echo($webpg_mon.sys_name) ?> </Sys_Name>
+
+<Name>Spectrum Spreader</Name>
+<Arg1> <?z echo($SS1_Mon) ?>  (0 to 50MHz)</Arg1>
+<Arg2> <?z echo($SS2_Mon) ?>  (Above 50MHz)</Arg2>
+
+<Name>Frequency Doubler</Name>
+<Arg1> <?z echo($FDB_Mon) ?> </Arg1>
+<Arg2> </Arg2>
+
+<Name>Frequency Divider</Name>
+<Arg1> <?z echo($FDV_Mon) ?> </Arg1>
+<Arg2> </Arg2>
+
+<Name>MCM Frequency</Name>
+<Arg1> <?z echo($MCM_Clk) ?> </Arg1>
+<Arg2> </Arg2>
+
+<Name>Real Time Clock</Name>
+<Arg1> <?z echo($RTC_date) ?> </Arg1>
+<Arg2> <?z echo($RTC_time) ?> </Arg2>
+
+<Name>Digital Mask</Name>
+<Arg1> <?z echo($msw) ?> </Arg1>
+<Arg2> <?z echo($lsw) ?> </Arg2>
+
+
+<Name> <?z echo($webpg_mon.sys_para[0]) ?></Name>
+<Arg1> <?z echo($webpg_mon.arg1[0]) ?></Arg1>
+<Arg2> <?z echo($webpg_mon.arg2[0]) ?></Arg2>
+
+<Name> <?z echo($webpg_mon.sys_para[1]) ?></Name>
+<Arg1> <?z echo($webpg_mon.arg1[1]) ?></Arg1>
+<Arg2> <?z echo($webpg_mon.arg2[1]) ?></Arg2>
+
+<Name> <?z echo($webpg_mon.sys_para[2]) ?></Name>
+<Arg1> <?z echo($webpg_mon.arg1[2]) ?></Arg1>
+<Arg2> <?z echo($webpg_mon.arg2[2]) ?></Arg2>
+
+<Name> <?z echo($webpg_mon.sys_para[3]) ?></Name>
+<Arg1> <?z echo($webpg_mon.arg1[3]) ?></Arg1>
+<Arg2> <?z echo($webpg_mon.arg2[3]) ?></Arg2>
+
+<Name> <?z echo($webpg_mon.sys_para[4]) ?></Name>
+<Arg1> <?z echo($webpg_mon.arg1[4]) ?></Arg1>
+<Arg2> <?z echo($webpg_mon.arg2[4]) ?></Arg2>
+
+<Name> <?z echo($webpg_mon.sys_para[5]) ?></Name>
+<Arg1> <?z echo($webpg_mon.arg1[5]) ?></Arg1>
+<Arg2> <?z echo($webpg_mon.arg2[5]) ?></Arg2>
+
+<Name> <?z echo($webpg_mon.sys_para[6]) ?></Name>
+<Arg1> <?z echo($webpg_mon.arg1[6]) ?></Arg1>
+<Arg2> <?z echo($webpg_mon.arg2[6]) ?></Arg2>
+
+<Name> <?z echo($webpg_mon.sys_para[7]) ?></Name>
+<Arg1> <?z echo($webpg_mon.arg1[7]) ?></Arg1>
+<Arg2> <?z echo($webpg_mon.arg2[7]) ?></Arg2>
+
+<Name> <?z echo($webpg_mon.sys_para[8]) ?></Name>
+<Arg1> <?z echo($webpg_mon.arg1[8]) ?></Arg1>
+<Arg2> <?z echo($webpg_mon.arg2[8]) ?></Arg2>
+
+<Name> <?z echo($webpg_mon.sys_para[9]) ?></Name>
+<Arg1> <?z echo($webpg_mon.arg1[9]) ?></Arg1>
+<Arg2> <?z echo($webpg_mon.arg2[9]) ?></Arg2>
+
+</xml>

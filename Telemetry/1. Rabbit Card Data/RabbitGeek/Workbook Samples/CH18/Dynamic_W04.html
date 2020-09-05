@@ -1,0 +1,36 @@
+<html>
+<head>
+<script type="text/javascript">
+function Get_XML()
+{
+	try 		//Test for Internet Explorer
+	{
+		xmlDoc=new ActiveXObject("Microsoft.XMLDOM");
+	}
+	catch(err)	//If ActiveX isn't going to work we use a more codified standard
+	{
+		try 	//Every browser but Internet Explorer
+		{
+			xmlDoc=document.implementation.createDocument("","",null);
+		}
+		catch(err) //If that doesn't work, we produce an error mocking our user.
+		{
+			alert("No XML for you!");
+			return;
+		}
+	}
+	xmlDoc.async=false;
+	xmlDoc.load("my_data3.xml");
+	document.getElementById("Switch_1").innerHTML=xmlDoc.getElementsByTagName("Switch_1")[0].childNodes[0].nodeValue;
+	setTimeout("Get_XML();",500);
+}
+</script>
+</head>
+
+<body>
+<h1>Press Switch 1 on the Protoboard!</h1>
+<p><b>Switch_1:</b> <span id="Switch_1"></span><br /></p>
+<p><button onclick="Get_XML();">Start Dynamic Data</button></p>
+
+</body>
+</html>

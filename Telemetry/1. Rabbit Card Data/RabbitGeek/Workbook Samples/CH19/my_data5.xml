@@ -1,0 +1,4 @@
+<!-- RabbitWeb XML file -->
+<RabbitWeb>
+	<My_Data><?z echo($Switch_Time) ?></My_Data>
+</RabbitWeb>

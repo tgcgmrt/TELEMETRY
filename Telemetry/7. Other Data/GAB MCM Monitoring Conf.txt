@@ -1,0 +1,254 @@
+#
+# Discussion with DKN and Prakash Hande 22/10/2013
+#
+
+(1) GAB Rx PIU Monitoring Points
+Attenuators CH1, CH2
+
+Path - NOISE/ANT   // GAB input
+
+Mixer PATH - Direct/Mixer  // BB or LPF Filter - Direct Path < 600 || Filter Path
+
+BBIN - Digital CAL/Signal  // BB Input for the GPU Correlator
+
+RF (VGA) Detector - CH1, CH2 
+
+Power Supply  OK > 3 Volt // If voltage greater than 3 Volt is OK
+
+Temperature = (Volt * 100)/5
+
+Lock Indicator High means Lock
+
+SYNTH/SIGGEN - ?
+
+(2) Detetor BB Input two points (Buffer Detector)
+
+    BB Detector Power CH[22, 54] - Detector
+                        [23, 55] - Temperature
+                        [24, 56] - Power Supply
+
+#
+# Detector Terminology
+#
+    VGA - RF In Detector
+    Buffer - BB In Detector
+    GAB Out - BB Detector  [CH-22,54] 
+
+# Temperature
+  Temperature 61 
+
+# RF-Fil - To be incorporate
+  R-Fil Detector ?
+
+================================< ONLINE SCHEME FOR GAB MONITORING >===============================================================
+
+(3) RAW RABBIT CHANNEL COUNT TO VOLTAGE
+  ((980 - (rawcount))/196.)*1.035)
+
+ 0 to 31 Mapping
+
+#CH-1   31   30   29  28  27  26  25  24  23  22  21  20  19  18   17  16 15  14  13 12  11  10    9  8   7   6   5   4   3   2   1  0
+#CH-2   63   62   61  60  59  58  57  56  55  54  53  52  51  50   49  48 47  46  45 44  43  42   41 40  39  38  37  36  35  34  33  32
+
+#
+#---------------------------< RX PIU Monitoring >----------------------------------------------#
+#
+(1) X Attenuation - Two points 
+#CH-1    5   4   3   2   1   0
+#CH-2   37  36  35  34  33  32
+
+(2) X RF-IN : Noise (Buffer) OR ANTENNA - Two Points
+
+#CH-1     7   6  
+#CH-2    39  38  
+ RF-IN    0  0
+ BUF-CAL  0  1
+ TST-SIG  1  0
+
+(3) X Conversion or Direct Path for BB-Filter or LPF - Two Points
+#CH-1      8    
+#CH-2     40    
+Mixer       0
+Direct_Path 1
+
+(4) DECTOR VGA [ RF-IN]  Two Points (dB)
+#CH-1      9    
+#CH-2     41    
+
+(5) DECTOR BUFF [ BB-IN] - Two Points (dB)
+#CH-1     10    
+#CH-2     42    
+
+(6) X Power Supply RX PIU- Two Points
+#CH-1     11   < 3 Volt-OK
+#CH-2     43   < 3 Volt-OK
+
+(7) X Temperature RX PIU-1 - Two Points (Deg. C)
+#CH-1     12   Temp = (Volt * 100)/5
+#CH-2     44   Temp = (Volt * 100)/5
+
+#
+#---------------------------< RF-FILTER Monitoring - TBD  >----------------------------------------------#
+#
+(8) RF Filter Selection - Two Points
+#CH-1 15  14  13
+#CH-2 47  46  45  
+      0 to 7 - Three Bit Monitoring
+
+(9) X RF-Filter Monitoring  - Four Points (Volts)
+      M1 M2
+#CH-1 17 16 
+#CH-2 49 48 
+
+(10) X Power Supply RF-FIL PIU- Two Points
+#CH-1     18   < 3 Volt-OK
+#CH-2     50   < 3 Volt-OK
+
+#
+#---------------------------< BB Filter Monitoring  >----------------------------------------------#
+#
+
+(11) X BB or LOW Pass Filter Selection - Two Points (Filter Selected)
+#CH-1 20  19
+#CH-2 52  51
+ 100  0   0 
+ 200  0   1
+ 400  1   0
+ D    1   1
+
+(12) GAB-OUT Detector - Two Points (dB)  ### CHECK THESE BASEBAND DETECTOR POINTS
+#CH-1 21   
+#CH-2 53
+
+(13) X BB PIU Temperature - Two Points (deg.C)
+#CH-1 22   Volt * 100/5
+#CH-2 54   Volt * 100/5
+
+(14) X BB Power Supply - Two Points
+#CH-1 23   OK > 3 volt
+#CH-2 55   OK > 3 volt
+
+#
+#---------------------------< TO LO PIU  >------------------------------------------------------------#
+#
+
+(15) CW1- CW2 - Volt? - two points
+/* Shifted to 25,26 Mar 12, 2014 */
+#CH-1 24
+#CH-2 25
+/*
+#CH-1 56 // CW1
+#CH-2 57 // CW1
+#CH-1 58  HIGH OK i.e. > 3 Volt // Lock detector
+#CH-2 59  HIGH OK i.e. > 3 Volt // Lock detector
+#CH- 60 // power
+*/
+
+(16)XLOCK Detector - CH1, Ch2 - two points
+#CH-1 26  HIGH OK i.e. > 3 Volt
+#CH-2 27  HIGH OK i.e. > 3 Volt
+
+(17)XPower Supply- one point
+#CH- 28 
+
+(18)XTEMPERATURE
+#CH - 29  Volt * 100/5
+Temperature 29 
+
+# RF-Fil - To be incorporate
+  R-Fil Detector ?
+
+================================< ONLINE SCHEME FOR GAB MONITORING >===============================================================
+
+(3) RAW RABBIT CHANNEL COUNT TO VOLTAGE
+  ((980 - (rawcount))/196.)*1.035)
+
+ 0 to 31 Mapping
+
+#CH-1   31   30   29  28  27  26  25  24  23  22  21  20  19  18   17  16 15  14  13 12  11  10    9  8   7   6   5   4   3   2   1  0
+#CH-2   63   62   61  60  59  58  57  56  55  54  53  52  51  50   49  48 47  46  45 44  43  42   41 40  39  38  37  36  35  34  33  32
+
+#
+#---------------------------< RX PIU Monitoring >----------------------------------------------#
+#
+(1) X Attenuation - Two points 
+#CH-1    5   4   3   2   1   0
+#CH-2   37  36  35  34  33  32
+
+(2) X RF-IN : Noise (Buffer) OR ANTENNA - Two Points
+
+#CH-1     7   6  
+#CH-2    39  38  
+ RF-IN    0  0
+ BUF-CAL  0  1
+ TST-SIG  1  0
+
+(3) X Conversion or Direct Path for BB-Filter or LPF - Two Points
+#CH-1      8    
+#CH-2     40    
+Mixer       0
+Direct_Path 1
+
+(4) DECTOR VGA [ RF-IN]  Two Points (dB)
+#CH-1      9    
+#CH-2     41    
+
+(5) DECTOR BUFF [ BB-IN] - Two Points (dB)
+#CH-1     10    
+#CH-2     42    
+
+(6) X Power Supply RX PIU- Two Points
+#CH-1     11   < 3 Volt-OK
+#CH-2     43   < 3 Volt-OK
+
+(7) X 
+
+(??) EMPTY CHANNELS - NC - 62, 63h
+                      NC - 56,57,58,59,60,61 // NC 12 March 2014
+
+#
+# -------------------------< ONLINE STRUCTURE >-------------------------------------#
+#
+typedef struct {
+        float           gabtime;                           /* time hh:mm:ss      */
+        unsigned int    gabrlo[2];                         /* Value of Lo freq   */
+        unsigned char   gabword[8];                        /* received gab word  */
+        int             rawdata[64];                       /* Raw value received */
+}               GABRAW;
+
+typedef struct {
+        float           atten[2];			   /* Attenuation        */
+        int             rfin[2];			   /* RF-IN - Noise/ANT  */
+        int             cdpath[2];			   /* MIXER/DIRECT       */
+        float           detvga[2];                         /* Detector RF        */
+        float           detbuff[2];                        /* Detector BB-IN     */
+        float           psrx[2];                           /* Power Supply       */
+        float           temprx[2];                         /* Temperature        */
+        int             filrf[2];                          /* Filter RF CH1 CH2  */
+        float           filrfm[4];                         /* Filter RF M1-4     */
+        float           psfilrf[2];                        /* Filter RF PS       */
+        int             lpf[2];                            /* BB-Filter  CH1 CH2 */
+	float           gabout[2];                         /* BB-Fil DETECT-OUT  */
+        float           tempbb[2];                         /* BB-Filter Temp     */
+        float           psbb[2];                           /* BB-Filter PS       */
+        float           cw[2];                             /* CW Points CH1,2    */
+        float           lockdet[2];			   /* Lock Indicator-1,2  */
+        float           ps;                                /* Power Supply       */
+        float           temperature;                       /* Temperature        */
+        int             synthin[2];                        /*?Synth/SigGen       */
+        float           extr[4];                           /* Extra actors       */
+
+}               GAB_MONITOR;
+
+
+typedef struct {
+	unsigned int    antmask;                           /* Configured Antenna */
+        unsigned char   setword[8];                        /* online set word    */
+        unsigned int    gabslo[2];                         /* Value of Lo freq   */
+        GABRAW          gabrecv;                           /* Received Packet    */
+        GAB_MONITOR     gabmon;                            /* InterPreted        */
+}               GAB;
+
+#
+#-----------------------< END >--------------------------------------------------#
+#

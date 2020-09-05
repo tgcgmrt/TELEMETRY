@@ -1,0 +1,19 @@
+<html>
+<head>
+<title> My Page </title>
+<meta http-equiv="refresh" content="5" > 
+</head>
+<body>
+
+<?z if ($My_Data == 0){ ?>
+	ALERT! ALERT! ALERT!
+<?z } ?>
+
+<?z if ($My_Data == 1){ ?>
+	HAPPY HAPPY HAPPY…
+<?z } ?>
+
+</body>
+</html>
+
+

@@ -1,0 +1,29 @@
+<html>
+<head>
+<script type="text/javascript">
+var c = 0; 	//Simple counter
+var timer_id;  	//Global timeout ID so we can exit later if we wish 
+function Inc_C()
+{
+	document.getElementById("c_variable").innerHTML=c;
+	c = c +1;
+	timer_id = setTimeout("Inc_C();",500); //Calling the function again to loop!
+}
+
+function Done()
+{
+	clearTimeout(timer_id);
+}
+</script>
+</head>
+
+<body>
+
+<p>c = <span id="c_variable"></span></p>
+<p><button onclick="Inc_C();">Start C up!</button></p>
+<p><button onclick="Done();">Stop C!</button></p>
+
+</body>
+</html>
+
+

@@ -1,0 +1,151 @@
+
+<html>
+<head>
+  <title>RFI Emulator Homepage</title>
+  
+<style type="text/css">  
+  body {
+    font-family: "Trebuchet MS", Verdana, sans-serif;
+    font-size: 16px;
+    background-color: white; 
+    color: black;
+    padding: 5px;
+}
+
+#main {
+    width:1216;
+    padding: 5px;
+    padding-left:  5px;
+    padding-right: 5px;
+    background-color: LightSeaGreen;
+    border-radius: 10px 10px 10px 10px;
+    border:5px ridge black;
+}
+
+.out_rect
+  {
+   width:1204;
+   padding : 1px;
+   margin: 5 5 5 5;
+   background : #A9E2F3;
+   border-radius: 10px 10px 10px 10px;
+   -webkit-border-radius: 10px 10px 10px 10px;
+  }
+
+h1 {
+    font-family: Georgia, serif;
+    border-bottom: 3px solid #cc9900;
+    color: #996600;
+    font-size: 30px;
+}
+ul#menu {
+    padding: 0;
+	margin-top: 17px;
+}
+
+ul#menu li {
+    display: inline;
+    margin-left: -240px;
+}
+
+ul#menu li a {
+    background-color: LightSeaGreen;
+    padding: 13px 20px;
+    text-decoration: none;
+    color: white;
+	border-width:5px;
+	border-color:black;
+	border-style:ridge ridge hidden ridge;
+}
+
+ul#menu li a:hover {
+    color: white;
+    background-color: gray;
+}
+
+ul#menu1 {
+    padding: 0;
+	margin-top: -40px;
+}
+
+ul#menu1 li {
+    display: inline;
+	margin-left: -15px;
+}
+
+ul#menu1 li a {
+    background-color: gray;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: white;
+    border-width:5px;
+	border-color:black;
+	border-style:ridge ridge hidden ridge;
+}
+
+ul#menu1 li a:hover {
+    color: white;
+    background-color: LightSeaGreen;
+}
+
+ul#menu2 {
+    padding: 0;
+	margin-top: -38px;
+	margin-bottom: 10px;
+}
+
+ul#menu2 li {
+    display: inline;
+    margin-left: 225px;
+}
+
+ul#menu2 li a {
+    background-color: gray;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: white;
+    border-width:5px;
+	border-color:black;
+	border-style:ridge ridge hidden ridge;
+}
+
+ul#menu2 li a:hover {
+    color: white;
+    background-color: LightSeaGreen;
+}
+
+</style>
+  
+</head>
+<center>
+<body>
+  <nav id="nav00"></nav>
+  <div id="main">
+  <div class = "out_rect">
+  <h1>Welcome to Broad Band RFI Emulator</h1> 
+  <h3 style="margin-top:-12px">RFI Emulator</h3>
+  <img align="center" src="gmrt.jpg" alt="RFI Emulator" style="width:250px;height:150px;margin-top:-15px">
+  <h4 align="left" style="margin-left:50px"># Radio Frequency interference (RFI) is a growing concern for the highly sensitive radio recievers of ground based radio telescopes.</h4>
+  <h4 align="left" style="margin-top:-8px; margin-left:50px"># RFI reduces the sensitivity of radio telescope and produces artifacts in the observed data.</h4>
+  <h4 align="left" style="margin-top:-8px; margin-left:50px"># Over the years, RFI mitigation techniques have been proposed and implemented. There is a need to test these RFI mitigation techniques.</h4>
+  <h4 align="left" style="margin-top:-8px; margin-left:50px"># Broad Band RFI emulator is a hardware to generate RFI signal (Pulsed noise & Noise floor signal).</h4>
+  <h4 align="left" style="margin-top:-8px; margin-left:50px"># The power level and duty cycle can be varied of the Pulsed Noise and Noise Floor.</h4>
+  <hr style="color: #cc9900; border-bottom: 2px solid #cc9900; margin-top:-5px">
+  <p align="left" style="margin-top:-5px"><pre><font size="3px"><b>Note: 1.</b> Attenuator Settings are possible in range 0 to 31.5 dB with 0.5 dB Step size<br><b>Note: 2.</b> Timing and Duty Cycle settings have limitations</font></pre></p>
+  
+  <hr style="color: #cc9900; border-bottom: 2px solid #cc9900; margin-top:-5px">
+
+  <div style="font-size:14; color:black; margin-top:20; margin-bottom:10"> Designed @ Telemetry Lab - GMRT</div>
+
+<center>  
+<script>
+document.getElementById("nav00").innerHTML =
+"<ul id='menu'>" + "<li><a href='homep.zhtml'>Home</a></li></ul>" +
+"<ul id='menu1'>" + "<li><a href='calculations.zhtml'>Calculations</a></li></ul>" +
+"<ul id='menu2'>" + "<li><a href='MCM_Mon.zhtml'>Settings</a></li></ul>";
+</script>
+</div>
+</div>
+</body>
+
+</html>

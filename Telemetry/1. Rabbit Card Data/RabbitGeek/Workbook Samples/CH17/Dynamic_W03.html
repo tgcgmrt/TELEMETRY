@@ -1,0 +1,57 @@
+<html>
+<head>
+<script type="text/javascript">
+var My_Data1_var;
+var My_Data2_var;
+var My_Data3_var;
+var My_Data4_var;
+
+function Get_XML()
+{
+	try 		//Test for Internet Explorer
+	{
+		xmlDoc=new ActiveXObject("Microsoft.XMLDOM");
+	}
+	catch(err)	//If ActiveX isn't going to work we use a more codified standard
+	{
+		try 	//Every browser but Internet Explorer
+		{
+			xmlDoc=document.implementation.createDocument("","",null);
+		}
+		catch(err) //If that doesn't work, we produce an error mocking our user.
+		{
+			alert("No XML for you!");
+			return;
+		}
+	}
+	xmlDoc.async=false;
+	xmlDoc.load("my_data2.xml");
+	
+	My_Data1_var = xmlDoc.getElementsByTagName("My_Data1")[0].childNodes[0].nodeValue;
+	My_Data2_var = xmlDoc.getElementsByTagName("My_Data2")[0].childNodes[0].nodeValue;	
+	My_Data3_var = xmlDoc.getElementsByTagName("My_Data3")[0].childNodes[0].nodeValue;
+	My_Data4_var = xmlDoc.getElementsByTagName("My_Data4")[0].childNodes[0].nodeValue;
+	
+	document.getElementById("My_Data1").innerHTML=My_Data1_var;
+	document.getElementById("My_Data2").innerHTML=My_Data2_var;
+	document.getElementById("My_Data3").innerHTML=My_Data3_var;
+	document.getElementById("My_Data4").innerHTML=My_Data4_var;
+	setTimeout("Get_XML()",500);
+}
+</script>
+</head>
+
+<body>
+<h1>Dynamic XML Test!</h1>
+
+<p>
+<b>My_Data1:</b> <span id="My_Data1"></span><br />
+<b>My_Data2:</b> <span id="My_Data2"></span><br />
+<b>My_Data3:</b> <span id="My_Data3"></span><br />
+<b>My_Data4:</b> <span id="My_Data4"></span><br />
+</p>
+
+<p><button onclick="Get_XML();">Get XML</button></p>
+
+</body>
+</html>

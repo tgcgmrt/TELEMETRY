@@ -1,0 +1,1423 @@
+// **************************************************************************** //
+// ************************ Program : TCS_MCM ********************************* //
+// ************************ Date : 27/05/2015 ********************************* //
+// ************************** Version : V1.01 ********************************* //
+// **** Client for Existing Online Server as well as being used with TCS ****** //
+// ****              HTTP Server for Remote Firmware Update               ***** //
+// ****            Modified by Rahul Bhor. Added LO reference,            ***** //
+// ****    Remote Firmware Update (v2.0) and some monitoring parameters   ***** //
+// **************************************************************************** //
+
+
+#class    auto
+#memmap   xmem
+
+#use      "rcm43xx.lib"	             // Use with RCM 4300
+#use      "adc_ads7870.lib"
+#include  "define.c"
+#include  "firmware_update.c"
+#include  "Init.c"
+#use	    "dcrtcp.lib"
+#use  	 "http.lib"
+#use      "spi.lib"
+
+SSPEC_MIMETABLE_START
+   SSPEC_MIME_FUNC(".zhtml","text/html",zhtml_handler),
+   SSPEC_MIME_FUNC(".xml","text/xml",zhtml_handler),
+   SSPEC_MIME(".html","text/html"),
+   SSPEC_MIME(".gif", "image/gif"),
+	SSPEC_MIME(".cgi", "")
+SSPEC_MIMETABLE_END
+
+
+SSPEC_RESOURCETABLE_START
+   //SSPEC_RESOURCE_XMEMFILE("/",index_html),
+   SSPEC_RESOURCE_XMEMFILE("/",MCM_Mon_zhtml),
+   SSPEC_RESOURCE_XMEMFILE("/Mon_Sum.xml",Mon_Sum_xml),
+   SSPEC_RESOURCE_XMEMFILE("/Mon_Raw.xml",Mon_Raw_xml),
+	SSPEC_RESOURCE_XMEMFILE("/MCM_Set.zhtml",MCM_Set_zhtml),
+   SSPEC_RESOURCE_FUNCTION("/", root_htm),
+   SSPEC_RESOURCE_XMEMFILE("/up_Sum.xml", up_Sum_xml),
+   SSPEC_RESOURCE_XMEMFILE("/fw/upload.zhtml", upload_zhtml),
+   SSPEC_RESOURCE_P_CGI("/fw/upload.cgi", firmware_upload,
+                    REALM, ADMIN_GROUP, 0x0000, SERVER_HTTP, SERVER_AUTH_DIGEST)
+SSPEC_RESOURCETABLE_END
+
+static tcp_Socket Socket;
+
+
+
+//.... Generating milisecond delay .... //
+
+void Ms_delay(unsigned int delay)
+{
+	auto unsigned long delay_time;
+
+	delay_time = MS_TIMER + delay;
+   while((long)(MS_TIMER - delay_time) < 0 );
+}
+
+
+int atox(char *mask)
+{
+  int hex_value;
+  char msk[4];
+
+  strcpy(msk, mask);
+
+  printf("\n%s ",msk);
+
+  if((msk[0] < 58) && (msk[0] > 47))
+   msk[0] = msk[0] - '0';
+  else if((msk[0] > 64) && (msk[0] < 71))
+   msk[0] = msk[0] - 'A' + 10;
+  else if((msk[0] > 96) && (msk[0] < 103))
+   msk[0] = msk[0] - 'a' + 10;
+  else
+   msk[0] = 0;
+
+  if((msk[1] < 58) && (msk[1] > 47))
+   msk[1] = msk[1] - '0';
+  else if((msk[1] > 64) && (msk[1] < 71 ))
+   msk[1] = msk[1] - 'A' + 10;
+  else if((msk[1] > 96) && (msk[1] < 103))
+   msk[1] = msk[1] - 'a' + 10;
+  else
+   msk[1] = 0;
+
+
+  hex_value = (((msk[0]) * 16) + (msk[1]));
+
+  return hex_value;
+}
+
+
+/*void Set_LO();
+void Set_SS();
+void Set_FDB();
+void Set_FDV();
+void Set_NW();
+
+int cmd_validation();
+int form_inter_resp();
+int command_process_sen();
+int command_process_sig();
+void form_final_resp(int, int);
+void bg_mon();
+void Sig_decode();
+void Set_DMask();
+void Set_RTC(char far *);
+void Set_LO();
+void Set_Attn(int, int); */
+
+
+
+// .... Opening Server Socket at desired port address .... //
+
+cofunc int mcm_clnt()
+{
+   int port, write_bytes, read_bytes, wait_var;
+   longword host;
+
+   ifconfig( IF_ETH0, IFS_DOWN, IFS_IPADDR,aton(MY_IP_ADDR), IFS_NETMASK,aton(MY_NET_MASK), IFS_ROUTER_SET,aton(MY_GATEWAY), IFS_UP, IFS_END);
+
+   while (ifpending(IF_ETH0) == IF_COMING_UP)
+         tcp_tick(NULL);
+
+   if(!(host = inet_addr(SERVER_ADDR)))
+   {
+      puts("\nCould not resolve host");
+      exit(3);
+   }
+   printf("\n\nHost hex address %lx\n",host);
+
+   port = atoi(SERVER_PORT);
+
+   printf("\nAttempting to open '%s' on port %u", SERVER_ADDR, port );
+
+   while( ! tcp_open(&Socket, 0, host, port, NULL))
+    {
+     tcp_tick(NULL);
+     printf("\nUnable to open TCP session");
+    }
+
+   wait_var = 0;
+
+   while((!sock_established(&Socket) && sock_bytesready(&Socket)== -1))
+    {
+      http_handler();
+      tcp_tick(NULL);
+      wait_var++;
+      if(wait_var == 100)
+      {
+        tcp_open(&Socket, 0, host, port, NULL);
+        wait_var = 0;
+      }
+      yield;
+    }
+   printf("\nSocket Established");
+
+   if(sock_established(&Socket))
+   {
+    read_bytes = 0;
+    do{
+       http_handler();
+       if(sock_bytesready(&Socket) > 0)
+       {
+         read_bytes = sock_read(&Socket, &Wrpr_Cmd, Wrpr_Cmd_Size);
+
+         printf("\nMCM has read command of %d bytes",read_bytes);
+
+         if(form_inter_resp() == 10)    // Form intermediate response and send it over socket //
+         {
+           write_bytes = sock_write(&Socket, &MCM_Resp, MCM_Resp_Size);
+           printf("\nMCM has sent intermediate response of %d bytes",write_bytes);
+           http_handler();
+           form_final_resp(SUCCESS,FINAL);   // Process the command, Form final response and send it over socket //
+           write_bytes = sock_write(&Socket, &MCM_Resp, MCM_Resp_Size);
+   		  printf("\nMCM has sent final response of %d bytes",write_bytes);
+         }
+         else
+         {
+   		 write_bytes = sock_write(&Socket, &MCM_Resp, MCM_Resp_Size);
+         }
+       }
+       read_bytes = 0;
+       yield;
+      }while(tcp_tick(&Socket));    // This loop continuously listens over socket for incoming command //
+   }
+   http_handler();
+   sock_close(&Socket);
+	printf("\nConnection closed for port-%d",port);
+
+   return 0;
+}
+
+
+// ..... Main start .... //
+main()
+{
+  auto unsigned long scn_dl;
+  int result;
+
+  fwinit();
+  brdInit();
+  SPIinit();
+  PortInit();
+  sock_init();
+  http_init();
+  Struct_Init();
+  ADC_Init();
+  rd_MCM_addr();
+
+  tcp_reserveport(80);
+
+  printf("\nsizeof(parseCMSCmd) : %d",sizeof(parseCMSCmd));
+  printf("\nsizeof(devResponse) : %d",sizeof(devResponse));
+
+  if(mcm_addr == 1)
+  {
+   BitWrPortI(PADR, &PADRShadow, 1, 0); // Useful for setting LO in sigcon //
+   BitWrPortI(PADR, &PADRShadow, 0, 2);
+   BitWrPortI(PADR, &PADRShadow, 0, 4);
+   if_vccp = 12; if_vccn = 12; if_vdd = 5;
+   lo_vccp = 12; lo_vccn = 12; lo_vdd = 5;
+  }
+
+  while(1)
+  {
+    http_handler();
+    costate    // This will open client socket at port 3000 //
+     {
+       wfd mcm_clnt();
+     }
+
+    costate    // This will do background monitoring in parallel at every SCAN_DELAY miliseconds //
+     {
+       scn_dl = MS_TIMER + SCAN_DELAY;
+       Ms_delay(1);  // This delay is necessary for proper working of following loop. //
+       while(((scn_dl - MS_TIMER) > 0) && ((scn_dl - MS_TIMER) < 1000))
+         yield;
+       bg_mon();
+     }
+
+    costate
+     {
+       http_handler();
+       tcp_tick(NULL);
+     }
+  }
+}
+
+
+
+// ********* This function will validate command against various checks. ********* //
+// **** Syntax error, Invalid, Incomplete command, Other error will be checked **** //
+
+int cmd_validation()
+ {
+   int cmpl,i,j;
+   cmpl =  0;
+
+   printf("\nEntering cmd_validation");
+   if(mcm_addr == 0)
+   {
+      if(!(_f_strcmp(Wrpr_Cmd.cmd_elem.subsysid,SYSTEM_0)))
+       {
+         printf("\nSubsystem validated");
+         printf("\nCommand received : %s",Wrpr_Cmd.cmd_elem.cmd_name);
+
+         if(!_f_strcmp(Wrpr_Cmd.cmd_elem.cmd_name,Cmd_001))
+          {
+           printf("\nCommand Name Validated");
+           return 10;
+          }
+         else if(!_f_strcmp(Wrpr_Cmd.cmd_elem.cmd_name,Cmd_002))
+          {
+           printf("\nCommand Name Validated");
+           return 10;
+          }
+         else if(!_f_strcmp(Wrpr_Cmd.cmd_elem.cmd_name,Cmd_003))
+          {
+           printf("\nCommand Name Validated");
+           return 10;
+
+           for(j=0; j<Wrpr_Cmd.cmd_data.numpkt; j++) // Looking for Jth parameter //
+            {
+             for(i=0; i<SMP_rawsize; i++) // comparing Jth against Ith parameter //
+              {
+               if(!_f_strcmp(Wrpr_Cmd.cmd_data.prmname[j],SenMon_Para[i]))
+                {
+                 printf("\nCommand Name Validated");
+                 cmpl++;
+                 break;
+                }
+              }
+            }// Checking of all parameters over here //
+
+            if(cmpl == Wrpr_Cmd.cmd_data.numpkt)
+             return 10;
+            else
+             return 13;   // Incase of Incomplete command //
+          }
+         else if(!_f_strcmp(Wrpr_Cmd.cmd_elem.cmd_name,Cmd_004))
+          {
+           printf("\nCommand Name Validated");
+           return 10;
+          }
+         else
+          {
+           printf("\nCommand Syntax Error");
+           return 12;     // Incase of Syntax Error in command //
+          }
+       }
+      else
+       {
+        printf("\nCommand Invalid");
+        return 14;        // Incase of Invalid command //
+       }
+   }
+
+   else if(mcm_addr == 1)
+   {
+      if(!_f_strcmp(Wrpr_Cmd.cmd_elem.subsysid,SYSTEM_1))
+       {
+         printf("\nSubsystem validated");
+
+         if(!_f_strcmp(Wrpr_Cmd.cmd_elem.cmd_name,Cmd_101))
+          {
+           printf("\nCommand Name Validated");
+           return 10;
+          }
+         else if(!_f_strcmp(Wrpr_Cmd.cmd_elem.cmd_name,Cmd_102))
+          {
+           printf("\nCommand Name Validated");
+           return 10;
+          }
+         else if(!_f_strcmp(Wrpr_Cmd.cmd_elem.cmd_name,Cmd_103))
+          {
+           printf("\nCommand Name Validated");
+           return 10;
+          }
+         else if(!_f_strcmp(Wrpr_Cmd.cmd_elem.cmd_name,Cmd_104))
+          {
+           printf("\nCommand Name Validated");
+           return 10;
+          }
+         else if(!_f_strcmp(Wrpr_Cmd.cmd_elem.cmd_name,Cmd_105))
+          {
+           printf("\nCommand Name Validated");
+           return 10;
+          }
+         else if(!_f_strcmp(Wrpr_Cmd.cmd_elem.cmd_name,Cmd_106))
+          {
+           printf("\nCommand Name Validated");
+           return 10;
+          }
+         else
+          {
+           printf("\nCommand Syntax Error");
+           return 12;     // Incase of Syntax Error in command //
+          }
+       }
+      else
+       {
+        printf("\nCommand Invalid");
+        return 14;
+       }
+   }
+
+   else if(mcm_addr == 2)
+   {
+      if(!_f_strcmp(Wrpr_Cmd.cmd_elem.subsysid,SYSTEM_2))
+       {
+        printf("\nCommand valid");
+        return 10;
+       }
+      else
+       {
+        printf("\nCommand Invalid");
+        return 14;
+       }
+   }
+
+   else
+   {
+    printf("\nMCM Address not valid");
+    return 100;     // Incase of Unknown error like, MCM address mismatch or Sending Sentinal command to Sigcon MCM. //
+   }
+
+ }
+
+
+
+// ****** Forming intermediate response for all system commands ****** //
+
+int form_inter_resp()
+{
+  int loop;
+
+  printf("\nEntering form_inter_resp");
+
+  MCM_Resp.code = cmd_validation();
+  MCM_Resp.event = INTERMEDIATE;
+
+  switch(MCM_Resp.code)
+  {
+    case 10 :  _f_strcpy(MCM_Resp.message,"Command received successfully");
+               break;
+    case 12 :  _f_strcpy(MCM_Resp.message,"Command Syntax Error");
+               break;
+    case 13 :  _f_strcpy(MCM_Resp.message,"Command Incomplete");
+               break;
+    case 14 :  _f_strcpy(MCM_Resp.message,"Command Invalid");
+               break;
+    case 100:  _f_strcpy(MCM_Resp.message,"Error Unknown");
+               break;
+    default :  break;
+  };
+
+ // ******** Write in to Tx_BasicFlds *********** //
+  MCM_Resp.resp_elem.seq = Wrpr_Cmd.cmd_elem.seq;
+  MCM_Resp.resp_elem.version = Wrpr_Cmd.cmd_elem.version;
+  _f_strcpy(MCM_Resp.resp_elem.subsysid,Wrpr_Cmd.cmd_elem.subsysid);
+  _f_strcpy(MCM_Resp.resp_elem.cmd_id,Wrpr_Cmd.cmd_elem.cmd_id);
+  _f_strcpy(MCM_Resp.resp_elem.cmd_name,Wrpr_Cmd.cmd_elem.cmd_name);
+  _f_strcpy(MCM_Resp.resp_elem.timestamp,Wrpr_Cmd.cmd_elem.timestamp);
+  MCM_Resp.resp_elem.priority = Wrpr_Cmd.cmd_elem.priority;
+  MCM_Resp.resp_elem.timeout = Wrpr_Cmd.cmd_elem.timeout;
+
+  // ******** Write in to Tx_DataPkt *********** //
+  MCM_Resp.resp_data.numpkt = 0;
+  for(loop=0; loop<MAXDATA; loop++)
+   {
+     _f_strcpy(MCM_Resp.resp_data.prmname[loop],"\0");
+     _f_strcpy(MCM_Resp.resp_data.prmvalue[loop],"\0");
+   }
+  // ******** Write in to Tx_alarm *********** //
+  MCM_Resp.MCM_alarm.id = 0;
+  MCM_Resp.MCM_alarm.level = 0;
+  _f_strcpy(MCM_Resp.MCM_alarm.description,"\0");
+
+  return MCM_Resp.code;
+}
+
+
+
+
+// ******** Processing the Sentinal command ******** //
+
+int command_process_sen()
+{
+
+  printf("\nEntering command_process_sen");
+  if(!_f_strcmp(Wrpr_Cmd.cmd_elem.cmd_name,Cmd_001))      // DoMon will monitor Temperature, RTC time, Status, Raw Values etc..//
+  {
+     MCM_Resp.resp_data.numpkt = 5;
+
+    _f_strcpy(MCM_Resp.resp_data.prmname[0],"time");
+
+      sec_tm = read_rtc();
+      mktm(&rtc, sec_tm);
+      sprintf(time_ar,"%d:%d:%d",rtc.tm_hour, rtc.tm_min, rtc.tm_sec);
+
+    _f_strcpy(MCM_Resp.resp_data.prmvalue[0],time_ar);      // This value should be filled in bg_mon function. //
+
+    _f_strcpy(MCM_Resp.resp_data.prmname[1],"state");
+    _f_strcpy(MCM_Resp.resp_data.prmvalue[1],"Ok");         // This value should be filled in bg_mon function. //
+
+    _f_strcpy(MCM_Resp.resp_data.prmname[2],"temp");
+    _f_strcpy(MCM_Resp.resp_data.prmvalue[2],"23");         // This value should be filled in bg_mon function. //
+
+    _f_strcpy(MCM_Resp.resp_data.prmname[3],"chan");
+    _f_strcpy(MCM_Resp.resp_data.prmvalue[3],"1");          // This value should be filled in bg_mon function. //
+
+    _f_strcpy(MCM_Resp.resp_data.prmname[4],"rawcnt");
+    _f_strcpy(MCM_Resp.resp_data.prmvalue[4],temp_ar);      // This value should be filled in bg_mon function. //
+
+    return 99;   // This return value will be stored in MCM_Resp.event //
+  }
+
+  else if(!_f_strcmp(Wrpr_Cmd.cmd_elem.cmd_name,Cmd_002))   // SetCmd will set portbits at 32 bit o/p //
+  {
+      // Do notihng, as currently nothing to set in Sentinal system !! //
+  }
+
+  else if(!_f_strcmp(Wrpr_Cmd.cmd_elem.cmd_name,Cmd_003))   // Init command will initalise Memory, Portbits, ADC and RTC //
+  {
+    //Struct_Init();             // If this func will be called here, values in struct should be refilled in Final_Resp //
+    PortInit();
+    ADC_Init();
+    Set_RTC(Wrpr_Cmd.cmd_elem.timestamp);
+  }
+
+  else if(!_f_strcmp(Wrpr_Cmd.cmd_elem.cmd_name,Cmd_004))
+  {
+     printf("\n MCM is given Reset : Socket Closed !!");
+     sock_close(&Socket);
+     exit(0);
+  }
+
+  return 12;     // This return value will be stored in MCM_Resp.event //
+}
+
+
+
+
+// ******** Processing the SIGCON command ******** //
+
+int command_process_sig()
+{
+  unsigned long lo_frq1, lo_frq2, lor_frq1, lor_frq2;
+  int IF_Attn1, IF_Attn2;
+  int rch = 0;
+
+
+  printf("\nEntering Command Process");
+
+  if(!_f_strcmp(Wrpr_Cmd.cmd_elem.cmd_name,Cmd_101))    // Init command will initalise Memory, Portbits, ADC and RTC //
+  {
+    MCM_Resp.resp_data.numpkt = 68;
+
+    _f_strcpy(MCM_Resp.resp_data.prmname[0],"time");
+
+      sec_tm = read_rtc();
+      mktm(&rtc, sec_tm);
+      sprintf(time_ar,"%d:%d:%d",rtc.tm_hour, rtc.tm_min, rtc.tm_sec);
+
+    _f_strcpy(MCM_Resp.resp_data.prmvalue[0],time_ar);      // This value should be filled in bg_mon function. //
+
+    /*_f_strcpy(MCM_Resp.resp_data.prmname[1],"state");
+      _f_strcpy(MCM_Resp.resp_data.prmvalue[1],"Ok");         // This value should be filled in bg_mon function. //
+     */
+
+    _f_strcpy(MCM_Resp.resp_data.prmname[1],"dmask");
+    _f_strcpy(MCM_Resp.resp_data.prmvalue[1],mswT);
+    _f_strcat(MCM_Resp.resp_data.prmvalue[1],lswT);
+    printf("\n dmask            [ %s %s ] \n", mswT, lswT);
+     // sprintf(MCM_Resp.resp_data.prmvalue[1],"%ld%ld", msw, lsw);
+    _f_strcpy(MCM_Resp.resp_data.prmname[2],"lo1");
+    printf(" LO SETTING %s %s \n", LO1_Mon,LO2_Mon);
+    _f_strcpy(MCM_Resp.resp_data.prmvalue[2],LO1_Mon);
+    _f_strcpy(MCM_Resp.resp_data.prmname[3],"lo2");
+    _f_strcpy(MCM_Resp.resp_data.prmvalue[3],LO2_Mon);
+
+    for (rch=0; rch < 64; rch++)
+    {
+      sprintf(MCM_Resp.resp_data.prmname[rch+4],"Ch%.2d",rch);
+      sprintf(MCM_Resp.resp_data.prmvalue[rch+4],"%d",rw[rch]);
+    }
+    //_f_strcpy(MCM_Resp.resp_data.prmname[68],"antid");
+    //_f_strcpy(MCM_Resp.resp_data.prmvalue[68],"30");
+
+   // Sig_decode();
+
+    return 99;   // This return value will be stored in MCM_Resp.event //
+  }
+
+  else if(!_f_strcmp(Wrpr_Cmd.cmd_elem.cmd_name,Cmd_102))
+  {
+    lo_frq1 = _f_atol(Wrpr_Cmd.cmd_data.prmvalue[0]);
+    lo_frq2 = _f_atol(Wrpr_Cmd.cmd_data.prmvalue[1]);
+    printf("\nCommand for Set LO : %ld KHz %ld KHz Received..................",lo_frq1, lo_frq2);
+    Set_LO_Ptrn(lo_frq1,0);
+    Set_LO_Ptrn(lo_frq2,1);
+  }
+
+  else if(!_f_strcmp(Wrpr_Cmd.cmd_elem.cmd_name,Cmd_104))
+  {
+    IF_Attn1 =  _f_atoi(Wrpr_Cmd.cmd_data.prmvalue[0]);
+    IF_Attn2 =  _f_atoi(Wrpr_Cmd.cmd_data.prmvalue[1]);
+    printf("\nCommand for Set IF Attn : %ddB %ddB ..................", IF_Attn1, IF_Attn2);
+    Set_Attn(IF_Attn2, IF_Attn1);
+  }
+
+   else if(!_f_strcmp(Wrpr_Cmd.cmd_elem.cmd_name,Cmd_105))
+  {
+    lor_frq1 = _f_atol(Wrpr_Cmd.cmd_data.prmvalue[0]);
+    lor_frq2 = _f_atol(Wrpr_Cmd.cmd_data.prmvalue[1]);
+    printf("\nCommand for Set LOR : %ld KHz %ld KHz Received..................",lor_frq1, lor_frq2);
+    Set_LOR_Ptrn(lor_frq1,0);
+    Set_LOR_Ptrn(lor_frq2,1);
+  }
+
+  else if(!_f_strcmp(Wrpr_Cmd.cmd_elem.cmd_name,Cmd_103))
+  {
+    _f_strcpy(dmask, Wrpr_Cmd.cmd_data.prmvalue[0]);
+    printf("\nReceived Dmask : %s",dmask);
+    strcpy(lsw,dmask+4);
+    dmask[4] = 0;
+    strcpy(msw,dmask);
+    Set_DMask();
+  }
+
+  else if(!_f_strcmp(Wrpr_Cmd.cmd_elem.cmd_name,Cmd_106))
+  {
+    //Struct_Init();             // If this func will be called here, values in struct should be refilled in Final_Resp //
+    PortInit();
+    ADC_Init();
+    Set_RTC(Wrpr_Cmd.cmd_elem.timestamp);
+  }
+
+  else if(!_f_strcmp(Wrpr_Cmd.cmd_elem.cmd_name,Cmd_107))
+  {
+    printf("\n MCM is given Reset : Socket Closed !!");
+    sock_close(&Socket);
+    exit(0);
+  }
+
+  else
+  {
+    printf("Nothing Matched, Received : %s",Wrpr_Cmd.cmd_elem.cmd_name);
+  }
+
+  return 12;
+}
+
+
+
+// ******** Forming final response ******** //
+
+void form_final_resp(int code, int event)
+{
+  printf("\nEntering form_final_resp");
+
+  MCM_Resp.code = code;
+  if(mcm_addr == 0)
+   MCM_Resp.event = command_process_sen();
+  else if(mcm_addr == 1)
+   MCM_Resp.event = command_process_sig();
+}
+
+
+
+// ******** Forming Alarm ******** //
+
+void form_alarm(int Alrm_id, int Alrm_lvl)
+{
+  MCM_Resp.code = 20;
+  MCM_Resp.event = 100;
+
+  MCM_Resp.MCM_alarm.id = Alrm_id;
+  MCM_Resp.MCM_alarm.level = Alrm_lvl;
+
+  if(Alrm_id == 903)
+  _f_strcpy(MCM_Resp.MCM_alarm.description,"Raw Count More than 500");
+  if(Alrm_id == 613)
+  _f_strcpy(MCM_Resp.MCM_alarm.description,"LO VCC+ Lower than 10V");
+
+  MCM_Resp.resp_data.numpkt = 0;
+  sock_write(&Socket, &MCM_Resp, MCM_Resp_Size);
+}
+
+
+
+// ****** Doing background monitoring tasks and event generation ****** //
+
+void bg_mon()
+{
+  int channel, mux_sel, set_mux_sel;
+  float volt;
+
+  //printf("\nMonitoring Array :");
+  for(channel=0; channel<4; channel++)
+  {
+   for(mux_sel=0; mux_sel<16; mux_sel++)
+    {
+      set_mux_sel = mux_sel*16;
+
+      WrPortI(PEDR, &PEDRShadow, ((RdPortI(PEDR)&0x0f) | set_mux_sel));
+
+      rw[channel*16 + mux_sel] = (anaIn(channel, SINGLE, GAINSET));
+
+      volt = (980 - rw[channel*16 + mux_sel])/196.0;
+
+      volt = volt * 1.035;
+
+      sprintf(vl[channel*16 + mux_sel],"%5.2f",volt);
+
+    }
+  }
+
+  t0 = read_rtc();
+
+  mktm(&rtc,t0);
+
+  sprintf(time1,"%02d:%02d:%02d",rtc.tm_hour,rtc.tm_min,rtc.tm_sec);
+  sprintf(date,"%02d-%02d-%d",rtc.tm_mday,rtc.tm_mon,(1900+rtc.tm_year));
+}
+
+
+
+void Sig_decode()
+{
+  char attn1[10], attn2[10];
+  int i, ch1_attn, ch2_attn;
+  ch1_attn = 0;
+  ch2_attn = 0;
+
+  //bg_mon();
+
+  for(i=0;i<4;i++)
+  {
+   if(rw[i]<10)
+   ch1_attn = ch1_attn + pow(2,i);
+   if(rw[i+4]<10)
+   ch2_attn = ch2_attn + pow(2,i);
+  }
+ // printf("\nCh1_attn = %d, Ch2_attn = %d", ch1_attn, ch2_attn);
+
+  _f_strcpy(MCM_Resp.resp_data.prmname[2],"attn1");
+  sprintf(attn1,"%2d",ch1_attn);
+  _f_strcpy(MCM_Resp.resp_data.prmvalue[2],attn1);
+
+  _f_strcpy(MCM_Resp.resp_data.prmname[3],"attn2");
+  sprintf(attn2,"%2d",ch2_attn);
+  _f_strcpy(MCM_Resp.resp_data.prmvalue[3],attn2);
+
+//  printf("\nCh1_attn = %s, Ch2_attn = %s", attn1, attn2);
+
+  if_vccp = 130 - rw[8];
+  if_vccp = (if_vccp * 2.4)/26;
+  _f_strcpy(MCM_Resp.resp_data.prmname[4],"if-vccp");
+  sprintf(MCM_Resp.resp_data.prmvalue[4],"%.2f",if_vccp);
+
+  if_vccn = 130 - rw[9];
+  if_vccn = (if_vccn * 2.4)/26;
+  _f_strcpy(MCM_Resp.resp_data.prmname[5],"if-vccn");
+  sprintf(MCM_Resp.resp_data.prmvalue[5],"%.2f",if_vccn);
+
+  if_vdd = 130 - rw[10];
+  if_vdd = if_vdd /26;
+  _f_strcpy(MCM_Resp.resp_data.prmname[6],"if-vdd");
+  sprintf(MCM_Resp.resp_data.prmvalue[6],"%.2f",if_vdd);
+
+
+  _f_strcpy(MCM_Resp.resp_data.prmname[7],"sel_vco");
+  if(rw[16]<10 && rw[17]>100 && rw[18]>100)
+  {
+   printf("\nVCO-1 is selected");
+   _f_strcpy(MCM_Resp.resp_data.prmvalue[7],"VCO-1");
+  }
+  else if(rw[17]<10 && rw[16]>100 && rw[18]>100)
+  {
+   printf("\nVCO-2 is selected");
+   _f_strcpy(MCM_Resp.resp_data.prmvalue[7],"VCO-2");
+  }
+  else if(rw[18]<10 && rw[16]>100 && rw[17]>100)
+  {
+   printf("\nVCO-3 is selected");
+   _f_strcpy(MCM_Resp.resp_data.prmvalue[7],"VCO-3");
+  }
+  else
+  {
+   printf("\nNo VCO is selected");
+   _f_strcpy(MCM_Resp.resp_data.prmvalue[7],"Error");
+  }
+
+
+  _f_strcpy(MCM_Resp.resp_data.prmname[8],"vco");
+  _f_strcpy(MCM_Resp.resp_data.prmvalue[8],"Locked");
+
+
+  lo_vccp = 130 - rw[22];
+  lo_vccp = (lo_vccp * 2.4)/26;
+  _f_strcpy(MCM_Resp.resp_data.prmname[9],"lo-vccp");
+  sprintf(MCM_Resp.resp_data.prmvalue[9],"%.2f",lo_vccp);
+
+  lo_vccn = 130 - rw[23];
+  lo_vccn = (lo_vccn * 2.4)/26;
+  _f_strcpy(MCM_Resp.resp_data.prmname[10],"lo-vccn");
+  sprintf(MCM_Resp.resp_data.prmvalue[10],"%.2f",lo_vccn);
+
+  lo_vdd = 130 - rw[24];
+  lo_vdd = lo_vdd /26;
+  _f_strcpy(MCM_Resp.resp_data.prmname[11],"lo-vdd");
+  sprintf(MCM_Resp.resp_data.prmvalue[11],"%.2f",lo_vdd);
+
+  //sock_write(&Socket, &MCM_Resp, MCM_Resp_Size);
+}
+
+
+void Set_SS()
+{
+  if(!(SS))
+   SS = Temp_SS;
+
+  if(SS == 1)
+   {
+     WrPortI(GCM1R,NULL,0x00);
+     strcpy(SS1_Mon,"Off");
+     strcpy(SS2_Mon,"Off");
+     Ms_delay(10);
+   }
+  else if(SS == 2)
+   {
+     WrPortI(GCM1R,NULL,0x00);
+     Ms_delay(10);
+     WrPortI(GCM0R,NULL,0x40);
+     WrPortI(GCM1R,NULL,0x80);
+     strcpy(SS1_Mon,"Normal");
+     strcpy(SS2_Mon,"Normal");
+   }
+  else if(SS == 3)
+   {
+     WrPortI(GCM1R,NULL,0x00);
+     Ms_delay(10);
+     WrPortI(GCM0R,NULL,0x00);
+     WrPortI(GCM1R,NULL,0x80);
+     strcpy(SS1_Mon,"Normal");
+     strcpy(SS2_Mon,"Strong");
+   }
+  else if(SS == 4)
+   {
+     WrPortI(GCM1R,NULL,0x00);
+     Ms_delay(10);
+     WrPortI(GCM0R,NULL,0x80);
+     WrPortI(GCM1R,NULL,0x80);
+     strcpy(SS1_Mon,"Strong");
+     strcpy(SS2_Mon,"Normal");
+   }
+ Temp_SS = SS;
+}
+
+
+void Set_FDB()
+{
+  if(!(FDB))
+   FDB = Temp_FDB;
+
+  if(FDB == 1)
+   {
+     WrPortI(GCDR,NULL,0x00);
+     strcpy(FDB_Mon,"Off");
+   }
+  else if(FDB == 2)
+   {
+     WrPortI(GCDR,NULL,0x05);
+     strcpy(FDB_Mon,"On");
+   }
+ Temp_FDB = FDB;
+}
+
+
+void Set_FDV()
+{
+ if(!(FDV))
+   FDV = Temp_FDV;
+
+ if(FDV == 1)
+   {
+     WrPortI(GCSR,NULL,0x09);
+     strcpy(FDV_Mon,"1");
+   }
+  else if(FDV == 2)
+   {
+     WrPortI(GCSR,NULL,0x0D);
+     strcpy(FDV_Mon,"2");
+   }
+  else if(FDV == 3)
+   {
+     WrPortI(GCSR,NULL,0x19);
+     strcpy(FDV_Mon,"4");
+   }
+  else if(FDV == 4)
+   {
+     WrPortI(GCSR,NULL,0x1D);
+     strcpy(FDV_Mon,"6");
+   }
+  else if(FDV == 5)
+   {
+     WrPortI(GCSR,NULL,0x01);
+     strcpy(FDV_Mon,"8");
+   }
+ Temp_FDV = FDV;
+}
+
+
+void Rd_MCM_Clk()
+{
+  float Clock;
+
+  Clock = (30.0*FDB)/FDV;
+  sprintf(MCM_Clk,"%5.2f %s",Clock,"MHz");
+}
+
+
+void Set_LO_Ptrn(unsigned long lo, int Ch)
+{
+ char LO_Arr[10], Temp_Arr[10],rem[10];
+ int padding, cntr_1, i;
+
+ unsigned long lo_frq;
+ lo_frq = lo/1000;
+
+ if(Ch==0)
+   sprintf(LO1_Mon,"%ld %s",lo_frq,"MHz");
+ else if(Ch==1)
+   sprintf(LO2_Mon,"%ld %s",lo_frq,"MHz");
+
+ for(cntr_1=0; cntr_1<9; cntr_1++)
+	LO_Arr[cntr_1] = '0';
+
+ printf("\n unsigned lo = %ld",lo);
+
+ i=0;
+  do
+  {
+   rem[i] = (lo%16)+48;
+   if(rem[i]>57)
+   rem[i] = rem[i]+7;
+   lo = lo/16;
+   i++;
+  }while(lo>0);
+  rem[i]= 0 ;
+
+  for(cntr_1=0; cntr_1 < strlen(rem); cntr_1++)
+  {
+    Temp_Arr[i-1] = rem[cntr_1];
+    i--;
+  }
+  Temp_Arr[cntr_1]= 0;
+
+  printf("\nAfter converting to hex : %s",Temp_Arr);
+
+  padding = 9 - strlen(Temp_Arr);
+
+  strcpy(LO_Arr + padding, Temp_Arr);
+
+  LO_Arr[0] = 'K';
+
+
+ for(cntr_1=0; cntr_1 < strlen(LO_Arr); cntr_1++)
+  {
+    if((LO_Arr[cntr_1] > 96) && (LO_Arr[cntr_1] < 123))
+     LO_Arr[cntr_1] = LO_Arr[cntr_1] - 32;
+  }
+
+ strcpy(Temp_Arr, LO_Arr);
+
+ printf("\nSending over SPI (LO_Arr) : %s\n",LO_Arr);
+// printf("\n\nBefore making PE%d high : 0x%x",Ch,RdPortI(PEDR));
+ BitWrPortI(PEDR, &PEDRShadow, 1, Ch);
+ BitWrPortI(PEDR, &PEDRShadow, 0, Ch);
+// printf("\nAfter making PE%d low : 0x%x",Ch,RdPortI(PEDR));
+
+ for(i=0;i<10;i++);
+ SPIWrite(LO_Arr,10);
+ for(i=0;i<10;i++);
+
+ BitWrPortI(PEDR, &PEDRShadow, 1, Ch);
+// printf("\nAgain after making PE%d high : 0x%x",Ch,RdPortI(PEDR));
+}
+
+void Set_LOR_Ptrn(unsigned long lor, int Ch)
+{
+ char LOR_Arr[6];
+ int i;
+
+if(Ch==0)
+   sprintf(LOR1_Mon, "%ld %s", lor, "MHz");
+ else if(Ch==1)
+   sprintf(LOR2_Mon, "%ld %s", lor, "MHz");
+
+ printf("\n unsigned lo = %ld", lor);
+
+    LOR_Arr[0] = 'R';
+    LOR_Arr[1] = lor *2;
+    LOR_Arr[2] = 0;
+    LOR_Arr[3] = 0;
+    LOR_Arr[4] = 0;
+    LOR_Arr[5] = 0;
+
+ printf("\nAfter converting to hex : %x",LOR_Arr[1]);
+
+ //printf("\n\nBefore making PE%d high : 0x%x",Ch,RdPortI(PEDR));
+ BitWrPortI(PEDR, &PEDRShadow, 1, Ch);
+ BitWrPortI(PEDR, &PEDRShadow, 0, Ch);
+ //printf("\nAfter making PE%d low : 0x%x",Ch,RdPortI(PEDR));
+
+ for(i=0;i<50;i++);
+ SPIWrite(LOR_Arr,6);
+ for(i=0;i<50;i++);
+
+ BitWrPortI(PEDR, &PEDRShadow, 1, Ch);
+ //printf("\nAgain after making PE%d high : 0x%x",Ch,RdPortI(PEDR));
+}
+
+
+void Set_LORef()
+{
+int refm, refl, refm1, refm2, refm3, refl1, refl2, refl3, i;
+
+if(ref_lo1[1]=='\0' && ref_lo1[2]=='\0')
+{
+ref_lo1[2]=ref_lo1[0];
+ref_lo1[1]=48;
+ref_lo1[0]=48;
+}
+
+if(ref_lo1[2]=='\0')
+{
+ref_lo1[2]=ref_lo1[1];
+ref_lo1[1]=ref_lo1[0];
+ref_lo1[0]=48;
+}
+
+if(ref_lo2[1]=='\0' && ref_lo2[2]=='\0')
+{
+ref_lo2[2]=ref_lo2[0];
+ref_lo2[1]=48;
+ref_lo2[0]=48;
+}
+
+if(ref_lo2[2]=='\0')
+{
+ref_lo2[2]=ref_lo2[1];
+ref_lo2[1]=ref_lo2[0];
+ref_lo2[0]=48;
+}
+
+printf("\n\nref_lo1 : %s", ref_lo1);
+printf("\n\nref_lo2 : %s\n", ref_lo2);
+
+refm1=ref_lo1[0]-48;
+refm2=ref_lo1[1]-48;
+refm3=ref_lo1[2]-48;
+refm= (refm1*100) + (refm2*10) + refm3;
+
+refl1=ref_lo2[0]-48;
+refl2=ref_lo2[1]-48;
+refl3=ref_lo2[2]-48;
+refl= (refl1*100) + (refl2*10) + refl3;
+
+printf("\n\nrefm : %d\n", refm);
+printf("\n\nrefl : %d\n", refl);
+
+if(refm>0 && refm>9 && refm<121)
+Set_LOR_Ptrn(refm,0);
+if(refl>0 && refl>9 && refl<121)
+Set_LOR_Ptrn(refl,1);
+
+}
+
+void Set_LO()
+{
+long int LOm, LOl, LOm1, LOm2, LOm3, LOm4, LOl1, LOl2, LOl3, LOl4, i;
+
+if(LO1[1]=='\0' && LO1[2]=='\0' && LO1[3]=='\0')
+{
+LO1[3]=LO1[0];
+LO1[2]=48;
+LO1[1]=48;
+LO1[0]=48;
+}
+
+if(LO1[2]=='\0' && LO1[3]=='\0')
+{
+LO1[3]=LO1[1];
+LO1[2]=LO1[0];
+LO1[1]=48;
+LO1[0]=48;
+}
+
+if(LO1[3]=='\0')
+{
+LO1[3]=LO1[2];
+LO1[2]=LO1[1];
+LO1[1]=LO1[0];
+LO1[0]=48;
+}
+
+if(LO2[1]=='\0' && LO2[2]=='\0' && LO2[3]=='\0')
+{
+LO2[3]=LO2[0];
+LO2[2]=48;
+LO2[1]=48;
+LO2[0]=48;
+}
+
+if(LO2[2]=='\0' && LO2[3]=='\0')
+{
+LO2[3]=LO2[1];
+LO2[2]=LO2[0];
+LO2[1]=48;
+LO2[0]=48;
+}
+
+if(LO2[3]=='\0')
+{
+LO2[3]=LO2[2];
+LO2[2]=LO2[1];
+LO2[1]=LO2[0];
+LO2[0]=48;
+}
+
+printf("\n\nLO1 : %s", LO1);
+printf("\n\nLO2 : %s\n", LO2);
+
+LOm1=LO1[0]-48;
+LOm2=LO1[1]-48;
+LOm3=LO1[2]-48;
+LOm4=LO1[3]-48;
+LOm= (LOm1*1000) + (LOm2*100) + (LOm3*10) + LOm4;
+
+LOl1=LO2[0]-48;
+LOl2=LO2[1]-48;
+LOl3=LO2[2]-48;
+LOl4=LO2[3]-48;
+LOl= (LOl1*1000) + (LOl2*100) + (LOl3*10) + LOl4;
+
+printf("\n\nLOm : %d\n", LOm);
+printf("\n\nLOl : %d\n", LOl);
+
+if(LOm>0 && LOm>99 && LOm<1701)
+Set_LO_Ptrn(LOm*1000,0);
+if(LOl>0 && LOl>99 && LOl<1701)
+Set_LO_Ptrn(LOl*1000,1);
+
+}
+
+// **** After initialising port bits in PortInit(), 32 bit digital mask will be set here **** //
+
+void Set_DMask()
+{
+  int i, MSB_2, LSB_2, MSB_1, LSB_1;
+  int MSB_22, LSB_22, MSB_11, LSB_11;
+  db1=00.0;
+  db2=00.0;
+  filter1=1;
+  filter2=1;
+  strcpy(mswT, msw);
+  strcpy(lswT, lsw);
+  for(i=0;i<sizeof(mswT);i++)
+   mswT[i] = toupper(mswT[i]);
+  for(i=0;i<sizeof(lswT);i++)
+   lswT[i] = toupper(lswT[i]);
+
+  LSB_2 = atox(msw + 2);
+  msw[2]=0;
+  MSB_2 = atox(msw);    // don't need any shift operation, because atox is done only for two poiter locations //
+
+  LSB_1 = atox(lsw + 2);
+  lsw[2]=0;
+  MSB_1 = atox(lsw);
+
+  printf("\nMSB_2 LSB_2 MSB_1 LSB_1 : %x %x %x %x", MSB_2, LSB_2, MSB_1, LSB_1);
+   // For web-page monitoring by RB 7/4/2015
+  LSB_11=LSB_1;
+  LSB_22=LSB_2;
+  MSB_11=MSB_1;
+  MSB_22=MSB_2;
+  if((LSB_11 & 0x01) == 0x00)
+  db1=db1+0.5;
+  if((LSB_11 & 0x02) == 0x00)
+  db1=db1+1;
+  if((LSB_11 & 0x04) == 0x00)
+  db1=db1+2;
+  if((LSB_11 & 0x08) == 0x00)
+  db1=db1+4;
+  if((LSB_11 & 0x10) == 0x00)
+  db1=db1+8;
+  if((LSB_11 & 0x20) == 0x00)
+  db1=db1+16;
+
+  if((MSB_11 & 0x80) == 0x00)
+  db2=db2+0.5;
+  if((LSB_22 & 0x01) == 0x00)
+  db2=db2+1;
+  if((LSB_22 & 0x02) == 0x00)
+  db2=db2+2;
+  if((LSB_22 & 0x04) == 0x00)
+  db2=db2+4;
+  if((LSB_22 & 0x08) == 0x00)
+  db2=db2+8;
+  if((LSB_22 & 0x10) == 0x00)
+  db2=db2+16;
+
+  if((MSB_11 & 0x02) == 0x02)
+  filter1=filter1+1;
+  if((MSB_11 & 0x04) == 0x04)
+  filter1=filter1+2;
+  if((MSB_11 & 0x08) == 0x08)
+  filter1=filter1+4;
+
+  if((MSB_22 & 0x01) == 0x01)
+  filter2=filter2+1;
+  if((MSB_22 & 0x02) == 0x02)
+  filter2=filter2+2;
+  if((MSB_22 & 0x04) == 0x04)
+  filter2=filter2+4;
+
+  if((MSB_11 & 0x30) == 0x00)
+  strcpy(lpf1,"100 MHZ");
+  if((MSB_11 & 0x30) == 0x10)
+  strcpy(lpf1,"200 MHZ");
+  if((MSB_11 & 0x30) == 0x20)
+  strcpy(lpf1,"400 MHZ");
+  if((MSB_11 & 0x30) == 0x30)
+  strcpy(lpf1,"Direct Path");
+
+  if((MSB_22 & 0x18) == 0x00)
+  strcpy(lpf2,"100 MHZ");
+  if((MSB_22 & 0x18) == 0x08)
+  strcpy(lpf2,"200 MHZ");
+  if((MSB_22 & 0x18) == 0x10)
+  strcpy(lpf2,"400 MHZ");
+  if((MSB_22 & 0x18) == 0x18)
+  strcpy(lpf2,"Direct Path");
+
+  if((MSB_11 & 0x01) == 0x01)
+  strcpy(path1,"Direct");
+  else
+  strcpy(path1,"Mixer");
+
+  if((LSB_11 & 0xC0) == 0x00)
+  strcpy(in1,"RF");
+  if((LSB_11 & 0xC0) == 0x40)
+  strcpy(in1,"VGA");
+  if((LSB_11 & 0xC0) == 0x80)
+  strcpy(in1,"Buffer");
+
+  if((LSB_22 & 0x80) == 0x80)
+  strcpy(path2,"Direct");
+  else
+  strcpy(path2,"Mixer");
+
+  if((LSB_22 & 0x60) == 0x00)
+  strcpy(in2,"RF");
+  if((LSB_22 & 0x60) == 0x20)
+  strcpy(in2,"VGA");
+  if((LSB_22 & 0x60) == 0x40)
+  strcpy(in2,"Buffer");
+
+
+
+  if((MSB_22 & 0x80) == 0x80)
+  strcpy(source2,"Signal Generator");
+  else
+  strcpy(source2,"Synthesizer");
+  if((MSB_22 & 0x40) == 0x40)
+  strcpy(source1,"Signal Generator");
+  else
+  strcpy(source1,"Synthesizer");
+  // Init Before setting the bits //
+  // RB modification for webpage over
+
+  BitWrPortI(PBDR, &PBDRShadow, 1, 6);
+  BitWrPortI(PBDR, &PBDRShadow, 0, 2);
+  BitWrPortI(PBDR, &PBDRShadow, 0, 3);
+  BitWrPortI(PBDR, &PBDRShadow, 0, 4);
+  BitWrPortI(PBDR, &PBDRShadow, 0, 5);
+
+  // Set Most Significant Word and Least Significant Word on 32 Bit digital o/ps //
+
+  WrPortI(PADR, &PADRShadow, LSB_1);
+  BitWrPortI(PBDR, &PBDRShadow, 1, 2); // Latching value at LSB latch //
+
+ /* BitWrPortI(PBDR, &PBDRShadow, 0, 2);    // Dont use this switching as its creating problem with latch ICs //
+  BitWrPortI(PBDR, &PBDRShadow, 1, 2);
+  BitWrPortI(PBDR, &PBDRShadow, 0, 2);     */
+
+  WrPortI(PADR, &PADRShadow, MSB_1);
+  BitWrPortI(PBDR, &PBDRShadow, 1, 3); // Latching value at LSB latch //
+
+  WrPortI(PADR, &PADRShadow, LSB_2);
+  BitWrPortI(PBDR, &PBDRShadow, 1, 4); // Latching value at LSB latch //
+
+  WrPortI(PADR, &PADRShadow, MSB_2);
+  BitWrPortI(PBDR, &PBDRShadow, 1, 5); // Latching value at LSB latch //
+
+  BitWrPortI(PBDR, &PBDRShadow, 0, 6); // Enable output of both latches at same time //
+
+}
+
+
+// **** This function will set RTC to value provided within Init command **** //
+
+void Set_RTC(char far * rtc_str)
+{
+  _f_strcpy(RTC_time,rtc_str);
+
+  printf("\nRTC is set to : %s",rtc_str);
+  printf("\nRTC is set to : %s",RTC_time);
+
+  // Setting RTC is hard-coded, follows timestamp formate : yyyy-mm-dd hh:mm:ss//
+
+  rtc_str = RTC_time;
+
+  RTC_time[4]=0;
+  RTC_time[7]=0;
+  RTC_time[10]=0;
+  RTC_time[13]=0;
+  RTC_time[16]=0;
+
+  rtc_str  = rtc_str + 17;
+    rtc.tm_sec = _f_atoi(rtc_str);            // storing second //
+
+  rtc_str  = rtc_str - 3;
+    rtc.tm_min = _f_atoi(rtc_str);            // storing minute //
+
+  rtc_str  = rtc_str - 3;
+    rtc.tm_hour = _f_atoi(rtc_str);           // storing hour //
+
+  rtc_str  = rtc_str - 3;
+    rtc.tm_mday =  _f_atoi(rtc_str);          // storing day //
+
+  rtc_str  = rtc_str - 3;
+    rtc.tm_mon =  _f_atoi(rtc_str);           // storing month //
+
+  rtc_str  = rtc_str - 5;
+    rtc.tm_year =  _f_atoi(rtc_str) - 1900;   // storing year //
+
+  tm_wr(&rtc);											 // Writing to RTC //
+  SEC_TIMER = mktime(&rtc);                   // mktime() is required to read current value correctly using tm_read()//
+}
+
+
+/* void Set_LO_Ptrn(unsigned long lo, int Ch)
+{
+ char LO_Arr[10], Temp_Arr[10],rem[10];
+ int padding, cntr_1, i;
+
+
+ for(cntr_1=0; cntr_1<9; cntr_1++)
+	LO_Arr[cntr_1] = '0';
+
+ printf("\n unsigned lo = %ld",lo);
+
+ i=0;
+  do
+  {
+   rem[i] = (lo%16)+48;
+   if(rem[i]>57)
+   rem[i] = rem[i]+7;
+   lo = lo/16;
+   i++;
+  }while(lo>0);
+  rem[i]= 0 ;
+
+  for(cntr_1=0; cntr_1 < strlen(rem); cntr_1++)
+  {
+    Temp_Arr[i-1] = rem[cntr_1];
+    i--;
+  }
+  Temp_Arr[cntr_1]= 0;
+
+  printf("\nAfter converting to hex : %s",Temp_Arr);
+
+  padding = 9 - strlen(Temp_Arr);
+
+  strcpy(LO_Arr + padding, Temp_Arr);
+
+  LO_Arr[0] = 'K';
+
+
+ for(cntr_1=0; cntr_1 < strlen(LO_Arr); cntr_1++)
+  {
+    if((LO_Arr[cntr_1] > 96) && (LO_Arr[cntr_1] < 123))
+     LO_Arr[cntr_1] = LO_Arr[cntr_1] - 32;
+  }
+
+ strcpy(Temp_Arr, LO_Arr);
+
+ printf("\nSending over SPI (LO_Arr) : %s\n",LO_Arr);
+
+ printf("\n\nBefore making PE%d high : 0x%x",Ch,RdPortI(PEDR));
+ BitWrPortI(PEDR, &PEDRShadow, 1, Ch);
+
+ BitWrPortI(PEDR, &PEDRShadow, 0, Ch);
+ printf("\nAfter making PE%d low : 0x%x",Ch,RdPortI(PEDR));
+
+ for(i=0;i<5;i++);
+
+ SPIWrite(LO_Arr,10);
+
+ for(i=0;i<5;i++);
+
+
+ BitWrPortI(PEDR, &PEDRShadow, 1, Ch);
+ printf("\nAgain after making PE%d high : 0x%x",Ch,RdPortI(PEDR));
+}  */
+
+
+void Set_Attn(int ch2, int ch1)
+{
+ char Attn_bits;
+
+ Attn_bits = 0;
+
+ sprintf(Attn1_Mon, "%d dB", ch1);
+ sprintf(Attn2_Mon, "%d dB", ch2);
+
+ Attn_bits = ch1 & 0x0f;
+
+ ch2 = ch2 << 4;
+
+ Attn_bits = (Attn_bits | (ch2 & 0xf0));
+
+
+
+ printf("\nAttn_bits : 0x%x",Attn_bits);
+ WrPortI(PADR, &PADRShadow, Attn_bits);
+
+ BitWrPortI(PBDR, &PBDRShadow, 1, 2); // Latching value at LSB latch //
+ BitWrPortI(PBDR, &PBDRShadow, 0, 2);
+ BitWrPortI(PBDR, &PBDRShadow, 1, 2);
+ BitWrPortI(PBDR, &PBDRShadow, 0, 2);
+
+ BitWrPortI(PDDR, &PDDRShadow, 0, 5); // Enabling output of both Latch //
+}
+
+
+void Set_NW()
+{
+  strcpy(MY_IP_ADDR, ip);
+  strcpy(MY_NET_MASK, mask);
+  strcpy(MY_GATEWAY, gateway);
+
+  ifconfig( IF_ETH0, IFS_DOWN, IFS_IPADDR,aton(MY_IP_ADDR), IFS_NETMASK,aton(MY_NET_MASK), IFS_ROUTER_SET,aton(MY_GATEWAY), IFS_UP,IFS_END);
+
+  while (ifpending(IF_ETH0) == IF_COMING_UP)
+   tcp_tick(NULL);
+}

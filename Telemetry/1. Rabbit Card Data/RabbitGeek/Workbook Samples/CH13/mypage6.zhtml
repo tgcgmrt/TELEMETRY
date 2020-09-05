@@ -1,0 +1,19 @@
+<html>
+<head>
+<script type="application/x-javascript">
+	function my_script() 
+	{
+		var Analog_input1 = <?z echo($My_Data[0]) ?>;
+		var Analog_input2 = <?z echo($My_Data[1]) ?>;
+		var Analog_input2 = <?z echo($My_Data[2]) ?>;
+		var Analog_input3 = <?z echo($My_Data[3]) ?>;
+		var Analog_input4 = <?z echo($My_Data[4]) ?>;
+	}
+</script> 	 
+</head>
+<body onload="my_script();">
+	Some HTML CODE
+</body>
+</html>
+
+

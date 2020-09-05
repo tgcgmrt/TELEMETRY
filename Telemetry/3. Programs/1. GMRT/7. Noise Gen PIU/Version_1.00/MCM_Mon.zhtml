@@ -1,0 +1,347 @@
+
+<html>
+<head>
+  <title>RFI Emulator Settings</title>
+  
+<style type="text/css">  
+  body {
+    font-family: "Trebuchet MS", Verdana, sans-serif;
+    font-size: 16px;
+    background-color: white; 
+    color: black;
+    padding: 5px;
+}
+
+#main {
+    width:1216;
+    padding: 5px;
+    padding-left:  5px;
+    padding-right: 5px;
+    background-color: LightSeaGreen;
+    border-radius: 10px 10px 10px 10px;
+    border:5px ridge black;
+}
+
+.out_rect
+  {
+   width:1204;
+   padding : 1px;
+   margin: 5 5 5 5;
+   background : #A9E2F3;
+   border-radius: 10px 10px 10px 10px;
+   -webkit-border-radius: 10px 10px 10px 10px;
+  }
+
+h1 {
+    font-family: Georgia, serif;
+    border-bottom: 3px solid #cc9900;
+    color: #996600;
+    font-size: 30px;
+}
+ul#menu {
+    padding: 0;
+	margin-top: 15px;
+}
+
+ul#menu li {
+    display: inline;
+    margin-left: -240px;
+}
+
+ul#menu li a {
+    background-color: gray;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: white;
+	border-width:5px;
+	border-color:black;
+	border-style:ridge ridge hidden ridge;
+}
+
+ul#menu li a:hover {
+    color: white;
+    background-color: LightSeaGreen;
+}
+
+ul#menu1 {
+    padding: 0;
+	margin-top: -38px;
+}
+
+ul#menu1 li {
+    display: inline;
+	margin-left: -15px;
+}
+
+ul#menu1 li a {
+    background-color: gray;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: white;
+    border-width:5px;
+	border-color:black;
+	border-style:ridge ridge hidden ridge;
+}
+
+ul#menu1 li a:hover {
+    color: white;
+    background-color: LightSeaGreen;
+}
+
+ul#menu2 {
+    padding: 0;
+	margin-top: -36px;
+	margin-bottom: 8px;
+}
+
+ul#menu2 li {
+    display: inline;
+    margin-left: 225px;
+}
+
+ul#menu2 li a {
+    background-color: LightSeaGreen;
+    padding: 13px 20px;
+    text-decoration: none;
+    color: white;
+    border-width:5px;
+	border-color:black;
+	border-style:ridge ridge hidden ridge;
+}
+
+ul#menu2 li a:hover {
+    color: white;
+    background-color: gray;
+}
+
+</style>
+  
+</head>
+<center>
+<body>
+  <nav id="nav02"></nav>
+  <div id="main">
+  <div class = "out_rect">
+  <h1>RFI Emulator Attenuation and Time Settings</h1> 
+<div> 
+<table width="1000" style = "font-size:15px; margin-bottom:15px; margin-top:5px">
+<tr> 
+<td width="35%">
+<font size="4px" color="blue"><b>RFI Emulator Attenuation Settings</b></font>
+</td>
+<td width="29%">
+<font size="4px" color="blue"><b>RFI Emulator Timing Settings</b></font>
+</td>
+</tr>
+</table>
+
+<table width="1000" style = "font-size:15px; margin-bottom:0px; margin-top:10px">
+<tr> 
+<td width="20%">Current Attenuation Mode: </td>
+<td width="20%"><font color="brown" id="rfi1"></font></td><td width="15%"></td>
+<td width="20%">Current Time Mode: </td>
+<td width="20%"><font color="brown" id="time1"></font></td><td width="5%"></td>
+</tr>
+</table>
+ 
+<table width="1000" style = "font-size:15px">
+<tr>
+	<td width="20%">Mode Selection: </td> 
+    <td width="20%">	
+		 <form name="Form1" onsubmit="return validateMode1()" action="" method="POST">
+	         <pre><SELECT NAME="atten_mode" style="color:brown;width:180;background:#DCDCDC">
+			 <OPTION disabled selected hidden>Select</OPTION>
+			 <optgroup label="Attenuation Mode">
+             <?z for($A=1; $A < count($atten_mode); $A++) { ?>
+             <OPTION> <?z print_opt($atten_mode,$A) ?> 
+			 </OPTION> <?z } ?> 
+			 </optgroup>
+	         </SELECT></pre>
+	         <td width="5%"> <input type="submit" value="Submit"> </td> 
+         </form>		 
+     </td>	
+	 
+	 <td width="10%"></td>
+
+	<td width="20%">Mode Selection: </td>
+    <td width="20%">	
+		 <form action="" method="POST">
+	         <pre><SELECT NAME="time_mode" style="color:brown;width:180;background:#DCDCDC">
+             <OPTION disabled selected hidden>Select</OPTION>
+			 <optgroup label="Time Mode"> 
+			 <?z for($A=1; $A < count($time_mode); $A++) { ?>
+             <OPTION> <?z print_opt($time_mode,$A) ?> </OPTION> <?z } ?> 
+	         </optgroup>
+			 </SELECT></pre>
+	         <td width="5%"> <input type="submit" value="Submit"> </td> 
+         </form>
+	 </td>
+</tr>
+</table>
+</div>
+<hr style="color: #cc9900; border-bottom: 2px solid #cc9900">
+
+<table width="1000" style = "font-size:15px; margin-bottom:15px; margin-top:10px">
+<tr> 
+<td width="35%">
+<font size="4px" color="blue"><b>Pulse Noise Chain</b></font>
+</td>
+<td width="29%">
+<font size="4px" color="blue"><b>ON Time</b></font>
+</td>
+</tr>
+</table>
+
+<table width="1000" style = "font-size:15px; margin-bottom:0px; margin-top:10px">
+<tr> 
+<td width="20%">Current RFI Attenuation: </td>
+<td width="20%"><font color="brown" id="attn1"></font></td><td width="15%"></td>
+<td width="20%">Current ON Time: </td>
+<td width="20%"><font color="brown" id="on1"></font></td><td width="5%"></td>
+</tr>
+</table>
+
+<table width="1000" style = "font-size:15px">
+
+<tr>
+	<td width="20%">Enter New Attenuation: </td> 
+    <td width="20%">	
+		 <form action="" method="POST">
+	         <pre><SELECT NAME="rfi_atten" style="color:brown;width:180;background:#DCDCDC">
+             <OPTION disabled selected hidden>Select</OPTION>
+			 <optgroup label="RFI Attenuation">
+			 <?z for($A=1; $A < count($rfi_atten); $A++) { ?>
+             <OPTION> <?z print_opt($rfi_atten,$A) ?> 
+			 </OPTION> <?z } ?> 
+	         </optgroup>
+			 </SELECT></pre>
+	         <td width="5%"> <?z if($atten_mode!=3) { ?> <input type="submit" value="Submit"> <?z } ?> </td> 
+         </form>			 
+     </td>	
+	 
+	 <td width="10%"></td>
+
+	<td width="20%">Enter New ON Time: </td>
+    <td width="20%">	
+		 <form action="" method="POST">
+	         <pre><SELECT NAME="t_on" style="color:brown;width:180;background:#DCDCDC">
+             <OPTION disabled selected hidden>Select</OPTION>
+			 <optgroup label="ON Time">
+			 <?z for($A=1; $A < count($t_on); $A++) { ?>
+             <OPTION> <?z print_opt($t_on,$A) ?> </OPTION> <?z } ?> 
+	         </optgroup>
+			 </SELECT></pre>
+	         <td width="5%"> <?z if($time_mode!=2) { ?> <input type="submit" value="Submit"> <?z } ?> </td> 
+         </form>
+     </td>	 
+</tr>
+</table>
+
+<hr style="color: #cc9900; border-bottom: 2px solid #cc9900">
+
+<table width="1000" style = "font-size:15px; margin-bottom:15px">
+<tr> 
+<td width="35%">
+<font size="4px" color="blue"><b>Noise Floor Chain</b></font>
+</td>
+<td width="29%">
+<font size="4px" color="blue"><b>Total Time</b></font>
+</td>
+</tr>
+</table>
+
+<table width="1000" style = "font-size:15px; margin-bottom:0px; margin-top:10px">
+<tr> 
+<td width="20%">Current NF Attenuation: </td>
+<td width="20%"><font color="brown" id="attn2"></font></td><td width="15%"></td>
+<td width="20%">Current Total Time: </td>
+<td width="20%"><font color="brown" id="total1"></font></td><td width="5%"></td>
+</tr>
+</table>
+
+<table width="1000" style = "font-size:15px; margin-bottom:-7px">
+<tr>
+	<td width="20%">Enter New Attenuation: </td> 
+    <td width="20%">	
+		 <form action="" method="POST">
+	         <pre><SELECT NAME="nf_atten" style="color:brown;width:180;background:#DCDCDC">
+             <OPTION disabled selected hidden>Select</OPTION>
+			 <optgroup label="NF Attenuation"> 
+			 <?z for($A=1; $A < count($nf_atten); $A++) { ?>
+             <OPTION> <?z print_opt($nf_atten,$A) ?> 
+			 </OPTION> <?z } ?> 
+	         </optgroup>
+			 </SELECT></pre>
+	         <td width="5%"> <input type="submit" value="Submit"> </td> 
+         </form>			 
+     </td>	
+	 
+	 <td width="10%"></td>
+
+	<td width="20%">Enter New Total Time: </td>
+    <td width="20%">	
+		 <form action="" method="POST">
+	         <pre><SELECT NAME="t_total" style="color:brown;width:180;background:#DCDCDC">
+             <OPTION disabled selected hidden>Select</OPTION>
+			 <optgroup label="Total Time">
+			 <?z for($A=1; $A < count($t_total); $A++) { ?>
+             <OPTION> <?z print_opt($t_total,$A) ?> </OPTION> <?z } ?> 
+	         </optgroup>
+			 </SELECT></pre>
+	         <td width="5%"> <?z if($time_mode!=2) { ?> <input type="submit" value="Submit"> <?z } ?> </td> 
+         </form>
+	 </td>
+	 
+</tr>
+</table>
+<hr style="color: #cc9900; border-bottom: 2px solid #cc9900">
+
+<div style="font-size:14; color:black; margin-top:20; margin-bottom:10"> Designed @ Telemetry Lab - GMRT</div>
+
+<script>
+//document.getElementById("foot01").innerHTML =
+//"<p>&copy;  " + new Date().getFullYear() + " GMRT.NCRA.TIFR. All rights reserved.</p>";
+document.getElementById("nav02").innerHTML =
+"<ul id='menu'>" + "<li><a href='homep.zhtml'>Home</a></li></ul>" +
+"<ul id='menu1'>" + "<li><a href='calculations.zhtml'>Calculations</a></li></ul>" +
+"<ul id='menu2'>" + "<li><a href='MCM_Mon.zhtml'>Settings</a></li></ul>";
+
+var xmlhttp = new window.XMLHttpRequest();
+var Arg_1 = new Array();
+var Arg_2 = new Array();
+var Arg_3 = new Array();
+var Arg_4 = new Array();
+var Arg_5 = new Array();
+var Arg_6 = new Array();
+
+xmlhttp.open("GET", "Mon_Sum.xml", false);
+xmlhttp.send(null);
+xmlDoc = xmlhttp.responseXML.documentElement;
+
+Arg_1[0] = xmlDoc.getElementsByTagName("Arg1")[0].childNodes[0].nodeValue;
+Arg_2[0] = xmlDoc.getElementsByTagName("Arg2")[0].childNodes[0].nodeValue;
+Arg_3[0] = xmlDoc.getElementsByTagName("Arg3")[0].childNodes[0].nodeValue;
+Arg_4[0] = xmlDoc.getElementsByTagName("Arg4")[0].childNodes[0].nodeValue;
+Arg_5[0] = xmlDoc.getElementsByTagName("Arg5")[0].childNodes[0].nodeValue;
+Arg_6[0] = xmlDoc.getElementsByTagName("Arg6")[0].childNodes[0].nodeValue;
+
+document.getElementById("attn1").innerHTML  = Arg_1[0];
+document.getElementById("attn2").innerHTML  = Arg_2[0];
+document.getElementById("on1").innerHTML    = Arg_3[0];
+document.getElementById("total1").innerHTML = Arg_4[0];
+document.getElementById("rfi1").innerHTML   = Arg_5[0];
+document.getElementById("time1").innerHTML  = Arg_6[0];
+
+function validateMode1()
+{    
+    var m1 = document.forms["Form1"]["atten_mode"].value;
+    if (m1=="Radiation Through Antenna")
+    {
+        alert("Warning!!! High Power at output port for radiation through Antenna. Dissconnect output port connected to ADC.");
+    }
+}
+</script>
+</div>
+</div>
+</body>
+</html>

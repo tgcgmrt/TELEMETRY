@@ -1,0 +1,311 @@
+<html>
+<head>
+<title>New MCM Monitoring Window</title>
+ <style type="text/css">
+  .mainpage
+   {
+   width:1040;
+   padding : 10;
+   color : #FFDEAD;
+   background : LightSeaGreen;
+   font-size : 22;
+   font-family : Lucida Sans Unicode;
+   box-shadow: 12px 12px 10px gray;
+   border-radius: 15px;
+   -webkit-border-radius : 15px;
+   border:5px ridge green;
+   margin: 10px;
+  }
+
+  .out_rect
+  {
+   width:1009;
+   padding : 1px;
+   margin-bottom : 15;
+   background : #585858;
+   border-radius : 2px;
+   -webkit-border-radius : 2px;
+  }
+
+  .title
+  {
+   width:1007px;
+   height : 28;
+   padding-top : 6;
+   margin-top : 1;
+   color : Black ;
+   background: linear-gradient(gray, white, gray);
+   font-size : 16;
+   font-family : Lucida Sans Unicode;
+   text-align : center;
+   letter-spacing:1;
+  }
+
+  .rv
+  {
+   width : 62;
+   height : 60;
+   background : #BDBDBD;
+   color : black;
+   font-family : Arial;
+   font-size : 13;
+   text-align : center;
+   letter-spacing:1;
+  }
+
+  .cl
+  {
+   width : 60;
+   height : 17;
+   background : #BDBDBD;
+   color : black;
+   font-family : Arial;
+   font-size : 13;
+   padding : 1;
+   margin-bottom : 5px;
+   text-align : center;
+  }
+
+  .sys_mon
+  {
+   width : 503;
+   height : 35;
+   background : #A9E2F3;
+   font-family : Arial;
+   font-size : 14;
+   padding-left : 5px;
+   letter-spacing:1;
+  }
+
+  .sys_mon1
+  {
+   width : 200.5;
+   height : 35;
+   background : #A9E2F3;
+   font-family : Arial;
+   font-size : 14;
+   padding-left : 5px;
+   letter-spacing:1;
+  }
+
+  a:link {text-decoration:none;}
+  //a:visited {text-decoration:none;color:#FFFFFF}
+
+  </style>
+
+  <script type="text/javascript">
+
+     var raw_val = new Array();
+     var volt_val = new Array();
+     var Para_Name = new Array();
+     var Arg_1 = new Array();
+     var Arg_2 = new Array();
+     var Arg_c = new Array();
+
+     function Mon64_Table(tableID1, tableID2, tableID3, tableID4, tableID5)
+     {
+       var i, j;
+
+       var table1 = document.getElementById(tableID1);
+
+        for(i=0; i<4; i++)
+	    {
+           var row = table1.insertRow(i);
+
+          for(j=0;j<16;j++)
+	      {
+	      var cell = row.insertCell(j);
+          cell.innerHTML = "<div class = cl>" + ((i*16)+j+1) + "</div>";
+	      }
+        }
+       var table2 =  Dyn_Table(tableID2,3);
+	   var table3 =  Dyn_Table(tableID3,1);
+       var table4 =  Dyn_Table1(tableID4,9);
+       var table5 =  Dyn_Table(tableID5,2);
+
+       get_XML(table1, table2, table3, table4, table5);
+     }
+
+    function Dyn_Table(tableID, raw)
+     {
+       var table = document.getElementById(tableID);
+       for(i=0; i<raw; i++)
+	    {
+          var row = table.insertRow(i);
+          for(j=0;j<2;j++)
+	      {
+		  var cell = row.insertCell(j);
+		  cell.innerHTML = "<div class = sys_mon> </div>";
+	      }
+        }
+        return table;
+     }
+
+	 function Dyn_Table1(tableID, raw)
+     {
+       var table = document.getElementById(tableID);
+       for(i=0; i<raw; i++)
+	    {
+          var row = table.insertRow(i);
+          for(j=0;j<5;j++)
+	      {
+		  var cell = row.insertCell(j);
+		  cell.innerHTML = "<div class = sys_mon1> </div>";
+	      }
+        }
+        return table;
+     }
+
+
+     function get_XML(table1, table2, table3, table4, table5)
+     {
+        var i, j, k;
+        var xmlhttp = new window.XMLHttpRequest();
+
+	xmlhttp.open("GET", "Mon_Raw.xml", false);
+	xmlhttp.send(null);
+	xmlDoc1 = xmlhttp.responseXML.documentElement;
+
+	xmlhttp.open("GET", "Mon_Sum.xml", false);
+	xmlhttp.send(null);
+	xmlDoc2 = xmlhttp.responseXML.documentElement;
+
+	xmlhttp.open("GET", "Mon_check.xml", false);
+	xmlhttp.send(null);
+	xmlDoc3 = xmlhttp.responseXML.documentElement;
+
+	for(i=0;i<4;i++)
+        {
+	  for(j=0;j<16;j++)
+	  {
+	    raw_val[(i*16)+j] = xmlDoc1.getElementsByTagName("R")[(i*16)+j].childNodes[0].nodeValue;
+	    volt_val[(i*16)+j] = xmlDoc1.getElementsByTagName("V")[(i*16)+j].childNodes[0].nodeValue;
+	    table1.rows[i].cells[j].innerHTML = "<div class=rv><div class = cl><b>" + pad2((i*16)+j+1) + "</b></div><font color='brown'>" + raw_val[(i*16)+j] + "</font><br>" + volt_val[(i*16)+j] + "</div></div>";
+	  }
+	}
+
+    for(i=0; i<3; i++)
+	{
+        for(j=0;j<2;j++)
+	    {
+		Para_Name[(i*2)+j] = xmlDoc2.getElementsByTagName("Name")[(i*2)+j].childNodes[0].nodeValue;
+	    	Arg_1[(i*2)+j] = xmlDoc2.getElementsByTagName("Arg1")[(i*2)+j].childNodes[0].nodeValue;
+		    Arg_2[(i*2)+j] = xmlDoc2.getElementsByTagName("Arg2")[(i*2)+j].childNodes[0].nodeValue;
+
+		table2.rows[i].cells[j].innerHTML = "<table class=sys_mon style=color:green><tr><td width=40% style=font-size:15;color:blue>" + Para_Name[(i*2)+j] + "</td><td width=30%>" + Arg_1[(i*2)+j] + "</td><td>" + Arg_2[(i*2)+j] + "</td></tr></div>";
+        }
+	}
+
+	k=6;
+        for(j=0;j<2;j++)
+	    {
+		Para_Name[k] = xmlDoc2.getElementsByTagName("Name")[k].childNodes[0].nodeValue;
+	    	Arg_1[k] = xmlDoc2.getElementsByTagName("Arg1")[k].childNodes[0].nodeValue;
+
+		table3.rows[0].cells[j].innerHTML = "<table class=sys_mon style=color:green><tr><td width=40% style=color:blue>" + Para_Name[k] + "</td><td width=30%>" + Arg_1[k] + "</td><td></td></tr></div>";
+        k++;
+		}
+
+	k=8;
+	for(j=0;j<5;j++)
+	    {
+	    Arg_1[k] = xmlDoc2.getElementsByTagName("Arg1")[k].childNodes[0].nodeValue;
+
+		table4.rows[0].cells[j].innerHTML = "<table class=sys_mon1 style=color:black;background:#BDBDBD><tr><td align=center><b>" + Arg_1[k] + "</b></td></tr></div>";
+		k++;
+		}
+	for(i=1; i<9; i++)
+	{
+        for(j=0;j<5;j++)
+	    {
+	    Arg_1[k] = xmlDoc2.getElementsByTagName("Arg1")[k].childNodes[0].nodeValue;
+		Arg_c[k] = xmlDoc3.getElementsByTagName("Arg1")[k].childNodes[0].nodeValue;
+
+		if(j==0)
+		table4.rows[i].cells[j].innerHTML = "<table class=sys_mon1 style=color:blue><tr><td align=center>" + Arg_1[k] + "</td></tr></div>";
+		else if(Arg_1[k] > Arg_c[k])
+		table4.rows[i].cells[j].innerHTML = "<table class=sys_mon1 style=color:red><tr><td align=center>" + Arg_1[k] + "</td></tr></div>";
+        else
+		table4.rows[i].cells[j].innerHTML = "<table class=sys_mon1 style=color:green><tr><td align=center>" + Arg_1[k] + "</td></tr></div>";
+		k++;
+		}
+	}
+	k=53;
+	for(i=0; i<2; i++)
+	{
+        for(j=0;j<2;j++)
+	    {
+		Para_Name[k] = xmlDoc2.getElementsByTagName("Name")[k].childNodes[0].nodeValue;
+	    	Arg_1[k] = xmlDoc2.getElementsByTagName("Arg1")[k].childNodes[0].nodeValue;
+			Arg_c[k] = xmlDoc3.getElementsByTagName("Arg1")[k].childNodes[0].nodeValue;
+		if(i==0 && j==0)
+		{
+		if(Arg_1[k] < Arg_c[k])
+		table5.rows[i].cells[j].innerHTML = "<table class=sys_mon><tr><td width=40% style=color:blue>" + Para_Name[k] + "</td><td width=30% style=color:red>" + Arg_1[k] + "</td><td></td></tr></div>";
+        else
+		table5.rows[i].cells[j].innerHTML = "<table class=sys_mon><tr><td width=40% style=color:blue>" + Para_Name[k] + "</td><td width=30% style=color:green>" + Arg_1[k] + "</td><td></td></tr></div>";
+		k++;
+		}
+		else
+		{
+		if(Arg_1[k] > Arg_c[k])
+		table5.rows[i].cells[j].innerHTML = "<table class=sys_mon><tr><td width=40% style=color:blue>" + Para_Name[k] + "</td><td width=30% style=color:red>" + Arg_1[k] + "</td><td></td></tr></div>";
+        else
+		table5.rows[i].cells[j].innerHTML = "<table class=sys_mon><tr><td width=40% style=color:blue>" + Para_Name[k] + "</td><td width=30% style=color:green>" + Arg_1[k] + "</td><td></td></tr></div>";
+		k++;
+		}
+		}
+	}
+
+	setTimeout(function(){get_XML(table1,table2,table3,table4,table5)},1000);
+     }
+
+   function pad2(number)
+    {
+      return (number < 10 ? '0' : '') + number;
+    }
+
+ </script>
+
+</head>
+
+
+<body bgcolor="#E6E6E6" onload = "Mon64_Table('table1', 'table2', 'table3', 'table4', 'table5')">
+<center>
+
+<div class="mainpage"> New MCM Monitoring Window
+ <table width="550" style="font-size:12px;color:#FFDEAD;margin-bottom:10;margin-top:10;letter-spacing:1px"><tr><td width="45%">IP : <?z echo($ip) ?></td><td width="35%">Antenna : ___</td><td>System : OFC</td></tr></table>
+
+ <div class = "out_rect" style="margin-bottom:25">
+ <div class="title"> 64 MONITORING CHANNELS </div>
+ <table id="table1" cellspacing="1" cellpadding="0" style="text-align:center;">
+ </table> </div>
+
+ <div class="out_rect" style="margin-bottom:25">
+  <div class="title"> MCM STATUS </div>
+ <table id="table2" cellspacing="1" cellpadding="0" style="text-align:center;">
+ </table> </div>
+
+ <div class="out_rect" style="margin-bottom:25">
+ <div class="title"> OFC CONTROL PARAMETERS</div>
+ <table id="table3" cellspacing="1" cellpadding="0" style="text-align:center;">
+ </table> </div>
+
+ <div class="out_rect" style="margin-bottom:25">
+ <div class="title"> OFC MONITORING PARAMETERS</div>
+ <table id="table4" cellspacing="1" cellpadding="0" style="text-align:center;">
+ </table> </div>
+
+ <div class="out_rect" style="margin-bottom:25">
+ <div class="title"> SENTINEL SYSTEM PARAMETERS </div>
+ <table id="table5" cellspacing="1" cellpadding="0" style="text-align:center;">
+ </table> </div>
+
+ <a href="MCM_Set.zhtml" target="_new" style="font-size:16;color:black;background:linear-gradient(#E6E6E6, #BDBDBD, #BDBDBD);padding:5;padding-left:8;padding-right:8;border-radius:5px;-webkit-border-radius:4px;border:1px solid black"> Click Here to SET New MCM </a>
+
+ <div style="font-size:12; color:white; margin-top:20"> Designed @ Telemetry Lab - GMRT</div>
+
+</div>
+</center>
+</body>
+</html>

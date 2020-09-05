@@ -1,0 +1,8 @@
+<html>
+<body>
+<p> 
+<?z echo($in_d) ?> <br>
+
+</p>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<html>
+<head>
+<script type="text/javascript">
+function Get_Dog_Tags()
+{
+	var Breed;	//Store the Breed of the dog here
+	try 		//Test for Internet Explorer
+	{
+		xmlDoc=new ActiveXObject("Microsoft.XMLDOM");
+	}
+	catch(err)	//If ActiveX isn't going to work we use a more codified standard
+	{
+		try 	//Every browser but Internet Explorer
+		{
+			xmlDoc=document.implementation.createDocument("","",null);
+		}
+		catch(err) //If that doesn't work, we produce an error mocking our user.
+		{
+			alert("No XML for you!");
+			return;
+		}
+	}
+	xmlDoc.async=false;		//We want a synchronous connection
+	xmlDoc.load("dogs.xml");	//Load the XML file
+	
+	//Get the XML data from Scoobie_Doo tag and stash it in the Breed variable 
+	Breed = xmlDoc.getElementsByTagName("Scoobie_Doo")[0].childNodes[0].nodeValue;
+	
+	//Write the contents of Breed at the span tag with the id="Dog_Breed" 
+	//(See the HTML body below.)
+	document.getElementById("Dog_Breed").innerHTML=Breed;
+}
+</script>
+</head>
+
+<body>
+<b>What Kind of Dog is Scoobie Doo?</b>
+
+<p>Scoobie Doo is a <span id="Dog_Breed"></span></p>
+
+<p><button onclick="Get_Dog_Tags();">Snag an XML Dog Tag!</button></p>
+
+</body>
+</html>

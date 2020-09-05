@@ -1,0 +1,55 @@
+<!-- RabbitWeb XML file -->
+<RabbitWeb>
+	<Digital_Input>
+		<Port_A>
+			<PA0> <?z echo($DigIn_Port_A[0]) ?> </PA0>
+			<PA1> <?z echo($DigIn_Port_A[1]) ?> </PA1>
+			<PA2> <?z echo($DigIn_Port_A[2]) ?> </PA2>
+			<PA3> <?z echo($DigIn_Port_A[3]) ?> </PA3>
+			<PA4> <?z echo($DigIn_Port_A[4]) ?> </PA4>
+			<PA5> <?z echo($DigIn_Port_A[5]) ?> </PA5>
+			<PA6> <?z echo($DigIn_Port_A[6]) ?> </PA6>
+			<PA7> <?z echo($DigIn_Port_A[7]) ?> </PA7>
+		</Port_A>
+		<Port_B>
+			<PB0> <?z echo($DigIn_Port_B[0]) ?> </PB0>
+			<PB1> <?z echo($DigIn_Port_B[1]) ?> </PB1>
+			<PB2> <?z echo($DigIn_Port_B[2]) ?> </PB2>
+			<PB3> <?z echo($DigIn_Port_B[3]) ?> </PB3>
+			<PB4> <?z echo($DigIn_Port_B[4]) ?> </PB4>
+			<PB5> <?z echo($DigIn_Port_B[5]) ?> </PB5>
+			<PB6> <?z echo($DigIn_Port_B[6]) ?> </PB6>
+			<PB7> <?z echo($DigIn_Port_B[7]) ?> </PB7>
+		</Port_B>
+		<Port_C>
+			<PC0> <?z echo($DigIn_Port_C[0]) ?> </PC0>
+			<PC1> <?z echo($DigIn_Port_C[1]) ?> </PC1>
+			<PC2> <?z echo($DigIn_Port_C[2]) ?> </PC2>
+			<PC3> <?z echo($DigIn_Port_C[3]) ?> </PC3>
+			<PC4> <?z echo($DigIn_Port_C[4]) ?> </PC4>
+			<PC5> <?z echo($DigIn_Port_C[5]) ?> </PC5>
+			<PC6> <?z echo($DigIn_Port_C[6]) ?> </PC6>
+			<PC7> <?z echo($DigIn_Port_C[7]) ?> </PC7>
+		</Port_C>
+		<Port_D>
+			<PD0> <?z echo($DigIn_Port_D[0]) ?> </PD0>
+			<PD1> <?z echo($DigIn_Port_D[1]) ?> </PD1>
+			<PD2> <?z echo($DigIn_Port_D[2]) ?> </PD2>
+			<PD3> <?z echo($DigIn_Port_D[3]) ?> </PD3>
+			<PD4> <?z echo($DigIn_Port_D[4]) ?> </PD4>
+			<PD5> <?z echo($DigIn_Port_D[5]) ?> </PD5>
+			<PD6> <?z echo($DigIn_Port_D[6]) ?> </PD6>
+			<PD7> <?z echo($DigIn_Port_D[7]) ?> </PD7>
+		</Port_D>
+		<Port_E>
+			<PE0> <?z echo($DigIn_Port_E[0]) ?> </PE0>
+			<PE1> <?z echo($DigIn_Port_E[1]) ?> </PE1>
+			<PE2> <?z echo($DigIn_Port_E[2]) ?> </PE2>
+			<PE3> <?z echo($DigIn_Port_E[3]) ?> </PE3>
+			<PE4> <?z echo($DigIn_Port_E[4]) ?> </PE4>
+			<PE5> <?z echo($DigIn_Port_E[5]) ?> </PE5>
+			<PE6> <?z echo($DigIn_Port_E[6]) ?> </PE6>
+			<PE7> <?z echo($DigIn_Port_E[7]) ?> </PE7>
+		</Port_E>
+	</Digital_Input>
+</RabbitWeb>

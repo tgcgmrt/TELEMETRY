@@ -1,0 +1,304 @@
+
+<html>
+<head>
+  <title>RFI Emulator Calculations</title>
+  
+<style type="text/css">  
+  body {
+    font-family: "Trebuchet MS", Verdana, sans-serif;
+    font-size: 16px;
+    background-color: white; 
+    color: black;
+    padding: 5px;
+}
+
+#main {
+    width:1216;
+    padding: 5px;
+    padding-left:  5px;
+    padding-right: 5px;
+    background-color: LightSeaGreen;
+    border-radius: 10px 10px 10px 10px;
+    border:5px ridge black;
+}
+
+.out_rect
+  {
+   width:1204;
+   padding : 1px;
+   margin: 5 5 5 5;
+   background : #A9E2F3;
+   border-radius: 10px 10px 10px 10px;
+   -webkit-border-radius: 10px 10px 10px 10px;
+  }
+
+h1 {
+    font-family: Georgia, serif;
+    border-bottom: 3px solid #cc9900;
+    color: #996600;
+    font-size: 30px;
+}
+ul#menu {
+    padding: 0;
+	margin-top: 15px;
+}
+
+ul#menu li {
+    display: inline;
+    margin-left: -240px;
+}
+
+ul#menu li a {
+    background-color: gray;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: white;
+	border-width:5px;
+	border-color:black;
+	border-style:ridge ridge hidden ridge;
+}
+
+ul#menu li a:hover {
+    color: white;
+    background-color: LightSeaGreen;
+}
+
+ul#menu1 {
+    padding: 0;
+	margin-top: -36px;
+}
+
+ul#menu1 li {
+    display: inline;
+	margin-left: -15px;
+}
+
+ul#menu1 li a {
+    background-color: LightSeaGreen;
+    padding: 13px 20px;
+    text-decoration: none;
+    color: white;
+    border-width:5px;
+	border-color:black;
+	border-style:ridge ridge hidden ridge;
+}
+
+ul#menu1 li a:hover {
+    color: white;
+    background-color: gray;
+}
+
+ul#menu2 {
+    padding: 0;
+	margin-top: -40px;
+	margin-bottom: 10px;
+}
+
+ul#menu2 li {
+    display: inline;
+    margin-left: 225px;
+}
+
+ul#menu2 li a {
+    background-color: gray;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: white;
+    border-width:5px;
+	border-color:black;
+	border-style:ridge ridge hidden ridge;
+}
+
+ul#menu2 li a:hover {
+    color: white;
+    background-color: LightSeaGreen;
+}
+
+</style>
+
+<script>
+		
+function myfunc()
+    {
+	var i,j;
+	var abw;
+	var anf;  //11
+	var pnf;
+	var nfw;
+	var nfv;
+	var nfmv;  //21
+	var nfmv1; //22
+	var nfmv3; //41
+	var nfmv5; //42
+	var nfw1;
+	var nfw3;
+	var nfw5;
+	var anf1; //12
+	var anf3; //31
+	var anf5; //32
+	var cnt;
+	var apn1;
+	var apn3;
+	var apn5;
+	var p1 = document.getElementsByName('para1')[0].value;
+	//alert(p1);
+	var p2 = document.getElementById("user_input").value;
+	//alert(p2);
+	
+	pnf=p2;
+	
+	if(p1==0){abw=-7; cnt=3.77;} 
+	else if(p1==1) {abw=-10; cnt=0;}
+	else if(p1==2) {abw=-13; cnt=-3;}	
+	
+	//if(p2==0) pnf=-17;
+	//if(p2==1) pnf=-18;
+	//if(p2==2) pnf=-19;	
+	anf=abw-pnf;
+	
+	nfw=Math.pow(10, (pnf/10))/1000;
+	nfv = Math.sqrt(nfw*50);
+	nfmv = nfv*1000;
+	
+	nfmv1= nfmv;
+	nfmv3= nfmv*3;
+	nfmv5= nfmv*5;
+	
+	nfw1= (Math.pow((nfmv1*0.001),2))/50;
+	nfw3= (Math.pow((nfmv3*0.001),2))/50;
+	nfw5= (Math.pow((nfmv5*0.001),2))/50;
+	anf1 = 10 * (Math.log10(nfw1/0.001));
+	anf3 = 10 * (Math.log10(nfw3/0.001));
+	anf5 = 10 * (Math.log10(nfw5/0.001));
+	
+	apn1 = Math.floor(cnt-anf1);
+	apn3 = Math.floor(cnt-anf3);
+	apn5 = Math.floor(cnt-anf5);
+	document.getElementById("nfmv").innerHTML  = nfmv.toFixed(2);
+	document.getElementById("nfmv1").innerHTML = nfmv1.toFixed(2);
+	document.getElementById("nfmv3").innerHTML = nfmv3.toFixed(2);
+	document.getElementById("nfmv5").innerHTML = nfmv5.toFixed(2);
+	document.getElementById("apn3").innerHTML  = apn3.toFixed(2);
+	document.getElementById("apn5").innerHTML  = apn5.toFixed(2);
+	document.getElementById("anf").innerHTML   = anf.toFixed(2);
+	document.getElementById("apn1").innerHTML  = apn1.toFixed(2);
+
+	//alert(apn5);
+	}
+
+</script>
+  
+</head>
+<center>
+<body onload = "myfunc()">
+  <nav id="nav01"></nav>
+  <div id="main">
+  <div class = "out_rect">
+  <h1 style="margin-bottom:15px">RFI Emulator Attenuation Selection</h1> 
+
+<table width="800" style = "font-size:15px; margin-bottom:15px; margin-top:15px">
+	<form>
+		<tr> 
+			<td width="70%"><font size="4px" color="blue"><b>Enter the bandwidth of operation for broadband RFI emulator</b></font></td>
+			<td width="30%">	
+				<SELECT style="color:brown;width:100;background:#DCDCDC" name = "para1" onchange="myfunc();">
+				<OPTION disabled selected hidden>Select</OPTION>
+				<optgroup label="Bandwidth">
+				<OPTION value = "0" selected> 400 MHz </OPTION> 
+				<OPTION value = "1"> 200 MHz </OPTION> 
+				<OPTION value = "2"> 100 MHz </OPTION> 
+				</optgroup>
+				</SELECT>   
+			</td>
+		</tr>
+
+		<tr>
+			<td width="70%"><font size="4px" color="blue"><b>Enter the required power level of noise floor in dBm</b></font></td>
+			<td width="30%">	
+				<input style="color:black; background:#D8D8D8" type="number" id="user_input" placeholder="0" maxlength="3" size="3" onclick="myfunc();"> 				
+			</td>
+		</tr>
+	</form>
+</table>
+
+<hr style="color: #cc9900; border-bottom: 2px solid #cc9900">
+
+<table width="800" style = "font-size:15px; margin-bottom:15px; margin-top:15px">
+	<tr> 
+		<td width="50%" align="center"><font size="4px" color="blue"><b>Noise Floor</b></font></td>
+		<td width="50%" align="center"><font size="4px" color="blue"><b>1S Pulse Noise</b></font></td>
+	</tr>
+</table>
+
+<table width="800" style = "font-size:15px; margin-bottom:10px; margin-top:10px">
+	<tr> 
+		<td width="20%">R.M.S. in mV: </td>
+		<td width="20%">&#9658; &nbsp<font color="brown" id="nfmv"></font></td><td width="15%"></td>
+		<td width="20%">R.M.S. in mV: </td>
+		<td width="20%">&#9658; &nbsp<font color="brown" id="nfmv1"></font></td><td width="5%"></td>
+	</tr>
+</table>
+
+<table width="800" style = "font-size:15px; margin-bottom:15px; margin-top:10px">
+	<tr> 
+		<td width="20%">Required Attenuation </td>
+		<td width="20%">&#9658; &nbsp<font color="brown" id="anf"></font></td><td width="15%"></td>
+		<td width="20%">Required Attenuation </td>
+		<td width="20%">&#9658; &nbsp<font color="brown" id="apn1"></font></td><td width="5%"></td>
+	</tr>
+</table>
+
+<hr style="color: #cc9900; border-bottom: 2px solid #cc9900">
+
+<table width="800" style = "font-size:15px; margin-bottom:15px; margin-top:15px">
+	<tr> 
+		<td width="50%" align="center"><font size="4px" color="blue"><b>3S Pulse Noise</b></font></td>
+		<td width="50%" align="center"><font size="4px" color="blue"><b>5S Pulse Noise</b></font></td>
+	</tr>
+</table>
+
+<table width="800" style = "font-size:15px; margin-bottom:10px; margin-top:10px">
+	<tr> 
+		<td width="20%">R.M.S. in mV </td>
+		<td width="20%">&#9658; &nbsp<font color="brown" id="nfmv3"></font></td><td width="15%"></td>
+		<td width="20%">R.M.S. in mV </td>
+		<td width="20%">&#9658; &nbsp<font color="brown" id="nfmv5"></font></td><td width="5%"></td>
+	</tr>
+</table>
+
+<table width="800" style = "font-size:15px; margin-bottom:15px; margin-top:10px">
+	<tr> 
+		<td width="20%">Required Attenuation </td>
+		<td width="20%">&#9658; &nbsp<font color="brown" id="apn3"></font></td><td width="15%"></td>
+		<td width="20%">Required Attenuation </td>
+		<td width="20%">&#9658; &nbsp<font color="brown" id="apn5"></font></td><td width="5%"></td>
+	</tr>
+</table>
+
+<hr style="color: #cc9900; border-bottom: 2px solid #cc9900">
+
+<div>
+  <p align="left" style="margin-top:-18px"><pre><font size="3px">
+  <b>Note: 1.</b> If any required attenuation value is coming negative this means setting is not possible, please reduce the Noise floor power level.
+  <b>Note: 2.</b> Selection of Bandwidth depends on Low pass filter in hardware (default 400MHz).
+  <b>Note: 3.</b> Pulse Noise Power level depends on duty cycle.</font></pre>
+  </p>
+</div>
+
+<hr style="color: #cc9900; border-bottom: 2px solid #cc9900">
+
+<div style="font-size:14; color:black; margin-top:20; margin-bottom:10"> Designed @ Telemetry Lab - GMRT</div>
+
+<center> 
+<script>
+//document.getElementById("foot01").innerHTML =
+//"<p>&copy;  " + new Date().getFullYear() + " Designed @ Telemetry Lab.</p>";
+document.getElementById("nav01").innerHTML =
+"<ul id='menu'>" + "<li><a href='homep.zhtml'>Home</a></li></ul>" +
+"<ul id='menu1'>" + "<li><a href='calculations.zhtml'>Calculations</a></li></ul>" +
+"<ul id='menu2'>" + "<li><a href='MCM_Mon.zhtml'>Settings</a></li></ul>";
+</script>
+</div>
+</div>
+</body>
+</html>

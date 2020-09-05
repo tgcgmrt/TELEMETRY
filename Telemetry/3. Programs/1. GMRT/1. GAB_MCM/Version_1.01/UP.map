@@ -1,0 +1,101 @@
+// Compilers view of MMU. Note these values are determined by the origin statements in the BIOS.
+//Segment           Origin     Size
+Root Code           0000:0000    001405
+Root Data           0010:b3c6    000000
+Xmem Code           0000:e756    000000
+
+
+
+// Function mapping and source reference.
+// * The size of labels is indeterminate and so is denoted with an asterisk.
+//  Addr     Size   Function                        File                         Line Num
+
+
+// Global/static data symbol mapping and source reference.
+//  Addr     Size   Symbol                          File                         Line Num  Type
+
+// Parameter and local auto symbol mapping and source reference.
+//Offset Rel. to     Size   Symbol                          File                         Line Num  Type
+
+
+// Macro listing and source reference.
+//  Name                           File                         Line Num
+   _RESTRICT_WATCHCODE_            
+   SETUSERMODE                     \DEFAULT.H                         14
+   SETSYSMODE                      \DEFAULT.H                         15
+   _system                         \DEFAULT.H                         16
+   _SYS_CALL_VARS                  \DEFAULT.H                         17
+   _NET_SYSCALL                    \DEFAULT.H                         18
+   _rk_printf                      \DEFAULT.H                         19
+   _rk_sprintf                     \DEFAULT.H                         20
+   DK_ENABLE_BREAKPOINTS           \DEFAULT.H                         28
+   DK_ENABLE_ASMSINGLESTEP         \DEFAULT.H                         36
+   DK_ENABLE_WATCHEXPRESSIONS      \DEFAULT.H                         44
+   DK_ENABLE_TRACING               \DEFAULT.H                         52
+   DK_ENABLE_STACK_TRACING         \DEFAULT.H                         60
+   DK_SEND_STACK_LENGTH            \DEFAULT.H                         68
+   DK_ENABLE_DEBUGKERNEL           \DEFAULT.H                         70
+   DK_ENABLE_TRACING               \DEFAULT.H                         77
+   DK_ENABLE_STACK_TRACING         \DEFAULT.H                         80
+   DK_ENABLE_ASMSINGLESTEP         \DEFAULT.H                         83
+   DK_ENABLE_BREAKPOINTS           \DEFAULT.H                         86
+   DK_ENABLE_WATCHEXPRESSIONS      \DEFAULT.H                         89
+   __RABBIT_H                      \RABBIT.H                          34
+   ZWORLD_RESERVED_SIZE            \RABBIT.H                          65
+   __DMA_LIB                       \DMA.LIB                           14
+   _dma_nodebug                    \DMA.LIB                           21
+   DMA_CHANNEL_NONE                \DMA.LIB                           24
+   DMA_CHANNEL_ANY                 \DMA.LIB                           28
+   DMA_CHANNEL_0                   \DMA.LIB                           30
+   DMA_CHANNEL_1                   \DMA.LIB                           31
+   DMA_CHANNEL_2                   \DMA.LIB                           32
+   DMA_CHANNEL_3                   \DMA.LIB                           33
+   DMA_CHANNEL_4                   \DMA.LIB                           34
+   DMA_CHANNEL_5                   \DMA.LIB                           35
+   DMA_CHANNEL_6                   \DMA.LIB                           36
+   DMA_CHANNEL_7                   \DMA.LIB                           37
+   DMA_IDP_FIXED                   \DMA.LIB                           48
+   DMA_IDP_ROTATE_FINE             \DMA.LIB                           49
+   DMA_IDP_ROTATE_COARSE           \DMA.LIB                           50
+   DMA_LAST_DESC                   \DMA.LIB                           53
+   DMA_LINK_DESC                   \DMA.LIB                           54
+   DMA_SRC_IOI                     \DMA.LIB                           55
+   DMA_SRC_IOE                     \DMA.LIB                           56
+   DMA_SRC_MEMDEC                  \DMA.LIB                           57
+   DMA_SRC_MEM                     \DMA.LIB                           58
+   DMA_DEST_IOI                    \DMA.LIB                           59
+   DMA_DEST_IOE                    \DMA.LIB                           60
+   DMA_DEST_MEMDEC                 \DMA.LIB                           61
+   DMA_DEST_MEM                    \DMA.LIB                           62
+   DMA_F_DEST_DEC                  \DMA.LIB                           65
+   DMA_F_SRC_DEC                   \DMA.LIB                           66
+   DMA_F_REPEAT                    \DMA.LIB                           67
+   DMA_F_INTERRUPT                 \DMA.LIB                           68
+   DMA_F_LAST_SPECIAL              \DMA.LIB                           69
+   DMA_F_STOP_MATCH                \DMA.LIB                           70
+   DMA_F_FALLING                   \DMA.LIB                           71
+   DMA_F_RISING                    \DMA.LIB                           72
+   DMA_F_LOW                       \DMA.LIB                           73
+   DMA_F_HIGH                      \DMA.LIB                           74
+   DMA_F_PD2                       \DMA.LIB                           75
+   DMA_F_PE2                       \DMA.LIB                           76
+   DMA_F_PE6                       \DMA.LIB                           77
+   DMA_F_PD3                       \DMA.LIB                           78
+   DMA_F_PE3                       \DMA.LIB                           79
+   DMA_F_PE7                       \DMA.LIB                           80
+   DMA_F_TIMER                     \DMA.LIB                           81
+   DMA_F_TIMER_1BPR                \DMA.LIB                           82
+   DMA_SC_USB_RX                   \DMA.LIB                           85
+   DMA_SC_USB_TX                   \DMA.LIB                           86
+   DMA_SC_CS_OFF                   \DMA.LIB                           88
+   DMA_SC_DC_SRC                   \DMA.LIB                           90
+   DMA_SC_SRC_FIXED                \DMA.LIB                           91
+   DMA_SC_DC_DEST                  \DMA.LIB                           92
+   DMA_SC_DEST_FIXED               \DMA.LIB                           93
+   DMAstartDirect                  \DMA.LIB                          100
+   DMAstartAuto                    \DMA.LIB                          101
+   DMAstopDirect                   \DMA.LIB                          102
+
+
+// Function call graph.
+No call graph information available.

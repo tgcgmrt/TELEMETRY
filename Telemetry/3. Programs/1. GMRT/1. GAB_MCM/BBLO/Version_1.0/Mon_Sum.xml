@@ -1,0 +1,51 @@
+<xml>
+
+<Name> MCM Time </Name>
+<Arg1> <?z echo($time1) ?></Arg1>
+<Arg2> <?z echo($date) ?></Arg2>
+
+<Name> Clock Frequency </Name>
+<Arg1> <?z echo($MCM_Clk) ?></Arg1>
+<Arg2> </Arg2>
+
+<Name> Spectrum Spreader </Name>
+<Arg1> <?z echo($SS1_Mon) ?> (0-50MHz)</Arg1>
+<Arg2> <?z echo($SS2_Mon) ?> (>50MHz)</Arg2>
+
+<Name> Clock Doubler </Name>
+<Arg1> <?z echo($FDB_Mon) ?></Arg1>
+<Arg2> </Arg2>
+
+<Name> Digital Mask </Name>
+<Arg1> <?z echo($mswT) ?> </Arg1>
+<Arg2> <?z echo($lswT) ?> </Arg2>
+
+<Name> Clock Divided By </Name>
+<Arg1> <?z echo($FDV_Mon) ?></Arg1>
+<Arg2> </Arg2>
+
+<Name> Parameters </Name>
+<Arg1> Channel 1 </Arg1>
+<Arg2> Channel 2 </Arg2>
+
+<Name> LO Frequency </Name>
+<Arg1> <?z echo($BBLO1_Mon) ?> <?z echo($synth1) ?> </Arg1>
+<Arg2> <?z echo($BBLO1_Mon) ?> <?z echo($synth2) ?> </Arg2>
+
+<Name> Lock Indication </Name>
+<Arg1> <?z echo($lock_indicator1) ?> </Arg1>
+<Arg2> <?z echo($lock_indicator2) ?> </Arg2>
+
+<Name> RF Power </Name>
+<Arg1> <?z echo($rf_power1) ?> </Arg1>
+<Arg2> <?z echo($rf_power2) ?> </Arg2>
+
+<Name> DC Power </Name>
+<Arg1> <?z echo($dc_power1) ?> </Arg1>
+<Arg2> <?z echo($dc_power2) ?> </Arg2>
+
+<Name> Temp. (Inside PIU) </Name>
+<Arg1> <?z echo($bb_temp1) ?> &#8451; </Arg1>
+<Arg2> <?z echo($bb_temp2) ?> &#8451; </Arg2>
+
+</xml>

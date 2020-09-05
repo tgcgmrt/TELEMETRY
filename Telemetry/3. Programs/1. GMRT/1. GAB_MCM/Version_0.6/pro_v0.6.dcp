@@ -1,0 +1,381 @@
+This is a machine generated file.
+Modifications by hand must be made carefully at one's own risk.
+Deleting an entry will result in factory default for that entry.
+----------------------------------------------------------------
+
+[COMM]
+port=9
+coldload baud=2400
+pilot baud=57600
+bios baud=115200
+Max Negotiated Baud=460800
+stop bits=2
+use TCP=0
+TCP Port=0
+TCP Name=
+Net Address=
+Serial Response Timeout=400
+Ethernet Response Timeout=8000
+Serial Retry Count=5
+Ethernet Retry Count=0
+Serial Poll Interval=3000
+Ethernet Poll Interval=30000
+Verify DSR=1
+Use USB to Serial Converter=1
+Disable Baud Negotiation=0
+USB to Serial Delay=500
+Begin Probe Delay=100
+End Probe Delay=300
+Begin Pilot Delay=0
+End Pilot Delay=0
+Pilot Bios Physical Address=0x4000
+Flash erase timeout=10000
+Use RabbitLink=0
+RabbitLink Port=0
+RabbitLink Address=
+RabbitLink Name=
+[Compiler Options]
+Max Errors Shown=100
+Max Warnings Shown=10
+All Serious None=A
+RTC Indices=1
+RTC Pointers=0
+Optimize For Size=0
+Prototypes=1
+Demotion=1
+Pointers=1
+BIOS Memory Mode=0
+Restrict Watch Expressions=0
+Separate Instruction and Data=0
+Generate List Files=0
+Inline Internal IO Functions=1
+Detect Internal Memory=1
+Detect Memory=1
+Flash type=64
+Memory type=8
+Default Compile Mode=0
+[Debug Options]
+Enable Breakpoints=1
+Enable Instruction Level Single Step=1
+Enable Watch Expressions=1
+Max Breakpoints=32
+Max Watch Expressions=8
+Watch Memory for Structs=512
+Enable Stack Tracing=1
+Stack Tracing Memory=4096
+Enable debug kernel=1
+[Include RST 28]
+Include RST=2
+[Include BIOS]
+Include BIOS=1
+[Poll Target]
+Poll target while running=1
+[Targetless Compile]
+Board ID=0x2702
+CPU ID=4000
+CPU Revision=0
+Crystal Speed MHz=29.4912
+RAM Size KBytes=512
+Flash Size KBytes=512
+Description=58MHz, RCM4000, 512K SRAM, 512K Flash, analog, 32M nand Flash
+Macros=CLK_DBL=1;BRD_OPT0=0x17;MD0=0x1;MD0_ID=0x2780;MD0_TYPE=0x5;MD0_SIZE=0x80;MD0_SECSIZE=0x1000;MD0_SECNUM=0x80;MD0_SPEED=0x37;MD0_MBC=0x40;MD2=0x1;MD2_ID=0x1;MD2_TYPE=0x0;MD2_SIZE=0x80;MD2_SECSIZE=0x0;MD2_SECNUM=0x0;MD2_SPEED=0x37;MD2_MBC=0x45
+[Output File]
+Auto open STDIO=1
+Append=0
+Log STDIO=0
+Output File Name=DC.OUT
+[Dynamic C Files]
+Use Rabbit 4000 Libs=1
+Use Lib File=0
+Use BIOS File=0
+Use Default Source File=0
+LIB File=
+BIOS File=
+CS0 RAM Detect File=bios\checkRamCS0.bin
+Pre-Cold Loader File=bios\precoldload.bin
+Cold Loader File=bios\coldload.bin
+16-bit Cold Loader File=bios\coldload16bit.bin
+Serial Flash Cold Loader File=bios\coldloadserflash.bin
+Pilot BIOS File=bios\pilot.bin
+16-bit Pilot BIOS File=bios\pilot16bit.bin
+Serial Flash Pilot BIOS File=bios\pilotserflash.bin
+Default Source File=
+Start Dir=D:\New_MCM_Dev\New_MCM_SW\In_House_CMS\Version_0.6\
+[DEFINES]
+Defines=
+[Compression Utility]
+Zimport External Utility=ZCOMPRESS.EXE
+[MRU Files]
+FileCount=10
+[Open Files]
+Number Open=0
+[C FILES]
+C Files=D:\New_MCM_Dev\New_MCM_SW\In_House_CMS\Version_0.6\main_v06.c;
+[Project Explorer]
+ProjEx Window Open=1
+ProjEx Window X=583
+ProjEx Window Y=769
+ProjEx Window W=692
+ProjEx Window H=113
+ProjEx Window State=0
+[INCLUDES]
+Includes=C:\DCRABBIT_10.64\Include;
+[MRU 1]
+MRU 1 Path=D:\New_MCM_Dev\New_MCM_SW\In_House_CMS\Version_0.6\main_v06.c
+MRU 1 Read Only=0
+MRU 1 X=28
+MRU 1 Y=13
+MRU 1 W=1173
+MRU 1 H=537
+MRU 1 Top Row=234
+MRU 1 WindowState=0
+MRU 1 Cursor Row=234
+MRU 1 Cursor Col=2
+[MRU 2]
+MRU 2 Path=D:\New_MCM_Dev\New_MCM_SW\In_House_CMS\Version_0.6\define.c
+MRU 2 Read Only=0
+MRU 2 X=102
+MRU 2 Y=269
+MRU 2 W=1042
+MRU 2 H=500
+MRU 2 Top Row=0
+MRU 2 WindowState=0
+MRU 2 Cursor Row=6
+MRU 2 Cursor Col=35
+[OpenFile  1]
+OpenFile  1 Path=D:\New_MCM_Dev\New_MCM_SW\In_House_CMS\Version_0.6\main_v06.c
+OpenFile  1 Read Only=0
+OpenFile  1 X=28
+OpenFile  1 Y=13
+OpenFile  1 W=1173
+OpenFile  1 H=537
+OpenFile  1 Top Row=234
+OpenFile  1 Top Col=0
+OpenFile  1 WindowState=0
+OpenFile  1 Cursor Row=234
+OpenFile  1 Cursor Col=2
+[OpenFile  2]
+OpenFile  2 Path=D:\New_MCM_Dev\New_MCM_SW\In_House_CMS\Version_0.6\define.c
+OpenFile  2 Read Only=0
+OpenFile  2 X=102
+OpenFile  2 Y=269
+OpenFile  2 W=1042
+OpenFile  2 H=500
+OpenFile  2 Top Row=0
+OpenFile  2 Top Col=0
+OpenFile  2 WindowState=0
+OpenFile  2 Cursor Row=6
+OpenFile  2 Cursor Col=35
+[OpenFile  3]
+OpenFile  3 Path=D:\New_MCM_Dev\New_MCM_SW\In_House_CMS\Version_0.6\define.c
+OpenFile  3 Read Only=0
+OpenFile  3 X=182
+OpenFile  3 Y=53
+OpenFile  3 W=921
+OpenFile  3 H=500
+OpenFile  3 Top Row=124
+OpenFile  3 Top Col=0
+OpenFile  3 WindowState=0
+OpenFile  3 Cursor Row=124
+OpenFile  3 Cursor Col=22
+[MRU 3]
+MRU 3 Path=D:\New_MCM_Dev\New_MCM_SW\In_House_CMS\Version_0.6\MCM_Mon.zhtml
+MRU 3 Read Only=0
+MRU 3 X=132
+MRU 3 Y=180
+MRU 3 W=800
+MRU 3 H=500
+MRU 3 Top Row=165
+MRU 3 WindowState=2
+MRU 3 Cursor Row=197
+MRU 3 Cursor Col=55
+[MRU 4]
+MRU 4 Path=C:\DCRABBIT_10.62\Samples\FileSystem\FAT\fat_create.c
+MRU 4 Read Only=0
+MRU 4 X=315
+MRU 4 Y=254
+MRU 4 W=800
+MRU 4 H=500
+MRU 4 Top Row=64
+MRU 4 WindowState=0
+MRU 4 Cursor Row=83
+MRU 4 Cursor Col=49
+[OpenFile  4]
+OpenFile  4 Path=D:\New_MCM_Dev\New_MCM_SW\In_House_CMS\Version_0.6\gab_bits.c
+OpenFile  4 Read Only=0
+OpenFile  4 X=329
+OpenFile  4 Y=230
+OpenFile  4 W=800
+OpenFile  4 H=500
+OpenFile  4 Top Row=0
+OpenFile  4 Top Col=0
+OpenFile  4 WindowState=0
+OpenFile  4 Cursor Row=4
+OpenFile  4 Cursor Col=28
+[MRU 5]
+MRU 5 Path=C:\DCRABBIT_10.62\Samples\SERIAL\PUTS.C
+MRU 5 Read Only=0
+MRU 5 X=132
+MRU 5 Y=180
+MRU 5 W=800
+MRU 5 H=500
+MRU 5 Top Row=33
+MRU 5 WindowState=2
+MRU 5 Cursor Row=47
+MRU 5 Cursor Col=7
+[MRU 6]
+MRU 6 Path=D:\New_MCM_Dev\New_MCM_SW\In_House_CMS\Version_0.6\Mon_Sum.xml
+MRU 6 Read Only=0
+MRU 6 X=198
+MRU 6 Y=270
+MRU 6 W=800
+MRU 6 H=500
+MRU 6 Top Row=0
+MRU 6 WindowState=0
+MRU 6 Cursor Row=19
+MRU 6 Cursor Col=25
+[MRU 7]
+MRU 7 Path=D:\New_MCM_Dev\New_MCM_SW\In_House_CMS\Version_0.6\Init.c
+MRU 7 Read Only=0
+MRU 7 X=258
+MRU 7 Y=142
+MRU 7 W=800
+MRU 7 H=500
+MRU 7 Top Row=138
+MRU 7 WindowState=0
+MRU 7 Cursor Row=147
+MRU 7 Cursor Col=20
+[OpenFile  5]
+OpenFile  5 Path=D:\New_MCM_Dev\New_MCM_SW\GSB_Monitoring\GSB_Mon\main_v04.c
+OpenFile  5 Read Only=0
+OpenFile  5 X=0
+OpenFile  5 Y=0
+OpenFile  5 W=800
+OpenFile  5 H=500
+OpenFile  5 Top Row=0
+OpenFile  5 Top Col=0
+OpenFile  5 WindowState=0
+OpenFile  5 Cursor Row=0
+OpenFile  5 Cursor Col=0
+[MRU 8]
+MRU 8 Path=D:\New_MCM_Dev\New_MCM_SW\In_House_CMS\Version_0.6\fe_bits.c
+MRU 8 Read Only=0
+MRU 8 X=391
+MRU 8 Y=120
+MRU 8 W=800
+MRU 8 H=500
+MRU 8 Top Row=0
+MRU 8 WindowState=0
+MRU 8 Cursor Row=19
+MRU 8 Cursor Col=45
+[MRU 9]
+MRU 9 Path=D:\New_MCM_Dev\New_MCM_SW\In_House_CMS\Version_0.6\gab_bits.c
+MRU 9 Read Only=0
+MRU 9 X=400
+MRU 9 Y=4
+MRU 9 W=800
+MRU 9 H=500
+MRU 9 Top Row=0
+MRU 9 WindowState=0
+MRU 9 Cursor Row=4
+MRU 9 Cursor Col=28
+[MRU10]
+MRU10 Path=D:\New_MCM_Dev\New_MCM_SW\Online_Clnt\Version_0.4\main_v04.c
+MRU10 Read Only=0
+MRU10 X=132
+MRU10 Y=180
+MRU10 W=800
+MRU10 H=500
+MRU10 Top Row=1333
+MRU10 WindowState=2
+MRU10 Cursor Row=1390
+MRU10 Cursor Col=41
+[MRU11]
+MRU11 Path=D:\New_MCM_Dev\New_MCM_SW\In_House_CMS\Version_0.5\main_v05.c
+MRU11 Read Only=0
+MRU11 X=0
+MRU11 Y=0
+MRU11 W=1276
+MRU11 H=520
+MRU11 Top Row=208
+MRU11 WindowState=0
+MRU11 Cursor Row=208
+MRU11 Cursor Col=2
+[MRU12]
+MRU12 Path=D:\New_MCM_Dev\New_MCM_SW\In_House_CMS\Version_0.5\fe_bits.c
+MRU12 Read Only=0
+MRU12 X=391
+MRU12 Y=400
+MRU12 W=777
+MRU12 H=425
+MRU12 Top Row=8
+MRU12 WindowState=0
+MRU12 Cursor Row=19
+MRU12 Cursor Col=55
+[MRU13]
+MRU13 Path=D:\New_MCM_Dev\New_MCM_SW\In_House_CMS\Version_0.5\Mon_Sum.xml
+MRU13 Read Only=0
+MRU13 X=279
+MRU13 Y=261
+MRU13 W=800
+MRU13 H=500
+MRU13 Top Row=0
+MRU13 WindowState=0
+MRU13 Cursor Row=29
+MRU13 Cursor Col=18
+[MRU14]
+MRU14 Path=D:\New_MCM_Dev\New_MCM_SW\In_House_CMS\Version_0.2\main_v02.c
+MRU14 Read Only=0
+MRU14 X=0
+MRU14 Y=0
+MRU14 W=1276
+MRU14 H=568
+MRU14 Top Row=633
+MRU14 WindowState=0
+MRU14 Cursor Row=644
+MRU14 Cursor Col=50
+[MRU15]
+MRU15 Path=C:\DCRABBIT_10.62\Samples\XMEM\XDATA.C
+MRU15 Read Only=0
+MRU15 X=176
+MRU15 Y=232
+MRU15 W=800
+MRU15 H=500
+MRU15 Top Row=51
+MRU15 WindowState=2
+MRU15 Cursor Row=0
+MRU15 Cursor Col=0
+[MRU16]
+MRU16 Path=C:\DCRABBIT_10.62\Samples\RCM4000\ADC\AD_CAL_ALL.C
+MRU16 Read Only=0
+MRU16 X=110
+MRU16 Y=145
+MRU16 W=800
+MRU16 H=500
+MRU16 Top Row=108
+MRU16 WindowState=2
+MRU16 Cursor Row=136
+MRU16 Cursor Col=7
+[MRU17]
+MRU17 Path=C:\DCRABBIT_10.62\Samples\RTCLOCK\RTC_TEST.C
+MRU17 Read Only=0
+MRU17 X=88
+MRU17 Y=116
+MRU17 W=693
+MRU17 H=587
+MRU17 Top Row=0
+MRU17 WindowState=0
+MRU17 Cursor Row=50
+MRU17 Cursor Col=58
+[OpenFile  6]
+OpenFile  6 Path=C:\Documents and Settings\naresh1\Desktop\Line_Toggle.c
+OpenFile  6 Read Only=0
+OpenFile  6 X=0
+OpenFile  6 Y=0
+OpenFile  6 W=800
+OpenFile  6 H=500
+OpenFile  6 Top Row=0
+OpenFile  6 Top Col=0
+OpenFile  6 WindowState=0
+OpenFile  6 Cursor Row=123
+OpenFile  6 Cursor Col=39

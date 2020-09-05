@@ -1,0 +1,20 @@
+<html>
+<head>
+<title> My Page </title>
+<meta http-equiv="refresh" content="5" > 
+</head>
+<body>
+
+<table border="1">
+<tr>
+
+	<?z for ($A = 0; $A < 5; $A++) { ?>
+		<td><?z echo($My_Data[$A]) ?></td>
+	<?z } ?>
+
+</tr>
+</table> 
+</body>
+</html>
+
+

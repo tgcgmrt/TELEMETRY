@@ -1,0 +1,47 @@
+<html>
+<head>
+<script type="text/javascript">
+function parseXML()
+{
+	try 		//Test for Internet Explorer
+	{
+		xmlDoc=new ActiveXObject("Microsoft.XMLDOM");
+	}
+	catch(err)	//If ActiveX isn't going to work we use a more codified standard
+	{
+		try 	//Every browser but Internet Explorer
+		{
+			xmlDoc=document.implementation.createDocument("","",null);
+		}
+		catch(err) //If that doesn't work, we produce an error mocking our user.
+		{
+			alert("No XML for you!");
+			return;
+		}
+	}
+	xmlDoc.async=false;
+	xmlDoc.load("my_data2.xml");
+	document.getElementById("My_Data1").innerHTML=xmlDoc.getElementsByTagName("My_Data1")[0].childNodes[0].nodeValue;
+	document.getElementById("My_Data2").innerHTML=xmlDoc.getElementsByTagName("My_Data2")[0].childNodes[0].nodeValue;
+	document.getElementById("My_Data3").innerHTML=xmlDoc.getElementsByTagName("My_Data3")[0].childNodes[0].nodeValue;
+	document.getElementById("My_Data4").innerHTML=xmlDoc.getElementsByTagName("My_Data4")[0].childNodes[0].nodeValue;
+}
+</script>
+</head>
+
+<body>
+<h1>XML Load Test!</h1>
+
+<p>
+<b>My_Data1:</b> <span id="My_Data1"></span><br />
+<b>My_Data2:</b> <span id="My_Data2"></span><br />
+<b>My_Data3:</b> <span id="My_Data3"></span><br />
+<b>My_Data4:</b> <span id="My_Data4"></span><br />
+</p>
+
+<p>
+<button onclick="parseXML();">Get XML</button>
+</p>
+
+</body>
+</html>

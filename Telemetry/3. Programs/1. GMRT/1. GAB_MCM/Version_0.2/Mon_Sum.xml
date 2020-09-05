@@ -1,0 +1,59 @@
+<xml>
+
+<Name> MCM Time </Name>
+<Arg1> <?z echo($time1) ?></Arg1>
+<Arg2> <?z echo($date) ?></Arg2>
+
+<Name> Clock Frequency </Name>
+<Arg1> <?z echo($MCM_Clk) ?></Arg1>
+<Arg2> </Arg2>
+
+<Name> Spectrum Spreader </Name>
+<Arg1> <?z echo($SS1_Mon) ?> (0-50MHz)</Arg1>
+<Arg2> <?z echo($SS2_Mon) ?> (>50MHz)</Arg2>
+
+<Name> Clock Doubler </Name>
+<Arg1> <?z echo($FDB_Mon) ?></Arg1>
+<Arg2> </Arg2>
+
+<Name> Digital Mask </Name>
+<Arg1> <?z echo($mswT) ?></Arg1>
+<Arg2> <?z echo($lswT) ?></Arg2>
+
+<Name> Clock Divided By </Name>
+<Arg1> <?z echo($FDV_Mon) ?></Arg1>
+<Arg2> </Arg2>
+
+<Name> LO Frequency </Name>
+<Arg1> <?z echo($LO1_Mon) ?></Arg1>
+<Arg2> <?z echo($LO2_Mon) ?></Arg2>
+
+<Name> Attenuation </Name>
+<Arg1> -- </Arg1>
+<Arg2> -- </Arg2>
+
+<Name> Filter </Name>
+<Arg1> -- </Arg1>
+<Arg2> -- </Arg2>
+
+<Name> LPF </Name>
+<Arg1> -- </Arg1>
+<Arg2> -- </Arg2>
+
+<Name> Path </Name>
+<Arg1> -- </Arg1>
+<Arg2> </Arg2>
+
+<Name> Source </Name>
+<Arg1> -- </Arg1>
+<Arg2> </Arg2>
+
+<Name> Operating Voltages </Name>
+<Arg1> -- </Arg1>
+<Arg2> -- </Arg2>
+
+<Name> Amplifier Voltages </Name>
+<Arg1> -- </Arg1>
+<Arg2> -- </Arg2>
+
+</xml>

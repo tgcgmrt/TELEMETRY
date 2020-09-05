@@ -1,0 +1,13 @@
+<xml>
+
+<P1><?z print($ip)                     ?></P1>
+<F1><?z print($firmware.running)       ?></F1>
+<F2><?z print($fwidate)                ?></F2>
+<F3><?z print($fwitime)                ?></F3>
+<F4><?z print($firmware.temp)          ?></F4>
+<F5><?z print($fwudate)                ?></F5>
+<F6><?z print($fwutime)                ?></F6>
+<F7><?z print($firmware.in_status)     ?></F7>
+<E1><?z print($firmware.error)         ?></E1>
+
+</xml>

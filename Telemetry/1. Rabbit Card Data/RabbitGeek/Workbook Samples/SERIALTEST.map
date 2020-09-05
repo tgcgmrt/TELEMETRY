@@ -1,0 +1,1033 @@
+// Compilers view of MMU. Note these values are determined by the origin statements in the BIOS.
+//Segment           Origin     Size
+Root Code           0000:0000    002a03
+Root Data           0000:bfff    001013
+Xmem Code           0000:e000    00411a
+
+
+
+// Function mapping and source reference.
+// * The size of labels is indeterminate and so is denoted with an asterisk.
+//  Addr     Size   Function                        File                         Line Num
+    1418        *   spd_rx_isr                      \RS232.LIB                       2593
+    1471        *   spd_tx_isr                      \RS232.LIB                       2666
+    148f        *   spdisr_start                    \RS232.LIB                       2692
+    149b        *   spd_dummyfunc                   \RS232.LIB                       2701
+    149c        *   dDisable                        \RS232.LIB                       2748
+    14b5        *   dEnable                         \RS232.LIB                       2753
+    14c2        *   spx_isr                         \RS232.LIB                       4870
+    15cf        *   c_udv                           \MUTIL.LIB                        471
+    15dc        *   c_div                           \MUTIL.LIB                        491
+    163d        *   div0                            \MUTIL.LIB                        430
+    1649        *   exception                       \ERRORS.LIB                       114
+    166c        *   c_asl                           \UTIL.LIB                        1584
+    1689        *   spx_txload                      \RS232.LIB                       4825
+    16d6        *   L_not                           \UTIL.LIB                        1231
+    16d6        *   G_not                           \UTIL.LIB                        1232
+    16db        *   L_div                           \MUTIL.LIB                         90
+    1712        *   div0long                        \MUTIL.LIB                        444
+    171e        *   G_div_ep2                       \MUTIL.LIB                        146
+    1722        *   G_div                           \MUTIL.LIB                        149
+    1751        *   dloop8                          \MUTIL.LIB                        187
+    17a4        *   periodic_isr                    \STDVDRIVER.LIB                   142
+    17ad        *   periodic_isr_ep2                \STDVDRIVER.LIB                   151
+    186b        *   bios_intexit                    \STDVDRIVER.LIB                   329
+    1888        *   __slice_tick                    \SLICE.LIB                         74
+    18a5        *   _n_memset                       \STRING.LIB                      1169
+    18c5        *   _param3                         \UTIL.LIB                         749
+    18d4        *   hitwd                           \VDRIVER.LIB                       97
+    18db        *   exit                            \SYS.LIB                           52
+    18f7        *   _ProgStkSwitch                  \STACK.LIB                        721
+    1918        *   _BiosStkSwitch                  \STACK.LIB                        754
+    192c        *   st4_s                           \CSUPPORT.LIB                     585
+    1933        *   slong_s                         \CSUPPORT.LIB                     590
+    1941        *   llong_                          \CSUPPORT.LIB                     866
+    194a        *   st4_                            \CSUPPORT.LIB                     878
+    1951        *   slong_                          \CSUPPORT.LIB                     884
+    1959        *   L_asr                           \MUTIL.LIB                        284
+    1994        *   _ZGLExit                        \MUTIL.LIB                        416
+    1996        *   G_rmax                          \MUTIL.LIB                        419
+    199e       42   WrPortI                         \SYSIO.LIB                        138
+    19c8        *   c_asr                           \UTIL.LIB                        1502
+    19f0        *   c_usr                           \UTIL.LIB                        1537
+    1a18        *   RdPortI                         \SYSIO.LIB                         58
+    1a1f        *   swap4_                          \UTIL.LIB                        1243
+    1a28        *   llong_s                         \CSUPPORT.LIB                     563
+    1a43       36   outchrs                         \STDIO.LIB                       2509
+    1a71        *   htoa                            \STDIO.LIB                       2393
+    1abd        *   hltoa                           \STDIO.LIB                       2451
+    1ae1        *   _n_strlen                       \STRING.LIB                      2691
+    1afb        *   utoa                            \STDIO.LIB                       2264
+    1b3c        *   utoan                           \STDIO.LIB                       2325
+    1b5b        *   itoan                           \STDIO.LIB                       2348
+    1b6b        *   abs                             \MATH.LIB                        1742
+    1b75        *   itoa                            \STDIO.LIB                       2204
+    1b94        *   _f_strlen                       \STRING.LIB                      2676
+    1bcb        *   G_com                           \MUTIL.LIB                        667
+    1bcb        *   L_com                           \MUTIL.LIB                        668
+    1bd5        *   __divmod10                      \STDIO.LIB                       1151
+    1c03      700   _f_strtol                       \STRING.LIB                       486
+    1ebf        *   isalpha                         \STRING.LIB                      3537
+    1ec4        *   isalnum                         \STRING.LIB                      3541
+    1ec9        *   isgraph                         \STRING.LIB                      3545
+    1ece        *   iscntrl                         \STRING.LIB                      3549
+    1f54        *   _ctype                          \STRING.LIB                      3703
+    1f6e        *   toupper                         \STRING.LIB                      3284
+    1f7e        *   islower                         \STRING.LIB                      3444
+    1f83        *   isupper                         \STRING.LIB                      3448
+    1f88        *   isdigit                         \STRING.LIB                      3452
+    1f8d        *   isxdigit                        \STRING.LIB                      3456
+    1f92        *   ispunct                         \STRING.LIB                      3460
+    1f97        *   isprint                         \STRING.LIB                      3464
+    1f9c        *   isspace                         \STRING.LIB                      3468
+    1fa1        *   G_mod                           \MUTIL.LIB                         56
+    1fba        *   mod0                            \MUTIL.LIB                        213
+    1fcf        *   _switch                         \UTIL.LIB                          38
+    2011        *   tolower                         \STRING.LIB                      3321
+    2042        *   Bf_Bl                           \CSUPPORT.LIB                     660
+    2068        *   Bf_Bg                           \CSUPPORT.LIB                     696
+    20a2        *   F_unpack                        \CSUPPORT.LIB                     737
+    20b1        *   S_right                         \CSUPPORT.LIB                     752
+    2112        *   G_neg                           \CSUPPORT.LIB                     825
+    2112        *   L_neg                           \CSUPPORT.LIB                     826
+    2123        *   F_neg                           \MUTILFP.LIB                     1332
+    2128        *   Bf_Hc                           \UTIL.LIB                        1621
+    2128        *   Bf_Hu                           \UTIL.LIB                        1622
+    2128        *   Bf_Hi                           \UTIL.LIB                        1623
+    212d        *   flt_0                           \UTIL.LIB                        1058
+    213a        *   cf_ge                           \UTIL.LIB                        1066
+    2151        *   cf_gt                           \UTIL.LIB                        1083
+    218a        *   cf_le                           \UTIL.LIB                        1120
+    21a1        *   cf_lt                           \UTIL.LIB                        1137
+    21cb        *   G_asr                           \MUTIL.LIB                        331
+    21f5        *   G_asl                           \MUTIL.LIB                        368
+    21f5        *   L_asl                           \MUTIL.LIB                        369
+    221f        *   eq_4                            \UTIL.LIB                        1178
+    221f        *   cf_eq                           \UTIL.LIB                        1179
+    2241        *   cf_ne                           \UTIL.LIB                        1207
+    2241        *   neq_4                           \UTIL.LIB                        1208
+    2266        *   dkDoMsg                         \STDIO.LIB                        628
+    2267        *   _DMApoll                        \DMA.LIB                         1804
+    229e      637   spx_dma_start                   \RS232.LIB                       4576
+    251b        *   spx_starttx                     \RS232.LIB                       4769
+    2561      154   premain                         \PROGRAM.LIB                      128
+    25ff       51   _shared_port_init               \RCM43XX_BIOS.LIB                 258
+    2634        *   _SPIgetSemaphore                \RCM43XX_BIOS.LIB                 309
+    26ad        *   _SPIfreeSemaphore               \RCM43XX_BIOS.LIB                 428
+    26c3      130   _rcm43_spi_init                 \RCM43XX_BIOS.LIB                 490
+    274f        *   _f_memcpy                       \STRING.LIB                      2462
+    274f        *   _f_memmove                      \STRING.LIB                      2463
+    2788        *   _init_bad_interrupts            \PROGRAM.LIB                      215
+    28d4        *   _unexp_interrupt                \UTIL.LIB                        2059
+    28fe        *   dkStartup                       \DKCOMMON.LIB                     199
+ 0000:e748      110   main                            \SERIALTEST.C                       5
+ 0000:e7b6      384   serDopen                        \RS232.LIB                       2495
+ 0000:e936        *   spd_init                        \RS232.LIB                       2706
+ 0000:e980        *   serDclose                       \RS232.LIB                       2772
+ 0000:e99f      146   ser_setupparitytable            \RS232.LIB                      10486
+ 0000:ea31        *   ser8_getparity                  \RS232.LIB                      10521
+ 0000:ea55        *   ser7_setparity                  \RS232.LIB                      10553
+ 0000:ea88        *   ser7_checkparity                \RS232.LIB                      10595
+ 0000:eabb      111   serSetParity                    \RS232.LIB                      10653
+ 0000:eb2a       83   serCheckParity                  \RS232.LIB                      10694
+ 0000:eb7d        *   cbuf_used                       \CBUF.LIB                         484
+ 0000:eb97        *   cbuf_putch                      \CBUF.LIB                         234
+ 0000:ebc6       34   labs                            \MATH.LIB                        2424
+ 0000:ebe8        *   periodic_init                   \STDVDRIVER.LIB                    88
+ 0000:ec32        *   vwdog                           \VDRIVER.LIB                      328
+ 0000:ec78       25   vwdogInit                       \VDRIVER.LIB                      116
+ 0000:ec91       17   slicefsp_init                   \SLICE.LIB                         29
+ 0000:eca2       24   read_rtc                        \RTCLOCK.LIB                      149
+ 0000:ecba      227   serXsetDividers                 \RS232.LIB                       4729
+ 0000:ed9d       12   serDdmaOff                      \RS232.LIB                       8557
+ 0000:eda9      209   _serXdmaOff                     \RS232.LIB                       4534
+ 0000:ee7a      101   DMAunalloc                      \DMA.LIB                          447
+ 0000:eedf       97   DMAhandle2chan                  \DMA.LIB                         1318
+ 0000:ef40      212   DMAstop                         \DMA.LIB                         1277
+ 0001:e014        *   cbuf_init                       \CBUF.LIB                         420
+ 0001:e02a        *   cbuf_getch                      \CBUF.LIB                          88
+ 0001:e057       43   printf                          \STDIO.LIB                        769
+ 0001:e082       71   __qe2                           \STDIO.LIB                        651
+ 0001:e0c9      120   _printf                         \STDIO.LIB                        703
+ 0001:e141     1577   doprnt                          \STDIO.LIB                        849
+ 0001:e76a      542   phex                            \STDIO.LIB                       1821
+ 0001:e988       39   outstr                          \STDIO.LIB                       2537
+ 0001:e9af       67   outpad                          \STDIO.LIB                       1782
+ 0001:e9f2      641   plhex                           \STDIO.LIB                       1092
+ 0001:ec73      694   pint                            \STDIO.LIB                       1887
+ 0001:ef29      728   plint                           \STDIO.LIB                       1556
+ 0002:e201      207   _gltoa                          \STDIO.LIB                       1236
+ 0002:e2d0      126   _gltoan                         \STDIO.LIB                       1438
+ 0002:e34e       24   gtoa                            \STDIO.LIB                       1470
+ 0002:e366       24   ltoa                            \STDIO.LIB                       1487
+ 0002:e37e       20   gtoan                           \STDIO.LIB                       1507
+ 0002:e392       20   ltoan                           \STDIO.LIB                       1524
+ 0002:e3a6     1912   pflt                            \STDIO.LIB                       1970
+ 0002:eb1e      854   __ftoa                          \STDIO.LIB                       1615
+ 0002:ee74      119   __fpconv_xmemwrapper            \MUTILFP.LIB                      188
+ 0002:ee74        *   Hi_Bf                           \MUTILFP.LIB                      192
+ 0002:ee7d        *   Bl_Bf                           \MUTILFP.LIB                      200
+ 0002:ee97        *   Bg_Bf                           \MUTILFP.LIB                      217
+ 0002:ee9d        *   Hc_Bf                           \MUTILFP.LIB                      222
+ 0002:ee9f        *   Hu_Bf                           \MUTILFP.LIB                      224
+ 0002:eeeb      631   __F_addxmemwrapper              \MUTILFP.LIB                      295
+ 0002:eeeb        *   F_sub                           \MUTILFP.LIB                      299
+ 0002:eef0        *   F_add                           \MUTILFP.LIB                      305
+ 0002:eff7        *   _normalize                      \MUTILFP.LIB                      552
+ 0003:e162      197   __f_divxmemwrapper              \MUTILFP.LIB                     1099
+ 0003:e16c        *   F_div                           \MUTILFP.LIB                     1136
+ 0003:e227      187   __f_mulxmemwrapper              \MUTILFP.LIB                      833
+ 0003:e227        *   F_mul                           \MUTILFP.LIB                      919
+ 0003:e2e2       12   serDgetc                        \RS232.LIB                       8614
+ 0003:e2ee      304   _serXgetc                       \RS232.LIB                       5171
+ 0003:e41e        *   cbuf_rdlock                     \CBUF.LIB                         360
+ 0003:e42c        *   cbuf_rdunlock                   \CBUF.LIB                         392
+ 0003:e432      146   ser_bufUpdate                   \RS232.LIB                       5120
+ 0003:e4c4       34   DMApoll                         \DMA.LIB                         1778
+ 0003:e4e6       12   serDwrFlush                     \RS232.LIB                       9134
+ 0003:e4f2      153   _serXwrFlush                    \RS232.LIB                       6450
+ 0003:e58b        *   cbuf_flush                      \CBUF.LIB                         572
+ 0003:e59f       17   serDputc                        \RS232.LIB                       8690
+ 0003:e5b0      117   _serXputc                       \RS232.LIB                       5402
+ 0003:e625       99   _serXDMArestart                 \RS232.LIB                       5363
+ 0003:e688       10   paddr                           \XMEM.LIB                         580
+ 0003:e692       24   DMAloadBufDesc                  \DMA.LIB                         1703
+ 0003:e6aa        *   cbuf_wrunlock                   \CBUF.LIB                         330
+ 0003:e6b0        *   cbuf_wrlock                     \CBUF.LIB                         298
+ 0003:e6be       12   serDrdFlush                     \RS232.LIB                       9109
+ 0003:e6ca       62   _serXrdFlush                    \RS232.LIB                       6409
+ 0003:e708        5   coreInit                        \RCM43XX_BIOS.LIB                 238
+ 0003:e70d      499   _Init_Stacks                    \STACK.LIB                        416
+ 0003:e900      258   _Get_Stack_Size                 \STACK.LIB                        493
+ 0003:ea02      255   _Alloc_Stack                    \STACK.LIB                        571
+ 0003:eb01      137   _Dealloc_Stack                  \STACK.LIB                        649
+ 0003:eb8a       61   _gen_lin2seg                    \XMEM.LIB                         131
+ 0003:ebc7       21   xalloc                          \STACK.LIB                        324
+ 0003:ebdc      376   _xalloc                         \MEM.LIB                          335
+ 0003:ed54       50   xmem2root                       \XMEM.LIB                         242
+ 0003:ed86       48   xmem2xmem                       \XMEM.LIB                         273
+ 0003:edb6       50   root2xmem                       \XMEM.LIB                         211
+ 0003:ede8       18   alloc_calc_chksum               \MEM.LIB                           51
+ 0003:edfa       66   _init_xalloc                    \MEM.LIB                          590
+ 0003:ee3c      383   xalloc_init                     \MEM.LIB                           86
+ 0003:efbb      334   alloc_init                      \MEM.LIB                          160
+ 0004:e109       16   VdInit                          \VDRIVER.LIB                       57
+
+
+// Global/static data symbol mapping and source reference.
+//  Addr     Size   Symbol                          File                         Line Num  Type
+    b39e        2   spi_Mutex                       \RCM43XX_BIOS.LIB                 213  void *          
+    13f4       24   _spi_dev                        \RCM43XX_BIOS.LIB                 482  const struct _SPIDev[]
+    b316      136   GLOBAL:DINBUF                   \RS232.LIB                       2458  char[]          
+    b28e      136   GLOBAL:DOUTBUF                  \RS232.LIB                       2459  char[]          
+    b25c       50   GLOBAL:serDdata                 \RS232.LIB                       2460  struct _sxd     
+    b21c       64   serDrxbd                        \RS232.LIB                       2465  struct []       
+    b1fc       32   serDtxbd                        \RS232.LIB                       2468  struct []       
+    b0fc      256   ser_paritytable                 \RS232.LIB                      10484  char[]          
+    b0fa        2   ser_setupparitytable:i          \RS232.LIB                      10489  int             
+    b0f8        2   ser_setupparitytable:j          \RS232.LIB                      10490  int             
+    b0f6        2   ser_setupparitytable:count      \RS232.LIB                      10491  int             
+    b0f5        1   bios_intnesting                 \STDVDRIVER.LIB                    53  char            
+    b0f4        1   bios_swpend                     \STDVDRIVER.LIB                    54  char            
+    b0f2        2   __MCOS_COUNTER                  \STDVDRIVER.LIB                    47  unsigned int    
+    b0f1        1   __TICK_COUNTER                  \STDVDRIVER.LIB                    45  char            
+    b0f0        1   __MS_COUNTER                    \STDVDRIVER.LIB                    46  char            
+    b0ec        4   SEC_TIMER                       \STDVDRIVER.LIB                    51  unsigned long   
+    b0e8        4   MS_TIMER                        \STDVDRIVER.LIB                    49  unsigned long   
+    b0e4        4   TICK_TIMER                      \STDVDRIVER.LIB                    50  unsigned long   
+    b0e2        2   __MCOS_CNT_VAL                  \STDVDRIVER.LIB                    48  unsigned int    
+    b0e1        1   pisr_inuse                      \STDVDRIVER.LIB                    77  char            
+    b0e0        1   topVd                           \VDRIVER.LIB                      108  char            
+    b0cc       20   vd_wdogarray                    \VDRIVER.LIB                      113  unsigned int[]  
+    b0cb        1   dkStatusFlags                   \DKCORE.LIB                       263  char            
+    b0ca        1   dkSendFlags                     \DKCORE.LIB                       265  char            
+    b0c9        1   dkRequest                       \DKCORE.LIB                       266  char            
+    b0c8        1   dkAckToSend                     \DKCORE.LIB                       267  char            
+    b0c7        1   dkStepFlags                     \DKCORE.LIB                       268  char            
+    b0c5        2   dkptrASMbuf                     \DKCORE.LIB                       269  char *          
+    bff8        8   dkASMbuf                        \DKCORE.LIB                       313  char[]          
+    b086       63   dkRegisters                     \DKCORE.LIB                       271  struct __dkregisters
+    b082        4   dkNextAddress                   \DKCORE.LIB                       276  struct __dkaddress
+    b07e        4   dkBreakAddress                  \DKCORE.LIB                       277  struct __dkaddress
+    b071       13   dkBreakPoint                    \DKCORE.LIB                       278  struct __dkbreakpoint
+    b06f        2   dkEntryCount                    \DKCORE.LIB                       279  int             
+    b06d        2   dkLastAsmStart                  \DKCORE.LIB                       285  unsigned int    
+    b06b        2   dkLastAsmEnd                    \DKCORE.LIB                       286  unsigned int    
+    b06a        1   dkLocks                         \DKCORE.LIB                       287  char            
+    b069        1   dkRST28State                    \DKCORE.LIB                       291  char            
+    b068        1   dkRST20State                    \DKCORE.LIB                       292  char            
+    b066        2   rstvectorreturn                 \DKCORE.LIB                       295  int             
+    b065        1   dkSUval                         \DKCORE.LIB                       296  char            
+    b063        2   _sys_exit_ret                   \SYS.LIB                           41  int             
+    b061        2   _sys_exit_err                   \SYS.LIB                           42  int             
+    b05f        2   biossp                          \STACK.LIB                        695  int             
+    b05d        2   biossr                          \STACK.LIB                        695  int             
+    b05b        2   FSP                             \SLICE.LIB                         20  void *          
+    b059        2   DBGFSP                          \SLICE.LIB                         20  void *          
+    b049       16   _dma_len                        \DMA.LIB                          119  unsigned int[]  
+    b041        8   _dma_allocCnt                   \DMA.LIB                          120  char[]          
+    b040        1   _dma_chanInUse                  \DMA.LIB                          115  char            
+    b020       32   _dma_bd                         \DMA.LIB                          122  unsigned long[] 
+    1af1       10   _tens                           \STDIO.LIB                       2254  const unsigned int[]
+    1b9f       44   __ltens                         \STDIO.LIB                       1217  const unsigned long[]
+    1ed3      129   _ctype_table                    \STRING.LIB                      3689  const char[]    
+    201c       32   pflt:round                      \STDIO.LIB                       1977  const long[]    
+    203e        4   __ftoa:lg_2_10                  \STDIO.LIB                       1624  const float     
+    2246       32   __f_divxmemwrapper:_divtable    \MUTILFP.LIB                     1106  const char[]    
+    b01e        2   ser_bufUpdate:dummy             \RS232.LIB                       5122  unsigned int    
+    b01c        2   ser_bufUpdate:X                 \RS232.LIB                       5122  unsigned int    
+    b01a        2   spx_dma_start:channel           \RS232.LIB                       4578  int             
+    b018        2   spx_dma_start:bufdesc           \RS232.LIB                       4579  struct  *       
+    b014        4   spx_dma_start:bufptr            \RS232.LIB                       4580  unsigned long   
+    b010        4   __initial_stack                 \PROGRAM.LIB                       67  long            
+    b00c        4   _SPI_t0_                        \RCM43XX_BIOS.LIB                 247  unsigned long   
+    25fb        4   _SPI_TIMEOUT                    \RCM43XX_BIOS.LIB                 249  const unsigned long
+    b004        8   _spiActiveDev                   \RCM43XX_BIOS.LIB                 248  struct _SPIDev  
+    b001        3   _SPI_semaphore                  \RCM43XX_BIOS.LIB                 250  struct _spiSemaphore
+    2632        2   structSize                      \RCM43XX_BIOS.LIB                 306  const int       
+    affd        4   freeStacks                      \STACK.LIB                        385  long[]          
+    2745       10   stackSizes                      \STACK.LIB                        386  const unsigned int[]
+    aff9        4   BaseOfStacks1                   \STACK.LIB                        337  unsigned long   
+    aff5        4   SizeOfStacks1                   \STACK.LIB                        338  unsigned long   
+    aff3        2   _Dealloc_Stack:fsPtr            \STACK.LIB                        652  char *          
+    afef        4   xubreak                         \MEM.LIB                          286  long            
+    afed        2   ubreak                          \MEM.LIB                           40  struct  *       
+    2921        2   _orgtablesize                   \Rabbitbios.c                      43  int             
+    2923        0   _orgtable                       \Rabbitbios.c                      44  struct []       
+
+// Parameter and local auto symbol mapping and source reference.
+//Offset Rel. to     Size   Symbol                          File                         Line Num  Type
+       3      SP        2   main:i                          \SERIALTEST.C                       7  int             
+       1      SP        2   main:data                       \SERIALTEST.C                       8  int             
+       0      SP        1   main:cOut                       \SERIALTEST.C                       9  char            
+      11      SP        4   serDopen:baud                   \RS232.LIB                       2495  long            
+       4      SP        4   serDopen:temp_bps               \RS232.LIB                       2497  long            
+       0      SP        4   serDopen:t                      \RS232.LIB                       2498  unsigned long   
+       3      SP        1   serSetParity:tx_byte            \RS232.LIB                      10653  char            
+       5      SP        1   serSetParity:parity             \RS232.LIB                      10653  char            
+       3      SP        1   serCheckParity:rx_byte          \RS232.LIB                      10694  char            
+       5      SP        1   serCheckParity:parity           \RS232.LIB                      10694  char            
+       3      SP        4   labs:x                          \MATH.LIB                        2424  long            
+       0      SP        0   read_rtc:_____ZW0000008F        \RTCLOCK.LIB                      149  void            
+       7      SP        4   serXsetDividers:baud            \RS232.LIB                       4729  long            
+      11      SP        2   serXsetDividers:sxdhr           \RS232.LIB                       4729  int             
+      13      SP        2   serXsetDividers:sxdlr           \RS232.LIB                       4729  int             
+       0      SP        4   serXsetDividers:divisor         \RS232.LIB                       4731  long            
+       4      SP        2   WrPortI:io_port                 \SYSIO.LIB                        137  int             
+       6      SP        2   WrPortI:PORTShadow              \SYSIO.LIB                        137  char *          
+       8      SP        2   WrPortI:value                   \SYSIO.LIB                        137  int             
+       0      SP        2   WrPortI:reg_perm                \SYSIO.LIB                        140  int             
+       5      SP        2   _serXdmaOff:port                \RS232.LIB                       4534  struct _sxd *   
+       0      SP        2   _serXdmaOff:rc                  \RS232.LIB                       4536  int             
+       5      SP        2   DMAunalloc:handle               \DMA.LIB                          447  unsigned int    
+       0      SP        2   DMAunalloc:channel              \DMA.LIB                          449  int             
+       5      SP        2   DMAhandle2chan:handle           \DMA.LIB                         1318  unsigned int    
+       0      SP        2   DMAhandle2chan:channel          \DMA.LIB                         1320  int             
+       7      SP        2   DMAstop:handle                  \DMA.LIB                         1277  unsigned int    
+       2      SP        2   DMAstop:channel                 \DMA.LIB                         1279  int             
+       0      SP        2   DMAstop:i                       \DMA.LIB                         1279  int             
+       3      SP        4   printf:fmt                      \STDIO.LIB                        770  far char *      
+       5      SP        2   __qe2:c                         \STDIO.LIB                        651  int             
+       7      SP        4   __qe2:_f_printfbuf              \STDIO.LIB                        651  far char *      
+      11      SP        2   __qe2:__printfcnt               \STDIO.LIB                        651  int *           
+      13      SP        2   __qe2:instanceParam             \STDIO.LIB                        651  void *          
+       0      SP        2   __qe2:__printfbuf               \STDIO.LIB                        653  char *          
+     135      SP        4   _printf:fmt                     \STDIO.LIB                        703  far char *      
+     139      SP        2   _printf:args                    \STDIO.LIB                        703  char *          
+     130      SP        2   _printf:__printfcnt             \STDIO.LIB                        705  int             
+     128      SP        2   _printf:__cnt                   \STDIO.LIB                        705  int             
+       0      SP      128   _printf:__printfbuf             \STDIO.LIB                        710  char[]          
+      45      SP        2   doprnt:putc                     \STDIO.LIB                        848  int( *)()       
+      47      SP        4   doprnt:fmt                      \STDIO.LIB                        848  far char *      
+      51      SP        2   doprnt:arg1                     \STDIO.LIB                        848  void *          
+      53      SP        2   doprnt:instanceParam            \STDIO.LIB                        848  void *          
+      55      SP        4   doprnt:buf                      \STDIO.LIB                        848  far char *      
+      59      SP        2   doprnt:cnt                      \STDIO.LIB                        848  int *           
+      40      SP        2   doprnt:p                        \STDIO.LIB                        851  struct dop_p    
+      36      SP        4   doprnt:alnum                    \STDIO.LIB                        852  long            
+      34      SP        2   doprnt:lng                      \STDIO.LIB                        853  int             
+      32      SP        2   doprnt:width                    \STDIO.LIB                        853  int             
+      30      SP        2   doprnt:prec                     \STDIO.LIB                        853  int             
+      28      SP        2   doprnt:FmtSpecified             \STDIO.LIB                        854  int             
+      26      SP        2   doprnt:temp                     \STDIO.LIB                        854  int             
+      24      SP        2   doprnt:j                        \STDIO.LIB                        854  int             
+      22      SP        2   doprnt:anum                     \STDIO.LIB                        854  int             
+      20      SP        2   doprnt:length                   \STDIO.LIB                        854  int             
+      19      SP        1   doprnt:code                     \STDIO.LIB                        855  char            
+      18      SP        1   doprnt:flag                     \STDIO.LIB                        855  char            
+      14      SP        4   doprnt:fptr                     \STDIO.LIB                        856  far char *      
+      10      SP        4   doprnt:sptr                     \STDIO.LIB                        856  far char *      
+       8      SP        2   doprnt:digits                   \STDIO.LIB                        857  int             
+       4      SP        4   doprnt:farstrptr                \STDIO.LIB                        860  far char *      
+       0      SP        4   doprnt:r                        \STDIO.LIB                        870  struct rra      
+       5      IX        1   phex:left                       \STDIO.LIB                       1821  char            
+       7      IX        2   phex:n1                         \STDIO.LIB                       1821  int             
+       9      IX        2   phex:putc                       \STDIO.LIB                       1821  int( *)()       
+      11      IX        2   phex:num                        \STDIO.LIB                       1821  int             
+      13      IX        2   phex:instanceParam              \STDIO.LIB                       1821  void *          
+      15      IX        4   phex:buf                        \STDIO.LIB                       1821  far char *      
+      19      IX        2   phex:cnt                        \STDIO.LIB                       1821  int *           
+      21      IX        1   phex:code                       \STDIO.LIB                       1821  char            
+      -2      IX        2   phex:spaces                     \STDIO.LIB                       1823  int             
+      -7      IX        5   phex:array                      \STDIO.LIB                       1824  char[]          
+      -9      IX        2   phex:i                          \STDIO.LIB                       1825  int             
+       2      SP        1   outchrs:c                       \STDIO.LIB                       2510  char            
+       4      SP        2   outchrs:n                       \STDIO.LIB                       2510  int             
+       6      SP        2   outchrs:putc                    \STDIO.LIB                       2510  int( *)()       
+       8      SP        2   outchrs:instanceParam           \STDIO.LIB                       2510  void *          
+      10      SP        4   outchrs:buf                     \STDIO.LIB                       2510  far char *      
+      14      SP        2   outchrs:cnt                     \STDIO.LIB                       2510  int *           
+       3      SP        4   outstr:string                   \STDIO.LIB                       2537  far char *      
+       7      SP        2   outstr:putc                     \STDIO.LIB                       2537  int( *)()       
+       9      SP        2   outstr:instanceParam            \STDIO.LIB                       2537  void *          
+      11      SP        4   outstr:buf                      \STDIO.LIB                       2537  far char *      
+      15      SP        2   outstr:cnt                      \STDIO.LIB                       2537  int *           
+       4      SP        1   outpad:left                     \STDIO.LIB                       1782  char            
+       6      SP        2   outpad:count                    \STDIO.LIB                       1782  int             
+       8      SP        2   outpad:putc                     \STDIO.LIB                       1782  int( *)()       
+      10      SP        2   outpad:instanceParam            \STDIO.LIB                       1782  void *          
+      12      SP        4   outpad:buf                      \STDIO.LIB                       1782  far char *      
+      16      SP        2   outpad:cnt                      \STDIO.LIB                       1782  int *           
+       0      SP        1   outpad:k                        \STDIO.LIB                       1784  char            
+       5      IX        1   plhex:left                      \STDIO.LIB                       1092  char            
+       7      IX        2   plhex:n1                        \STDIO.LIB                       1092  int             
+       9      IX        2   plhex:putc                      \STDIO.LIB                       1092  int( *)()       
+      11      IX        4   plhex:num                       \STDIO.LIB                       1092  long            
+      15      IX        2   plhex:instanceParam             \STDIO.LIB                       1092  void *          
+      17      IX        4   plhex:buf                       \STDIO.LIB                       1092  far char *      
+      21      IX        2   plhex:cnt                       \STDIO.LIB                       1092  int *           
+      23      IX        1   plhex:code                      \STDIO.LIB                       1092  char            
+      -2      IX        2   plhex:spaces                    \STDIO.LIB                       1094  int             
+     -11      IX        9   plhex:array                     \STDIO.LIB                       1095  char[]          
+     -13      IX        2   plhex:ptr                       \STDIO.LIB                       1096  char *          
+     -15      IX        2   plhex:i                         \STDIO.LIB                       1097  int             
+       5      IX        1   pint:left                       \STDIO.LIB                       1887  char            
+       7      IX        1   pint:code                       \STDIO.LIB                       1887  char            
+       9      IX        2   pint:n1                         \STDIO.LIB                       1887  int             
+      11      IX        2   pint:putc                       \STDIO.LIB                       1887  int( *)()       
+      13      IX        2   pint:num                        \STDIO.LIB                       1887  int             
+      15      IX        2   pint:instanceParam              \STDIO.LIB                       1887  void *          
+      17      IX        4   pint:buf                        \STDIO.LIB                       1887  far char *      
+      21      IX        2   pint:cnt                        \STDIO.LIB                       1887  int *           
+      -2      IX        2   pint:spaces                     \STDIO.LIB                       1889  int             
+      -9      IX        7   pint:array                      \STDIO.LIB                       1890  char[]          
+     -10      IX        1   pint:isSigned                   \STDIO.LIB                       1891  char            
+       5      IX        1   plint:left                      \STDIO.LIB                       1556  char            
+       7      IX        1   plint:code                      \STDIO.LIB                       1556  char            
+       9      IX        2   plint:n1                        \STDIO.LIB                       1556  int             
+      11      IX        2   plint:putc                      \STDIO.LIB                       1556  int( *)()       
+      13      IX        4   plint:num                       \STDIO.LIB                       1556  long            
+      17      IX        2   plint:instanceParam             \STDIO.LIB                       1556  void *          
+      19      IX        4   plint:buf                       \STDIO.LIB                       1556  far char *      
+      23      IX        2   plint:cnt                       \STDIO.LIB                       1556  int *           
+      -2      IX        2   plint:spaces                    \STDIO.LIB                       1558  int             
+     -16      IX       14   plint:array                     \STDIO.LIB                       1559  char[]          
+     -17      IX        1   plint:isSigned                  \STDIO.LIB                       1560  char            
+       9      SP        4   _gltoa:num                      \STDIO.LIB                       1236  unsigned long   
+      13      SP        2   _gltoa:ibuf                     \STDIO.LIB                       1236  char *          
+      15      SP        1   _gltoa:neg                      \STDIO.LIB                       1236  char            
+       2      SP        4   _gltoa:tmpL                     \STDIO.LIB                       1238  unsigned long   
+       0      SP        2   _gltoa:beginStr                 \STDIO.LIB                       1239  char *          
+       7      SP        4   _gltoan:num                     \STDIO.LIB                       1438  unsigned long   
+      11      SP        1   _gltoan:neg                     \STDIO.LIB                       1438  char            
+       2      SP        2   _gltoan:dig                     \STDIO.LIB                       1440  int             
+       0      SP        2   _gltoan:j                       \STDIO.LIB                       1440  int             
+       3      SP        4   gtoa:num                        \STDIO.LIB                       1470  unsigned long   
+       7      SP        2   gtoa:ibuf                       \STDIO.LIB                       1470  char *          
+       3      SP        4   ltoa:num                        \STDIO.LIB                       1487  long            
+       7      SP        2   ltoa:ibuf                       \STDIO.LIB                       1487  char *          
+       3      SP        4   gtoan:num                       \STDIO.LIB                       1507  unsigned long   
+       3      SP        4   ltoan:num                       \STDIO.LIB                       1524  long            
+      22      SP        4   _f_strtol:sptr                  \STRING.LIB                       486  far char *      
+      26      SP        4   _f_strtol:tailptr               \STRING.LIB                       486  far char * far *
+      30      SP        2   _f_strtol:base                  \STRING.LIB                       486  int             
+      16      SP        4   _f_strtol:sum                   \STRING.LIB                       488  unsigned long   
+      12      SP        4   _f_strtol:premul_limit          \STRING.LIB                       488  unsigned long   
+       8      SP        4   _f_strtol:max_unsigned          \STRING.LIB                       489  unsigned long   
+       6      SP        2   _f_strtol:char_limit            \STRING.LIB                       490  int             
+       4      SP        2   _f_strtol:negative              \STRING.LIB                       491  int             
+       2      SP        2   _f_strtol:overflow              \STRING.LIB                       492  int             
+       0      SP        2   _f_strtol:ch                    \STRING.LIB                       493  int             
+      73      SP        1   pflt:left                       \STDIO.LIB                       1960  char            
+      75      SP        1   pflt:code                       \STDIO.LIB                       1961  char            
+      77      SP        2   pflt:TotalLength                \STDIO.LIB                       1962  int             
+      79      SP        2   pflt:DigitsAfterDecPt           \STDIO.LIB                       1963  int             
+      81      SP        2   pflt:putc                       \STDIO.LIB                       1964  int( *)()       
+      83      SP        4   pflt:f                          \STDIO.LIB                       1965  float           
+      87      SP        2   pflt:FmtSpecified               \STDIO.LIB                       1966  int             
+      89      SP        2   pflt:instanceParam              \STDIO.LIB                       1967  void *          
+      91      SP        4   pflt:buffer                     \STDIO.LIB                       1968  far char *      
+      95      SP        2   pflt:cnt                        \STDIO.LIB                       1969  int *           
+      28      SP       42   pflt:buf                        \STDIO.LIB                       1972  char[]          
+      26      SP        2   pflt:sgn                        \STDIO.LIB                       1973  int             
+      24      SP        2   pflt:mdig                       \STDIO.LIB                       1973  int             
+      22      SP        2   pflt:npow                       \STDIO.LIB                       1973  int             
+      20      SP        2   pflt:prec                       \STDIO.LIB                       1973  int             
+      18      SP        2   pflt:xcode                      \STDIO.LIB                       1974  int             
+      16      SP        2   pflt:lenf                       \STDIO.LIB                       1974  int             
+      14      SP        2   pflt:lene                       \STDIO.LIB                       1974  int             
+      12      SP        2   pflt:expp                       \STDIO.LIB                       1974  int             
+      10      SP        2   pflt:k                          \STDIO.LIB                       1975  int             
+       8      SP        2   pflt:j                          \STDIO.LIB                       1975  int             
+       6      SP        2   pflt:q                          \STDIO.LIB                       1975  int             
+       4      SP        2   pflt:firstDigitNonZero          \STDIO.LIB                       1975  int             
+       0      SP        4   pflt:slng                       \STDIO.LIB                       1976  long            
+      35      SP        4   __ftoa:f                        \STDIO.LIB                       1615  float           
+      39      SP        2   __ftoa:rlng                     \STDIO.LIB                       1615  long *          
+      28      SP        4   __ftoa:tmp                      \STDIO.LIB                       1618  float           
+      24      SP        4   __ftoa:mant                     \STDIO.LIB                       1619  float           
+      22      SP        2   __ftoa:sgn                      \STDIO.LIB                       1626  int             
+      20      SP        2   __ftoa:texp                     \STDIO.LIB                       1626  int             
+      18      SP        2   __ftoa:exp                      \STDIO.LIB                       1627  int             
+      16      SP        2   __ftoa:exp2                     \STDIO.LIB                       1627  int             
+      14      SP        2   __ftoa:exp10                    \STDIO.LIB                       1627  int             
+      12      SP        2   __ftoa:i                        \STDIO.LIB                       1627  int             
+       8      SP        4   __ftoa:lng                      \STDIO.LIB                       1628  unsigned long   
+       4      SP        4   __ftoa:chg                      \STDIO.LIB                       1628  unsigned long   
+       0      SP        4   __ftoa:slng                     \STDIO.LIB                       1629  long            
+       9      SP        2   _serXgetc:port                  \RS232.LIB                       5171  struct _sxd *   
+       4      SP        2   _serXgetc:n                     \RS232.LIB                       5173  int             
+       2      SP        2   _serXgetc:i                     \RS232.LIB                       5173  int             
+       0      SP        2   _serXgetc:icbuf                 \RS232.LIB                       5174  char *          
+       5      SP        2   ser_bufUpdate:port              \RS232.LIB                       5120  struct _sxd *   
+       0      SP        2   ser_bufUpdate:icbuf             \RS232.LIB                       5123  char *          
+       5      SP        2   DMApoll:dmaChannel              \DMA.LIB                         1778  int             
+       7      SP        2   DMApoll:bufCount                \DMA.LIB                         1778  unsigned int *  
+       0      SP        2   DMApoll:cmask                   \DMA.LIB                         1780  unsigned int    
+       3      SP        2   _serXwrFlush:port               \RS232.LIB                       6450  struct _sxd *   
+       3      SP        1   serDputc:c                      \RS232.LIB                       8691  char            
+       9      SP        2   _serXputc:port                  \RS232.LIB                       5402  struct _sxd *   
+      11      SP        2   _serXputc:c                     \RS232.LIB                       5402  int             
+       4      SP        2   _serXputc:n                     \RS232.LIB                       5404  int             
+       2      SP        2   _serXputc:ocbuf                 \RS232.LIB                       5405  char *          
+       0      SP        2   _serXputc:count                 \RS232.LIB                       5406  unsigned int    
+       5      SP        2   _serXDMArestart:port            \RS232.LIB                       5363  struct _sxd *   
+       0      SP        2   _serXDMArestart:T               \RS232.LIB                       5365  unsigned int    
+       2      SP        2   spx_dma_start:port              \RS232.LIB                       4576  struct _sxd *   
+       3      SP        2   paddr:pointer                   \XMEM.LIB                         580  void *          
+       3      SP        2   DMAloadBufDesc:dmaChannel       \DMA.LIB                         1703  int             
+       5      SP        2   DMAloadBufDesc:bufPtr           \DMA.LIB                         1703  unsigned long * 
+       3      SP        2   _serXrdFlush:port               \RS232.LIB                       6409  struct _sxd *   
+       2      SP        2   _rcm43_spi_init:divisor         \RCM43XX_BIOS.LIB                 491  int             
+       4      SP        2   _rcm43_spi_init:_CR             \RCM43XX_BIOS.LIB                 491  int             
+       6      SP        2   _rcm43_spi_init:_ER             \RCM43XX_BIOS.LIB                 491  int             
+      16      SP        4   _Init_Stacks:spaceLeft          \STACK.LIB                        418  long            
+      14      SP        2   _Init_Stacks:i                  \STACK.LIB                        419  int             
+       4      SP       10   _Init_Stacks:locCounts          \STACK.LIB                        420  unsigned int[]  
+       2      SP        2   _Init_Stacks:allocIndex         \STACK.LIB                        421  unsigned int    
+       0      SP        2   _Init_Stacks:totalStackCounts   \STACK.LIB                        422  unsigned int    
+       5      SP        4   _Get_Stack_Size:ptr             \STACK.LIB                        494  long            
+       0      SP        2   _Get_Stack_Size:i               \STACK.LIB                        495  int             
+      13      SP        2   _Alloc_Stack:sz                 \STACK.LIB                        571  unsigned int    
+       6      SP        4   _Alloc_Stack:retval             \STACK.LIB                        573  long            
+       4      SP        2   _Alloc_Stack:i                  \STACK.LIB                        574  int             
+       2      SP        2   _Alloc_Stack:i2                 \STACK.LIB                        574  int             
+       0      SP        2   _Alloc_Stack:fsPtr              \STACK.LIB                        575  char *          
+       7      SP        4   _Dealloc_Stack:ptr              \STACK.LIB                        649  long            
+       2      SP        2   _Dealloc_Stack:i                \STACK.LIB                        651  int             
+       0      SP        2   _Dealloc_Stack:i2               \STACK.LIB                        651  int             
+       3      SP        2   _gen_lin2seg:laddr              \XMEM.LIB                         132  long *          
+       5      SP        1   _gen_lin2seg:norm               \XMEM.LIB                         132  char            
+       3      SP        4   xalloc:sz                       \STACK.LIB                        324  long            
+      35      SP        2   _xalloc:szp                     \MEM.LIB                          335  long *          
+      37      SP        2   _xalloc:alignm                  \MEM.LIB                          335  unsigned int    
+      39      SP        2   _xalloc:type                    \MEM.LIB                          335  unsigned int    
+      30      SP        2   _xalloc:i                       \MEM.LIB                          337  int             
+      26      SP        4   _xalloc:mask                    \MEM.LIB                          338  long            
+      22      SP        4   _xalloc:next                    \MEM.LIB                          338  long            
+      18      SP        4   _xalloc:sz                      \MEM.LIB                          339  long            
+      14      SP        4   _xalloc:base                    \MEM.LIB                          339  long            
+       0      SP       14   _xalloc:xsbreak                 \MEM.LIB                          340  struct          
+       5      IX        2   xmem2root:dest                  \XMEM.LIB                         242  void *          
+       7      IX        4   xmem2root:src                   \XMEM.LIB                         242  unsigned long   
+      11      IX        2   xmem2root:len                   \XMEM.LIB                         242  unsigned int    
+       3      SP        4   xmem2xmem:dest                  \XMEM.LIB                         273  unsigned long   
+       7      SP        4   xmem2xmem:src                   \XMEM.LIB                         273  unsigned long   
+      11      SP        2   xmem2xmem:len                   \XMEM.LIB                         273  unsigned int    
+       5      IX        4   root2xmem:dest                  \XMEM.LIB                         211  unsigned long   
+       9      IX        2   root2xmem:src                   \XMEM.LIB                         211  void *          
+      11      IX        2   root2xmem:len                   \XMEM.LIB                         211  unsigned int    
+       3      SP        2   alloc_calc_chksum:p             \MEM.LIB                           52  void *          
+       5      SP        2   alloc_calc_chksum:num           \MEM.LIB                           52  int             
+       0      SP        2   _init_xalloc:p                  \MEM.LIB                          592  char *          
+      35      SP        2   xalloc_init:orgtbl              \MEM.LIB                           87  struct  *       
+      37      SP        2   xalloc_init:orgtblsize          \MEM.LIB                           87  unsigned int    
+      28      SP        4   xalloc_init:tmp                 \MEM.LIB                           88  long            
+      24      SP        4   xalloc_init:prior_tmp           \MEM.LIB                           89  long            
+      20      SP        4   xalloc_init:prev_xsbreak        \MEM.LIB                           90  long            
+      18      SP        2   xalloc_init:i                   \MEM.LIB                           91  int             
+       4      SP       14   xalloc_init:xsbreak             \MEM.LIB                           92  struct          
+       0      SP        4   xalloc_init:available           \MEM.LIB                           93  long            
+      13      SP        2   alloc_init:orgtbl               \MEM.LIB                          161  struct  *       
+      15      SP        2   alloc_init:orgtblsize           \MEM.LIB                          161  unsigned int    
+       8      SP        2   alloc_init:i                    \MEM.LIB                          162  unsigned int    
+       6      SP        2   alloc_init:msize                \MEM.LIB                          162  unsigned int    
+       4      SP        2   alloc_init:bsize                \MEM.LIB                          162  unsigned int    
+       2      SP        2   alloc_init:mbreak               \MEM.LIB                          163  struct  *       
+       0      SP        2   alloc_init:pe                   \MEM.LIB                          164  struct  *       
+       0      SP        0   VdInit:_____ZW000003A1          \VDRIVER.LIB                       57  void            
+
+
+// Macro listing and source reference.
+//  Name                           File                         Line Num
+   _RESTRICT_WATCHCODE_            
+   __RCM43XXBIOS_LIB__             \RCM43XX_BIOS.LIB                   2
+   USE_CORE_INIT                   \RCM43XX_BIOS.LIB                  34
+   DB_IP_SET3                      \RCM43XX_BIOS.LIB                  36
+   DB_IP_RES                       \RCM43XX_BIOS.LIB                  37
+   _SPI_SD_LINES_SHARED_           \RCM43XX_BIOS.LIB                  41
+   SPI_SF                          \RCM43XX_BIOS.LIB                  43
+   SPI_SD                          \RCM43XX_BIOS.LIB                  44
+   SPI_ADC                         \RCM43XX_BIOS.LIB                  46
+   SPI_RXMASK                      \RCM43XX_BIOS.LIB                  49
+   SPI_TXMASK                      \RCM43XX_BIOS.LIB                  50
+   SPI_DEF_CONTROL_VAL             \RCM43XX_BIOS.LIB                  54
+   SPI_DEF_ECONTROL_VAL            \RCM43XX_BIOS.LIB                  55
+   SPI_SF_DIVISOR                  \RCM43XX_BIOS.LIB                  57
+   SPI_SD_DIVISOR                  \RCM43XX_BIOS.LIB                  58
+   SPI_SF_ECONTROL_VAL             \RCM43XX_BIOS.LIB                  59
+   SPI_SD_ECONTROL_VAL             \RCM43XX_BIOS.LIB                  60
+   SPI_ADC_DIVISOR                 \RCM43XX_BIOS.LIB                  62
+   SPI_ADC_ECONTROL_VAL            \RCM43XX_BIOS.LIB                  63
+   SPI_SHARED_DEVS                 \RCM43XX_BIOS.LIB                  64
+   _SPI_MAXTIME                    \RCM43XX_BIOS.LIB                  70
+   SBF_DR                          \RCM43XX_BIOS.LIB                  74
+   _AR_OFFS                        \RCM43XX_BIOS.LIB                  75
+   _SR_OFFS                        \RCM43XX_BIOS.LIB                  76
+   _CR_OFFS                        \RCM43XX_BIOS.LIB                  77
+   _ER_OFFS                        \RCM43XX_BIOS.LIB                  78
+   SF_TATR                         \RCM43XX_BIOS.LIB                  79
+   SD_CD_PORT                      \RCM43XX_BIOS.LIB                 101
+   SD_CD_PORT_FR                   \RCM43XX_BIOS.LIB                 102
+   SD_CD_PORT_FRSHADOW             \RCM43XX_BIOS.LIB                 103
+   SD_CD_PORT_DDR                  \RCM43XX_BIOS.LIB                 104
+   SD_CD_PORT_DDRSHADOW            \RCM43XX_BIOS.LIB                 105
+   SD_CD_PIN                       \RCM43XX_BIOS.LIB                 106
+   SD_WP_PORT                      \RCM43XX_BIOS.LIB                 109
+   SD_WP_PORT_FR                   \RCM43XX_BIOS.LIB                 110
+   SD_WP_PORT_FRSHADOW             \RCM43XX_BIOS.LIB                 111
+   SD_WP_PORT_DDR                  \RCM43XX_BIOS.LIB                 112
+   SD_WP_PORT_DDRSHADOW            \RCM43XX_BIOS.LIB                 113
+   SD_WP_PIN                       \RCM43XX_BIOS.LIB                 114
+   SD_CS_PORT                      \RCM43XX_BIOS.LIB                 118
+   SD_CS_PORT_DRSHADOW             \RCM43XX_BIOS.LIB                 119
+   SD_CS_PORT_DDR                  \RCM43XX_BIOS.LIB                 120
+   SD_CS_PORT_FR                   \RCM43XX_BIOS.LIB                 121
+   SD_CS_PORT_FRSHADOW             \RCM43XX_BIOS.LIB                 122
+   SD_CS_PORT_DDRSHADOW            \RCM43XX_BIOS.LIB                 123
+   SD_CS_PORT_DCR                  \RCM43XX_BIOS.LIB                 124
+   SD_CS_PORT_DCRSHADOW            \RCM43XX_BIOS.LIB                 125
+   SD_CS_PIN                       \RCM43XX_BIOS.LIB                 126
+   SD_CS_PORT_OD                   \RCM43XX_BIOS.LIB                 127
+   SD_TX_PORT_DR                   \RCM43XX_BIOS.LIB                 129
+   SD_TX_PORT_DRSHADOW             \RCM43XX_BIOS.LIB                 130
+   SD_TX_PORT_FR                   \RCM43XX_BIOS.LIB                 131
+   SD_TX_PORT_FRSHADOW             \RCM43XX_BIOS.LIB                 132
+   SD_TX_PORT_DDR                  \RCM43XX_BIOS.LIB                 133
+   SD_TX_PORT_DDRSHADOW            \RCM43XX_BIOS.LIB                 134
+   SD_TX_PORT_DCR                  \RCM43XX_BIOS.LIB                 135
+   SD_TX_PORT_DCRSHADOW            \RCM43XX_BIOS.LIB                 136
+   SD_TX_PIN                       \RCM43XX_BIOS.LIB                 137
+   SD_TX_PORT_OD                   \RCM43XX_BIOS.LIB                 138
+   SD_PWR_PORT_DR                  \RCM43XX_BIOS.LIB                 140
+   SD_PWR_PORT_DRSHADOW            \RCM43XX_BIOS.LIB                 141
+   SD_PWR_PORT_FR                  \RCM43XX_BIOS.LIB                 142
+   SD_PWR_PORT_FRSHADOW            \RCM43XX_BIOS.LIB                 143
+   SD_PWR_PORT_DDR                 \RCM43XX_BIOS.LIB                 144
+   SD_PWR_PORT_DDRSHADOW           \RCM43XX_BIOS.LIB                 145
+   SD_PWR_PORT_DCR                 \RCM43XX_BIOS.LIB                 146
+   SD_PWR_PORT_DCRSHADOW           \RCM43XX_BIOS.LIB                 147
+   SD_PWR_PIN                      \RCM43XX_BIOS.LIB                 148
+   SD_PWR_PORT_OD                  \RCM43XX_BIOS.LIB                 149
+   SD_PWR_PORT_ON                  \RCM43XX_BIOS.LIB                 150
+   SD_LED_PORT_DR                  \RCM43XX_BIOS.LIB                 152
+   SD_LED_PORT_DRSHADOW            \RCM43XX_BIOS.LIB                 153
+   SD_LED_PORT_FR                  \RCM43XX_BIOS.LIB                 154
+   SD_LED_PORT_FRSHADOW            \RCM43XX_BIOS.LIB                 155
+   SD_LED_PORT_DDR                 \RCM43XX_BIOS.LIB                 156
+   SD_LED_PORT_DDRSHADOW           \RCM43XX_BIOS.LIB                 157
+   SD_LED_PORT_DCR                 \RCM43XX_BIOS.LIB                 158
+   SD_LED_PORT_DCRSHADOW           \RCM43XX_BIOS.LIB                 159
+   SD_LED_PIN                      \RCM43XX_BIOS.LIB                 160
+   SD_LED_PORT_OD                  \RCM43XX_BIOS.LIB                 161
+   SD_LED_PORT_ON                  \RCM43XX_BIOS.LIB                 162
+   SD_RX_PORT_DR                   \RCM43XX_BIOS.LIB                 164
+   SD_RX_PORT_FR                   \RCM43XX_BIOS.LIB                 165
+   SD_RX_PORT_FRSHADOW             \RCM43XX_BIOS.LIB                 166
+   SD_RX_PORT_DDR                  \RCM43XX_BIOS.LIB                 167
+   SD_RX_PORT_DDRSHADOW            \RCM43XX_BIOS.LIB                 168
+   SD_RX_PIN                       \RCM43XX_BIOS.LIB                 169
+   SD_CLK_PORT_DR                  \RCM43XX_BIOS.LIB                 171
+   SD_CLK_PORT_FR                  \RCM43XX_BIOS.LIB                 172
+   SD_CLK_PORT_FRSHADOW            \RCM43XX_BIOS.LIB                 173
+   SD_CLK_PORT_DDR                 \RCM43XX_BIOS.LIB                 174
+   SD_CLK_PORT_DDRSHADOW           \RCM43XX_BIOS.LIB                 175
+   SD_CLK_PORT_DCR                 \RCM43XX_BIOS.LIB                 176
+   SD_CLK_PORT_DCRSHADOW           \RCM43XX_BIOS.LIB                 177
+   SD_CLK_PIN                      \RCM43XX_BIOS.LIB                 178
+   SD_CLK_PORT_OD                  \RCM43XX_BIOS.LIB                 179
+   SD_SPI_TACRSHADOW               \RCM43XX_BIOS.LIB                 181
+   SD_SPI_SERPORT                  \RCM43XX_BIOS.LIB                 182
+   SD_SPI_TCREG                    \RCM43XX_BIOS.LIB                 183
+   SD_SPI_TCRSHADOW                \RCM43XX_BIOS.LIB                 184
+   SD_SPI_TCRVALUE                 \RCM43XX_BIOS.LIB                 185
+   SD_SPI_SERSHADOW                \RCM43XX_BIOS.LIB                 187
+   SD_SPI_SERVALUE                 \RCM43XX_BIOS.LIB                 188
+   SD_SPI_SCRSHADOW                \RCM43XX_BIOS.LIB                 190
+   SD_SPI_SCRVALUE                 \RCM43XX_BIOS.LIB                 191
+   SD_SPI_DIVREG                   \RCM43XX_BIOS.LIB                 193
+   SD_SPI_DIVREGSHADOW             \RCM43XX_BIOS.LIB                 194
+   SD_SPI_DIVISOR                  \RCM43XX_BIOS.LIB                 195
+   SD_ENABLECS                     \RCM43XX_BIOS.LIB                 197
+   SD_DISABLECS                    \RCM43XX_BIOS.LIB                 198
+   SD_ENABLEPOW                    \RCM43XX_BIOS.LIB                 199
+   SD_DISABLEPOW                   \RCM43XX_BIOS.LIB                 200
+   SD_AR_OFFSET                    \RCM43XX_BIOS.LIB                 203
+   SD_SR_OFFSET                    \RCM43XX_BIOS.LIB                 204
+   SD_CR_OFFSET                    \RCM43XX_BIOS.LIB                 205
+   SD_ER_OFFSET                    \RCM43XX_BIOS.LIB                 206
+   SD_SPI_CONTROL_VALUE            \RCM43XX_BIOS.LIB                 207
+   SD_SPI_TXMASK                   \RCM43XX_BIOS.LIB                 208
+   SD_SPI_RXMASK                   \RCM43XX_BIOS.LIB                 209
+   SD_SPI_CLOCK_MODE               \RCM43XX_BIOS.LIB                 210
+   ZWORLD_RESERVED_SIZE            \DEFAULT.H                         52
+   __EXTIO_LIB__                   \EXTERNIO.LIB                      12
+   __PWM_LIB__                     \PWM.LIB                           15
+   PWM_FREQ_FACTOR                 \PWM.LIB                           32
+   PWM_SPREAD                      \PWM.LIB                           85
+   PWM_OPENDRAIN                   \PWM.LIB                           86
+   PWM_USEPORTC                    \PWM.LIB                           88
+   PWM_USEPORTD                    \PWM.LIB                           89
+   PWM_USEPORTE                    \PWM.LIB                           90
+   PWM_OUTNORMAL                   \PWM.LIB                           92
+   PWM_OUTEIGHTH                   \PWM.LIB                           93
+   PWM_OUTQUARTER                  \PWM.LIB                           94
+   PWM_OUTHALF                     \PWM.LIB                           95
+   PWM_INTNORMAL                   \PWM.LIB                           97
+   PWM_INTEIGHTH                   \PWM.LIB                           98
+   PWM_INTQUARTER                  \PWM.LIB                           99
+   PWM_INTHALF                     \PWM.LIB                          100
+   PWM_INTOFF                      \PWM.LIB                          102
+   PWM_INTPRI1                     \PWM.LIB                          103
+   PWM_INTPRI2                     \PWM.LIB                          104
+   PWM_INTPRI3                     \PWM.LIB                          105
+   __QD_LIB__                      \QD.LIB                            29
+   QD_DIVISOR                      \QD.LIB                            32
+   QD_OVERFLOW                     \QD.LIB                            34
+   QD_UNDERFLOW                    \QD.LIB                            35
+   __VBAT_LIB                      \VBAT.LIB                           2
+   SETUSERMODE                     \DEFAULT.H                         75
+   SETSYSMODE                      \DEFAULT.H                         76
+   _system                         \DEFAULT.H                         77
+   _SYS_CALL_VARS                  \DEFAULT.H                         78
+   _NET_SYSCALL                    \DEFAULT.H                         79
+   _rk_printf                      \DEFAULT.H                         80
+   _rk_sprintf                     \DEFAULT.H                         81
+   DK_ENABLE_BREAKPOINTS           \DEFAULT.H                         89
+   DK_ENABLE_ASMSINGLESTEP         \DEFAULT.H                         97
+   DK_ENABLE_WATCHEXPRESSIONS      \DEFAULT.H                        105
+   DK_ENABLE_TRACING               \DEFAULT.H                        113
+   DK_ENABLE_STACK_TRACING         \DEFAULT.H                        121
+   DK_SEND_STACK_LENGTH            \DEFAULT.H                        129
+   DK_ENABLE_DEBUGKERNEL           \DEFAULT.H                        131
+   DK_ENABLE_TRACING               \DEFAULT.H                        138
+   DK_ENABLE_STACK_TRACING         \DEFAULT.H                        141
+   DK_ENABLE_ASMSINGLESTEP         \DEFAULT.H                        144
+   DK_ENABLE_BREAKPOINTS           \DEFAULT.H                        147
+   DK_ENABLE_WATCHEXPRESSIONS      \DEFAULT.H                        150
+   __DKENTRY_LIB                   \DKENTRY.LIB                        2
+   __DKCOMMON_LIB                  \DKCOMMON.LIB                       2
+   __DKCORE_LIB                    \DKCORE.LIB                         2
+   TC_TYPE_DEBUG                   \DKCORE.LIB                        14
+   TC_DEBUG_NOREQUEST              \DKCORE.LIB                        16
+   TC_DEBUG_SINGLESTEP             \DKCORE.LIB                        17
+   TC_DEBUG_TOGGLEBREAKPOINT       \DKCORE.LIB                        18
+   TC_DEBUG_CLEARBREAKPOINTS       \DKCORE.LIB                        19
+   TC_DEBUG_TOGGLEALLBREAKPOINTS   \DKCORE.LIB                        20
+   TC_DEBUG_ATBREAKPOINT           \DKCORE.LIB                        21
+   TC_DEBUG_STARTPROGRAM           \DKCORE.LIB                        22
+   TC_DEBUG_RUNPROGRAM             \DKCORE.LIB                        23
+   TC_DEBUG_STOPPROGRAM            \DKCORE.LIB                        24
+   TC_DEBUG_ADDWATCH               \DKCORE.LIB                        25
+   TC_DEBUG_DELETEWATCH            \DKCORE.LIB                        26
+   TC_DEBUG_DELETEALLWATCHES       \DKCORE.LIB                        27
+   TC_DEBUG_EXECWATCH              \DKCORE.LIB                        28
+   TC_DEBUG_EXECALLWATCHES         \DKCORE.LIB                        29
+   TC_DEBUG_SENDCHAR               \DKCORE.LIB                        30
+   TC_DEBUG_RESET                  \DKCORE.LIB                        31
+   TC_DEBUG_SETSENDFLAGS           \DKCORE.LIB                        32
+   TC_DEBUG_REGDATA                \DKCORE.LIB                        33
+   TC_DEBUG_WATCHDATA              \DKCORE.LIB                        34
+   TC_DEBUG_ASMDATA                \DKCORE.LIB                        35
+   TC_DEBUG_STACKDATA              \DKCORE.LIB                        36
+   TC_DEBUG_STDIO                  \DKCORE.LIB                        37
+   TC_DEBUG_WRITEREGDATA           \DKCORE.LIB                        38
+   TC_DEBUG_STDIOCHARREADY         \DKCORE.LIB                        39
+   TC_DEBUG_NOOP                   \DKCORE.LIB                        40
+   TC_DEBUG_ENABLEDOPTIONS         \DKCORE.LIB                        41
+   DKF_STEP_INTO                   \DKCORE.LIB                        52
+   DKF_STEP_OVER                   \DKCORE.LIB                        53
+   DKF_STEP_ASM                    \DKCORE.LIB                        54
+   DKF_STEP_SOURCE                 \DKCORE.LIB                        55
+   DKF_STEP_CALL                   \DKCORE.LIB                        56
+   DKF_STEP_LCALL                  \DKCORE.LIB                        57
+   DKF_STAT_AT_BP                  \DKCORE.LIB                        60
+   DKF_STAT_AT_HARD_BP             \DKCORE.LIB                        61
+   DKF_STAT_RUNMODE                \DKCORE.LIB                        62
+   DKF_STAT_STEPMODE               \DKCORE.LIB                        63
+   DKF_STAT_ASMSTEPMODE            \DKCORE.LIB                        64
+   DKF_STAT_ATEXIT                 \DKCORE.LIB                        65
+   DKF_STAT_CONTEXTSWITCH          \DKCORE.LIB                        66
+   DKF_STAT_INWATCH                \DKCORE.LIB                        67
+   _TRACE                          \DKCORE.LIB                       106
+   _TRACEON                        \DKCORE.LIB                       107
+   _TRACEOFF                       \DKCORE.LIB                       108
+   DK_SEND_ASM_LENGTH              \DKCORE.LIB                       112
+   DKF_SEND_STACK                  \DKCORE.LIB                       114
+   DKF_SEND_WATCHES                \DKCORE.LIB                       115
+   DKF_SEND_ASM                    \DKCORE.LIB                       116
+   DKF_SEND_REGS                   \DKCORE.LIB                       117
+   DKF_SEND_STATUS                 \DKCORE.LIB                       118
+   DKF_SEND_ACK                    \DKCORE.LIB                       119
+   DK_ERROR_BPNOTENABLED           \DKCORE.LIB                       130
+   DK_ERROR_ASMSINGLESTEPNOTENABLED \DKCORE.LIB                       131
+   DK_ERROR_WATCHNOTENABLED        \DKCORE.LIB                       132
+   DKF_STDIO_LOCK                  \DKCORE.LIB                       134
+   DKF_GETCHAR_LOCK                \DKCORE.LIB                       135
+   DKF_RESET_LOCK                  \DKCORE.LIB                       136
+   DKF_DK_LOCK                     \DKCORE.LIB                       137
+   DK_STDIO_TIMEOUT                \DKCORE.LIB                       138
+   DK_GETCHAR_TIMEOUT              \DKCORE.LIB                       139
+   dkIOI                           \DKCORE.LIB                       141
+   dkIOE                           \DKCORE.LIB                       142
+   dkALTD                          \DKCORE.LIB                       143
+   DK_RST20                        \DKCORE.LIB                       145
+   DK_RST28                        \DKCORE.LIB                       146
+   dkZZ                            \DKCORE.LIB                       153
+   dkZS                            \DKCORE.LIB                       154
+   dkZD                            \DKCORE.LIB                       155
+   dkZT                            \DKCORE.LIB                       156
+   dkSZ                            \DKCORE.LIB                       157
+   dkSS                            \DKCORE.LIB                       158
+   dkSD                            \DKCORE.LIB                       159
+   dkST                            \DKCORE.LIB                       160
+   dkDZ                            \DKCORE.LIB                       161
+   dkDS                            \DKCORE.LIB                       162
+   dkDD                            \DKCORE.LIB                       163
+   dkDT                            \DKCORE.LIB                       164
+   dkTZ                            \DKCORE.LIB                       165
+   dkTS                            \DKCORE.LIB                       166
+   dkTD                            \DKCORE.LIB                       167
+   dkTT                            \DKCORE.LIB                       168
+   DK_MAX_WATCHES                  \DKCORE.LIB                       248
+   DKF_BP_ACTIVE                   \DKCORE.LIB                       779
+   DKF_BP_DELETED                  \DKCORE.LIB                       780
+   DKF_BP_CONDITIONAL              \DKCORE.LIB                       781
+   DKF_BP_HARD                     \DKCORE.LIB                       782
+   DKF_BP_HARDWARE                 \DKCORE.LIB                       783
+   DKF_BP_HWDATAREAD               \DKCORE.LIB                       784
+   DKF_BP_HWDATAWRITE              \DKCORE.LIB                       785
+   DKF_BP_HWINSFETCH               \DKCORE.LIB                       786
+   DKF_BP_INSERT                   \DKCORE.LIB                       789
+   DKF_BP_FOUND                    \DKCORE.LIB                       790
+   DKF_BP_NOTFOUND                 \DKCORE.LIB                       791
+   DKF_BP_EMPTYFOUND               \DKCORE.LIB                       792
+   DKF_BP_EXHAUSTED                \DKCORE.LIB                       793
+   DK_MAX_BREAKPOINTS              \DKCORE.LIB                       798
+   DK_BREAKPOINT_MASK              \DKCORE.LIB                       816
+   DK_BxM0R                        \DKCORE.LIB                       819
+   DK_BxM1R                        \DKCORE.LIB                       820
+   DK_BxM2R                        \DKCORE.LIB                       821
+   DK_BxCR                         \DKCORE.LIB                       823
+   DK_BxA0R                        \DKCORE.LIB                       825
+   DK_BxA1R                        \DKCORE.LIB                       826
+   DK_BxA2R                        \DKCORE.LIB                       827
+   DKF_RST_RST28                   \DKCORE.LIB                      2828
+   DKF_RST_RST20                   \DKCORE.LIB                      2829
+   DKF_RST_RST18                   \DKCORE.LIB                      2830
+   __DKAPP_LIB                     \DKAPP.LIB                          2
+   DKF_OPTIONS_BREAKPOINTS         \DKAPP.LIB                         71
+   DKF_OPTIONS_ASMSINGLESTEP       \DKAPP.LIB                         72
+   DKF_OPTIONS_WATCHES             \DKAPP.LIB                         73
+   DK_BREAKPOINTS_ENABLED          \DKAPP.LIB                         75
+   DK_ASMSINGLESTEP_ENABLED        \DKAPP.LIB                         76
+   DK_WATCHES_ENABLED              \DKAPP.LIB                         77
+   __PROGRAM_LIB                   \PROGRAM.LIB                       12
+   _program_debug                  \PROGRAM.LIB                       15
+   mem_debug                       \MEM.LIB                            5
+   XALLOC_ANY                      \MEM.LIB                           12
+   XALLOC_BB                       \MEM.LIB                           13
+   XALLOC_NOTBB                    \MEM.LIB                           14
+   XALLOC_MAYBBB                   \MEM.LIB                           15
+   USER_XALLOC_END                 \MEM.LIB                           73
+   USER_XALLOC_START               \MEM.LIB                           74
+   SYSTEM_XALLOC_END               \MEM.LIB                           75
+   DINBUFSIZE                      \SERIALTEST.C                       2
+   DOUTBUFSIZE                     \SERIALTEST.C                       3
+   DDRIVE_TXD                      \RS232.LIB                       2389
+   DDRIVE_RXD                      \RS232.LIB                       2393
+   SERD_TXPORT                     \RS232.LIB                       2397
+   SERD_RXPORT                     \RS232.LIB                       2401
+   SPD_TX                          \RS232.LIB                       2404
+   SERD_TX_PxDR                    \RS232.LIB                       2415
+   SERD_TX_PxFR                    \RS232.LIB                       2416
+   SERD_TX_PxDRShadow              \RS232.LIB                       2417
+   SERD_TX_PxFRShadow              \RS232.LIB                       2418
+   SERD_TX_PxDDR                   \RS232.LIB                       2421
+   SERD_TX_PxDCR                   \RS232.LIB                       2422
+   SERD_TX_PxDDRShadow             \RS232.LIB                       2423
+   SERD_TX_PxDCRShadow             \RS232.LIB                       2424
+   DINBUFOK                        \RS232.LIB                       2433
+   DOUTBUFOK                       \RS232.LIB                       2449
+   _DIVSTEP                        \MUTIL.LIB                        184
+   STDIO_MAX_PRINTF_BUF_SIZE       \STDIO.LIB                        647
+   DEFMANTISSA                     \STDIO.LIB                       1956
+   DEFAULTSTACKSIZE                \PROGRAM.LIB                       92
+   STACK_CNT_256                   \STACK.LIB                        347
+   STACK_CNT_512                   \STACK.LIB                        350
+   STACK_CNT_1K                    \STACK.LIB                        353
+   STACK_CNT_2K                    \STACK.LIB                        356
+   STACK_CNT_4K                    \STACK.LIB                        359
+   TOTAL_STACK_CNT                 \STACK.LIB                        382
+   UEI                             \PROGRAM.LIB                      212
+   XBREAK_T_ADJ                    \MEM.LIB                           95
+
+
+// Function call graph.
+premain
+   VdInit
+      periodic_init
+         read_rtc
+      vwdogInit
+         _n_memset
+   _Alloc_Stack
+      _gen_lin2seg
+   _BiosStkSwitch
+   _Dealloc_Stack
+   _Init_Stacks
+      xalloc
+         _xalloc
+            alloc_calc_chksum
+            exit
+            root2xmem
+               paddr
+               xmem2xmem
+                  _f_memcpy
+            xmem2root
+               paddr
+               xmem2xmem->**see above**
+   _ProgStkSwitch
+   _init_bad_interrupts
+   _init_xalloc
+      alloc_init
+         alloc_calc_chksum
+      exception
+      exit
+      xalloc_init
+   coreInit
+      _shared_port_init
+         _n_memset
+         _rcm43_spi_init
+   exception
+   exit
+   main
+      printf
+         _printf
+            __qe2
+            dkDoMsg
+            doprnt
+               _f_strlen
+               _f_strtol
+                  isalpha
+                  isdigit
+                  isspace
+                  toupper
+               outchrs
+               pflt
+                  __ftoa
+                  _gltoa
+                  _n_strlen
+                  itoa
+                  ltoan
+                     _gltoan
+                  outchrs
+                  outstr
+               phex
+                  _n_strlen
+                  htoa
+                  outchrs
+                  outpad
+                     outchrs
+                  outstr
+               pint
+                  abs
+                  itoa
+                  itoan
+                  outchrs
+                  outpad->**see above**
+                  outstr
+                  utoa
+                  utoan
+               plhex
+                  _n_strlen
+                  hltoa
+                  outchrs
+                  outpad->**see above**
+                  outstr
+               plint
+                  gtoa
+                     _gltoa
+                  gtoan
+                     _gltoan
+                  labs
+                  ltoa
+                     _gltoa
+                  ltoan->**see above**
+                  outchrs
+                  outpad->**see above**
+                  outstr
+               tolower
+      serDgetc
+         _serXgetc
+            cbuf_getch
+            cbuf_rdlock
+            cbuf_rdunlock
+            cbuf_used
+            ser_bufUpdate
+               DMAhandle2chan
+               DMApoll
+      serDopen
+         cbuf_getch
+         cbuf_init
+         labs
+         serDdmaOff
+            _serXdmaOff
+               DMAstop
+                  DMAhandle2chan
+                  WrPortI
+               DMAunalloc
+                  DMAhandle2chan
+               WrPortI
+         serXsetDividers
+         spd_init
+      serDputc
+         _serXputc
+            _serXDMArestart
+               spx_dma_start
+                  DMAhandle2chan
+                  DMAloadBufDesc
+                  WrPortI
+                  paddr
+            cbuf_putch
+            cbuf_wrlock
+            cbuf_wrunlock
+            spx_starttx
+      serDrdFlush
+         _serXrdFlush
+            _serXgetc->**see above**
+            cbuf_flush
+      serDwrFlush
+         _serXwrFlush
+            DMAhandle2chan
+            WrPortI
+            cbuf_flush

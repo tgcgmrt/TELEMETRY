@@ -1,0 +1,208 @@
+<html>
+<head>
+<title>New MCM Monitoring Window</title>
+ <style type="text/css">
+  .mainpage
+   {
+   width:1040;
+   padding : 10;
+   color : #ddeeff;
+   background : #445566;
+   font-size : 22;
+   font-family : Lucida Sans Unicode;
+   border-radius : 5px;
+   -webkit-border-radius : 5px;
+   box-shadow: 12px 12px 10px #999999;
+  }
+
+  .out_rect
+  {
+   width:1010;
+   padding : 5px;
+   margin-bottom : 15;
+   background : #778899;
+   border-radius : 2px;
+   -webkit-border-radius : 2px;
+  }
+
+  .title
+  {
+   width:1007;
+   height : 30;
+   padding-top : 10;
+   margin-bottom : 1;
+   margin-top : 1;
+   color : #223344;
+   background : #ccddff;
+   font-size : 16;
+   font-family : Lucida Sans Unicode;
+   text-align : center;
+   letter-spacing:1;
+  }
+
+  .rv
+  {
+   width : 62;
+   height : 60; background : #ddeeff;
+   color : #334455;
+   font-family : Arial;
+   font-size : 13;
+   text-align : center;
+   letter-spacing:1;
+  }
+
+  .cl
+  {
+   width : 60;
+   height : 17;
+   background : #bbccdd;
+   color : #334455;
+   font-family : Arial;
+   font-size : 13;
+   padding : 1;
+   margin-bottom : 5px;
+   text-align : center;
+  }
+
+  .sys_mon
+  {
+   width : 503;
+   height : 35;
+   background : #eef1ff;
+   color : #334455;
+   font-family : Arial;
+   font-size : 14;
+   padding-left : 5px;
+   letter-spacing:1
+  }
+
+  a:link {text-decoration:none;}
+  // a:visited {text-decoration:none;color:#FFFFFF}
+
+  </style>
+
+  <script type="text/javascript">
+
+     var raw_val = new Array();
+     var volt_val = new Array();
+     var Para_Name = new Array();
+     var Arg_1 = new Array();
+     var Arg_2 = new Array();
+
+
+     function Mon64_Table(tableID1, tableID2, tableID3)
+     {
+       var i, j;
+
+       var table1 = document.getElementById(tableID1);
+
+       for(i=0; i<4; i++)
+	{
+           var row = table1.insertRow(i);
+
+           for(j=0;j<16;j++)
+	    {
+	      var cell = row.insertCell(j);
+              cell.innerHTML = "<div class = cl>" + ((i*16)+j+1) + "</div>";
+	    }
+        }
+       var table2 =  Dyn_Table(tableID2,3);
+       var table3 =  Dyn_Table(tableID3,4);
+
+       get_XML(table1, table2, table3);
+     }
+
+    function Dyn_Table(tableID, raw)
+     {
+       var table = document.getElementById(tableID);
+       for(i=0; i<raw; i++)
+	{
+          var row = table.insertRow(i);
+          for(j=0;j<2;j++)
+	    {
+		var cell = row.insertCell(j);
+		cell.innerHTML = "<div class = sys_mon> </div>";
+	    }
+        }
+        return table;
+     }
+
+
+     function get_XML(table1, table2, table3)
+     {
+        var i, j;
+        var xmlhttp = new window.XMLHttpRequest();
+
+	xmlhttp.open("GET", "Mon_Raw.xml", false);
+	xmlhttp.send(null);
+	xmlDoc1 = xmlhttp.responseXML.documentElement;
+
+	xmlhttp.open("GET", "Mon_Sum.xml", false);
+	xmlhttp.send(null);
+	xmlDoc2 = xmlhttp.responseXML.documentElement;
+
+	for(i=0;i<4;i++)
+        {
+	  for(j=0;j<16;j++)
+	  {
+	    raw_val[(i*16)+j] = xmlDoc1.getElementsByTagName("R")[(i*16)+j].childNodes[0].nodeValue;
+	    volt_val[(i*16)+j] = xmlDoc1.getElementsByTagName("V")[(i*16)+j].childNodes[0].nodeValue;
+	    table1.rows[i].cells[j].innerHTML = "<div class=rv><div class = cl>" + pad2((i*16)+j+1) + "</div>" + raw_val[(i*16)+j] + "<br>" + volt_val[(i*16)+j] + "</div></div>";
+	  }
+	}
+
+       for(i=0; i<7; i++)
+	{
+          for(j=0;j<2;j++)
+	    {
+		Para_Name[(i*2)+j] = xmlDoc2.getElementsByTagName("Name")[(i*2)+j].childNodes[0].nodeValue;
+	    	Arg_1[(i*2)+j] = xmlDoc2.getElementsByTagName("Arg1")[(i*2)+j].childNodes[0].nodeValue;
+		Arg_2[(i*2)+j] = xmlDoc2.getElementsByTagName("Arg2")[(i*2)+j].childNodes[0].nodeValue;
+
+		if(i<3)
+		table2.rows[i].cells[j].innerHTML = "<table class=sys_mon><tr><td width=40% style=font-size:16>" + Para_Name[(i*2)+j] + "</td><td width=30%>" + Arg_1[(i*2)+j] + "</td><td>" + Arg_2[(i*2)+j] + "</td></tr></div>";
+		else
+		table3.rows[i-3].cells[j].innerHTML = "<table class=sys_mon><tr><td width=40% style=font-size:16>" + Para_Name[(i*2)+j] + "</td><td width=30%>" + Arg_1[(i*2)+j] + "</td><td>" + Arg_2[(i*2)+j] + "</td></tr></div>";
+	    }
+        }
+	setTimeout(function(){get_XML(table1,table2,table3)},900);
+     }
+
+   function pad2(number)
+    {
+      return (number < 10 ? '0' : '') + number;
+    }
+
+ </script>
+
+</head>
+
+
+<body onload = "Mon64_Table('table1', 'table2', 'table3')">
+<center>
+
+<div class="mainpage"> New MCM Monitoring Window
+ <table width="550" style="font-size:12px;color:#ddeeff;margin-bottom:10;letter-spacing:1px"><tr><td width="35%">IP : <?z echo($ip) ?></td><td width="30%">Antenna : ___</td><td>System : Analog Back End</td></tr></table>
+
+ <div class = "out_rect"> <div class="title"> 64 MONITORING CHANNELS </div>
+ <table id="table1" cellspacing="1" cellpadding="0" style="text-align:center;">
+ </table> </div>
+
+ <div class="out_rect">
+  <div class="title"> MCM STATUS </div>
+ <table id="table2" cellspacing="1" cellpadding="0" style="text-align:center;">
+ </table> </div>
+
+ <div class="out_rect" style="margin-bottom:25">
+  <div class="title"> ANALOG BACKEND STATUS </div>
+ <table id="table3" cellspacing="1" cellpadding="0" style="text-align:center;">
+ </table> </div>
+
+ <a href="MCM_Set.zhtml" target="_new" style="font-size:16;color:#00dddd;background:#557799;padding:5;padding-left:35;padding-right:35;border-radius:4px;-webkit-border-radius:4px;"> Click Here to SET New MCM </a>
+
+ <div style="font-size:12; color:#bbccdd; margin-top:20"> Designed @ Telemetry Lab - GMRT</div>
+
+</div>
+</center>
+</body>
+</html>
